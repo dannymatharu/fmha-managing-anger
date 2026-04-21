@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FMHA Code of Conduct</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --red: #ff5657;
+    --red-dark: #d94445;
+    --red-light: #fff5f5;
+    --red-border: rgba(255,86,87,0.22);
+    --navy: #1e1b2e;
+    --navy2: #2d2a3e;
+    --paper: #faf7f4;
+    --card: #ffffff;
+    --border: #e8e2dc;
+    --border-strong: #d4ccc4;
+    --text: #1e1b2e;
+    --muted: #6e6a75;
+    --muted-light: #9e9aa5;
+    --green: #1a7a4a;
+    --green-light: #edf7f1;
+    --green-border: rgba(26,122,74,0.25);
+    --amber: #b45309;
+    --amber-light: #fef3e2;
+    --amber-border: rgba(180,83,9,0.22);
+    --shadow: 0 2px 12px rgba(30,27,46,0.07);
+    --shadow-md: 0 4px 24px rgba(30,27,46,0.10);
+    --r: 12px;
+    --r-sm: 8px;
+  }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--paper);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    background: var(--navy);
+    padding: 0 28px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.2);
+  }
+
+  .brand-mark {
+    width: 32px; height: 32px;
+    background: var(--red);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: white; letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+
+  .brand-text .b-name {
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase; color: #fff;
+  }
+
+  .brand-text .b-sub { font-size: 10px; color: rgba(255,255,255,0.42); display: block; }
+
+  .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+
+  .tb-badge {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+    background: rgba(255,86,87,0.15); border: 1px solid rgba(255,86,87,0.3);
+    color: var(--red); padding: 4px 10px; border-radius: 20px;
+  }
+
+  .print-btn {
+    background: transparent; border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.7); padding: 7px 14px; border-radius: 6px;
+    font-size: 11px; font-weight: 700; cursor: pointer; font-family: inherit;
+    letter-spacing: 0.04em; display: flex; align-items: center; gap: 6px;
+    transition: all 0.15s;
+  }
+
+  .print-btn:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+
+  /* ── SETUP PANEL ── */
+  .setup-panel {
+    background: var(--amber-light);
+    border-bottom: 1px solid var(--amber-border);
+  }
+
+  .setup-main-row {
+    padding: 10px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .customise-label {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--amber); white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .customise-input {
+    flex: 1; min-width: 180px; max-width: 300px;
+    background: #fff; border: 1.5px solid var(--amber-border);
+    border-radius: 7px; padding: 8px 14px;
+    font-size: 13px; font-family: inherit; color: var(--text);
+    font-weight: 600;
+    outline: none; transition: border-color 0.15s;
+  }
+
+  .customise-input:focus { border-color: var(--amber); }
+  .customise-input::placeholder { color: var(--muted-light); font-weight: 400; }
+
+  .setup-toggle-btn {
+    background: var(--amber); color: #fff;
+    border: none; border-radius: 6px;
+    padding: 7px 14px; font-size: 11px; font-weight: 800;
+    font-family: inherit; letter-spacing: 0.06em;
+    cursor: pointer; white-space: nowrap;
+    transition: background 0.15s;
+  }
+
+  .setup-toggle-btn:hover { background: #a04700; }
+
+  .customise-hint {
+    font-size: 11px; color: var(--amber); opacity: 0.8;
+  }
+
+  .setup-contacts-panel {
+    display: none;
+    padding: 14px 28px 20px;
+    border-top: 1px solid var(--amber-border);
+  }
+
+  .setup-contacts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 600px) { .setup-contacts-grid { grid-template-columns: 1fr; } }
+
+  .setup-contact-col { display: flex; flex-direction: column; gap: 7px; }
+
+  .setup-col-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--amber); margin-bottom: 3px;
+  }
+
+  .setup-input {
+    background: #fff; border: 1.5px solid var(--amber-border);
+    border-radius: 6px; padding: 7px 10px;
+    font-size: 12px; font-family: inherit; color: var(--text);
+    outline: none; transition: border-color 0.15s; width: 100%;
+  }
+
+  .setup-input:focus { border-color: var(--amber); }
+  .setup-input::placeholder { color: var(--muted-light); }
+
+  /* ── CONTACT VALUE LABELS ── */
+  .cf-label {
+    font-size: 10px; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-right: 3px;
+  }
+
+  .cf-val {
+    font-size: 12px; font-weight: 600; color: var(--navy);
+  }
+
+  /* ── SIGNATURE INPUTS ── */
+  .sig-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  @media (max-width: 500px) { .sig-row { grid-template-columns: 1fr; } }
+
+  .sig-field {
+    display: flex; flex-direction: column; gap: 6px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 10px;
+  }
+
+  .sig-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.45);
+  }
+
+  .sig-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid rgba(255,255,255,0.3);
+    padding: 5px 2px;
+    font-size: 14px; font-family: inherit; font-weight: 600;
+    color: #fff; outline: none;
+    transition: border-bottom-color 0.15s;
+    width: 100%;
+  }
+
+  .sig-input:focus { border-bottom-color: var(--red); }
+  .sig-input::placeholder { color: rgba(255,255,255,0.25); font-weight: 400; }
+  .sig-input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1) opacity(0.4); }
+
+  /* ── SUBMIT BUTTON ── */
+  .submit-btn {
+    margin-top: 20px;
+    background: var(--red); color: #fff;
+    border: none; border-radius: 8px;
+    padding: 12px 22px;
+    font-size: 13px; font-weight: 700; font-family: inherit;
+    cursor: pointer; letter-spacing: 0.03em;
+    transition: background 0.15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+
+  .submit-btn:hover { background: var(--red-dark); }
+
+  .submit-note {
+    margin-top: 10px;
+    font-size: 11px; color: rgba(255,255,255,0.4);
+    line-height: 1.5;
+  }
+
+  /* ── TABS ── */
+  .tabs-wrap {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
+    display: flex;
+  }
+
+  .tab-btn {
+    background: none; border: none; border-bottom: 2px solid transparent;
+    padding: 15px 20px; font-family: inherit;
+    font-size: 13px; font-weight: 600; color: var(--muted);
+    cursor: pointer; white-space: nowrap; transition: all 0.15s;
+  }
+
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--red); border-bottom-color: var(--red); }
+
+  /* ── MAIN ── */
+  .content { max-width: 820px; margin: 0 auto; padding: 40px 28px 80px; }
+  .panel { display: none; }
+  .panel.active { display: block; animation: fadeUp 0.25s ease; }
+
+  /* ── KEY CONTACTS ── */
+  .contacts-block {
+    background: var(--card);
+    border: 1.5px solid var(--border-strong);
+    border-radius: var(--r);
+    padding: 20px 24px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+  }
+
+  .contacts-title {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--navy);
+    margin-bottom: 14px;
+  }
+
+  .contacts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .contact-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    padding: 12px 14px;
+  }
+
+  .contact-role {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--red);
+    margin-bottom: 4px;
+  }
+
+  .contact-name {
+    font-size: 13px; font-weight: 700; color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .contact-detail {
+    font-size: 12px; color: var(--muted); line-height: 1.6;
+  }
+
+  .contact-detail a {
+    color: var(--red); text-decoration: none;
+  }
+
+  @media print {
+    .contacts-block { border: 1.5px solid #ccc; box-shadow: none; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── COC HEADER ── */
+  .coc-head {
+    margin-bottom: 32px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .coc-badge {
+    display: block;
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(36px, 6vw, 54px);
+    font-weight: 400; line-height: 1.1;
+    color: var(--navy);
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .coc-title {
+    font-size: clamp(14px, 2vw, 17px);
+    font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--red);
+    margin-bottom: 14px;
+  }
+
+  .coc-title em { font-style: normal; }
+
+  .coc-intro {
+    font-size: 14px; color: var(--muted); line-height: 1.75; max-width: 600px;
+  }
+
+  /* ── CLUB SLOT ── */
+  .club-slot {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 18px 20px;
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 32px; box-shadow: var(--shadow);
+  }
+
+  .club-crest {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--paper); border: 2px dashed var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0; color: var(--muted-light);
+  }
+
+  .club-name-display {
+    font-size: 16px; font-weight: 700; color: var(--navy);
+  }
+
+  .club-name-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted-light); margin-bottom: 16px;
+  }
+
+  /* ── COMMITMENTS ── */
+  .commitments { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+
+  .commitment {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 18px 20px;
+    display: flex; gap: 16px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.15s;
+  }
+
+  .commitment:hover { box-shadow: var(--shadow-md); }
+
+  .c-num {
+    width: 30px; height: 30px; flex-shrink: 0; margin-top: 1px;
+    background: var(--red-light); border: 1px solid var(--red-border);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800; color: var(--red);
+  }
+
+  .c-body { flex: 1; }
+
+  .c-title {
+    font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .c-desc { font-size: 12.5px; color: var(--muted); line-height: 1.65; }
+
+  /* ── INFO BLOCK ── */
+  .info-block {
+    border-radius: var(--r); padding: 20px 22px; margin-bottom: 24px;
+  }
+
+  .info-block.amber { background: var(--amber-light); border: 1.5px solid var(--amber-border); }
+  .info-block.red   { background: var(--red-light);   border: 1.5px solid var(--red-border);   }
+  .info-block.green { background: var(--green-light);  border: 1.5px solid var(--green-border);  }
+
+  .info-block-title {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase;
+    margin-bottom: 10px; display: flex; align-items: center; gap: 7px;
+  }
+
+  .info-block.amber .info-block-title { color: var(--amber); }
+  .info-block.red   .info-block-title { color: var(--red); }
+  .info-block.green .info-block-title { color: var(--green); }
+
+  .info-block p { font-size: 12.5px; line-height: 1.7; margin-bottom: 7px; }
+  .info-block p:last-child { margin-bottom: 0; }
+  .info-block.amber p { color: #5c4a1e; }
+  .info-block.red   p { color: #7a1a1a; }
+  .info-block.green p { color: #1e4a35; }
+  .info-block strong { font-weight: 700; }
+
+  /* ── CONSEQUENCES ── */
+  .consequences {
+    background: var(--card); border: 1.5px solid var(--border);
+    border-radius: var(--r); padding: 20px 22px; margin-bottom: 28px;
+    box-shadow: var(--shadow);
+  }
+
+  .cons-title {
+    font-size: 12px; font-weight: 800; color: var(--text);
+    margin-bottom: 14px; letter-spacing: 0.04em;
+  }
+
+  .cons-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .cons-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 12.5px; color: var(--muted); line-height: 1.5;
+  }
+
+  .cons-arrow {
+    color: var(--red); font-weight: 700; flex-shrink: 0; margin-top: 1px; font-size: 13px;
+  }
+
+  /* ── PLEDGE ── */
+  .pledge-block {
+    background: var(--navy); border-radius: var(--r);
+    padding: 28px 24px; margin-bottom: 28px;
+  }
+
+  .pledge-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.16em;
+    text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 14px;
+  }
+
+  .pledge-quote {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(16px, 3vw, 20px); font-style: italic;
+    color: #fff; line-height: 1.65; margin-bottom: 28px;
+    border-left: 3px solid var(--red); padding-left: 18px;
+  }
+
+  .sig-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+
+  @media (max-width: 500px) { .sig-row { grid-template-columns: 1fr 1fr; } }
+
+  .sig-field {
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 8px;
+    font-size: 10px; color: rgba(255,255,255,0.4);
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  /* ── JUNIOR PLEDGE CARDS ── */
+  .pledge-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px;
+  }
+
+  @media (max-width: 480px) { .pledge-grid { grid-template-columns: 1fr; } }
+
+  .pledge-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 18px 16px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.15s;
+  }
+
+  .pledge-card:hover { box-shadow: var(--shadow-md); }
+
+  .pledge-card:nth-child(1) { border-top: 3px solid #ff5657; }
+  .pledge-card:nth-child(2) { border-top: 3px solid #f39c12; }
+  .pledge-card:nth-child(3) { border-top: 3px solid #1a7a4a; }
+  .pledge-card:nth-child(4) { border-top: 3px solid #1d68c4; }
+  .pledge-card:nth-child(5) { border-top: 3px solid #9b59b6; }
+  .pledge-card:nth-child(6) { border-top: 3px solid #e67e22; }
+
+  .pc-icon { font-size: 26px; margin-bottom: 8px; display: block; }
+
+  .pc-statement {
+    font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.3; margin-bottom: 6px;
+  }
+
+  .pc-statement em { color: var(--red); font-style: normal; }
+
+  .pc-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+  /* ── YOUNG PLEDGE ── */
+  .young-pledge {
+    background: var(--navy); border-radius: var(--r);
+    padding: 28px 24px; margin-bottom: 28px; text-align: center;
+  }
+
+  .yp-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 22px; color: #fff; margin-bottom: 14px;
+  }
+
+  .yp-title em { font-style: italic; color: var(--red); }
+
+  .yp-quote {
+    font-size: 15px; font-style: italic; color: rgba(255,255,255,0.82);
+    line-height: 1.75; margin-bottom: 24px; max-width: 480px; margin-left: auto; margin-right: auto;
+  }
+
+  .yp-sig-row {
+    display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+  }
+
+  .yp-sig-field {
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 8px; font-size: 10px;
+    color: rgba(255,255,255,0.4); letter-spacing: 0.1em;
+    text-transform: uppercase; min-width: 140px; text-align: left;
+  }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    margin-top: 32px; padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
+  }
+
+  .doc-footer-brand { font-size: 11px; color: var(--muted-light); }
+  .doc-footer-brand strong { color: var(--red); }
+  .doc-footer-url { font-size: 10px; color: var(--muted-light); text-decoration: none; }
+
+  /* ── PRINT ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    body { background: #fff !important; }
+    .topbar, .tabs-wrap, .customise-bar { display: none !important; }
+
+    .content { padding: 0 !important; max-width: 100% !important; }
+
+    .panel { display: none !important; }
+    .panel.active { display: block !important; }
+
+    .commitment, .club-slot, .consequences { box-shadow: none !important; }
+    .pledge-block, .young-pledge { -webkit-print-color-adjust: exact !important; }
+
+    @page { margin: 16mm 14mm; size: A4; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="brand-mark">FM</div>
+  <div class="brand-text">
+    <span class="b-name">FMHA</span>
+    <span class="b-sub">Football Mental Health Alliance</span>
+  </div>
+  <div class="topbar-right">
+    <span class="tb-badge">Code of Conduct</span>
+    <button class="print-btn" onclick="window.print()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print / Save PDF
+    </button>
+  </div>
+</header>
+
+<!-- SETUP PANEL -->
+<div class="setup-panel">
+  <div class="setup-main-row">
+    <span class="customise-label">📋 Club Setup</span>
+    <input
+      class="customise-input"
+      id="clubInput"
+      type="text"
+      placeholder="Type your club name here…"
+      oninput="updateClubName(this.value)"
+      maxlength="60"
+    />
+    <button class="setup-toggle-btn" id="contactsToggle" onclick="toggleContacts()">Setup Contacts ▾</button>
+    <span class="customise-hint">Fill in once, then share this page with your members.</span>
+  </div>
+  <div class="setup-contacts-panel" id="setupContacts">
+    <div class="setup-contacts-grid">
+      <div class="setup-contact-col">
+        <div class="setup-col-label">Club Welfare Officer</div>
+        <input class="setup-input" id="cwoNameInput" type="text" placeholder="Name" oninput="updateContact('cwo-name', this.value)" />
+        <input class="setup-input" id="cwoMobileInput" type="tel" placeholder="Mobile" oninput="updateContact('cwo-mobile', this.value)" />
+        <input class="setup-input" id="cwoEmailInput" type="email" placeholder="Email" oninput="updateContact('cwo-email', this.value)" />
+      </div>
+      <div class="setup-contact-col">
+        <div class="setup-col-label">Club Secretary</div>
+        <input class="setup-input" id="secNameInput" type="text" placeholder="Name" oninput="updateContact('sec-name', this.value)" />
+        <input class="setup-input" id="secMobileInput" type="tel" placeholder="Mobile" oninput="updateContact('sec-mobile', this.value)" />
+        <input class="setup-input" id="secEmailInput" type="email" placeholder="Email (used for signed submissions)" oninput="updateContact('sec-email', this.value)" />
+      </div>
+      <div class="setup-contact-col">
+        <div class="setup-col-label">Chair</div>
+        <input class="setup-input" id="chairNameInput" type="text" placeholder="Name" oninput="updateContact('chair-name', this.value)" />
+        <input class="setup-input" id="chairMobileInput" type="tel" placeholder="Mobile" oninput="updateContact('chair-mobile', this.value)" />
+        <input class="setup-input" id="chairEmailInput" type="email" placeholder="Email" oninput="updateContact('chair-email', this.value)" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <button class="tab-btn active" onclick="switchTab('adult', this)">Parents / Carers / Guardians &amp; Spectators</button>
+  <button class="tab-btn" onclick="switchTab('older', this)">Junior Players — U12 to U16</button>
+  <button class="tab-btn" onclick="switchTab('younger', this)">Junior Players — U7 to U11</button>
+  <button class="tab-btn" onclick="switchTab('coaches', this)">Coaches &amp; Managers</button>
+</div>
+
+<div class="content">
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- PANEL 1 — ADULT                         -->
+  <!-- ════════════════════════════════════════ -->
+  <div id="panel-adult" class="panel active">
+
+    <div class="coc-head">
+      <div class="coc-badge">Code of Conduct</div>
+      <h1 class="coc-title">Parents, Carers &amp; Guardians / Spectators</h1>
+      <p class="coc-intro">Grassroots football exists for the players — children who show up every week to learn, compete, and enjoy the game. How adults behave on the sideline shapes that experience directly. This Code sets out what we expect from every parent, carer, guardian, and spectator at every game.</p>
+    </div>
+
+    <div class="club-slot">
+      <div class="club-crest">🏟️</div>
+      <div>
+        <div class="club-name-display club-name-label">Your Club Name FC</div>
+        <div class="club-name-sub">Please sign and return this form to your Club Welfare Officer</div>
+      </div>
+    </div>
+
+    <div class="section-label">My commitments as a parent, carer, guardian or spectator</div>
+
+    <div class="commitments">
+
+      <div class="commitment">
+        <div class="c-num">1</div>
+        <div class="c-body">
+          <div class="c-title">Cheer for the players — not against the opposition</div>
+          <div class="c-desc">Positive encouragement is always welcome. Negative comments directed at opposing players, their parents, carers, or guardians, or their coaches are not. Shout their name. Celebrate effort as much as goals.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">2</div>
+        <div class="c-body">
+          <div class="c-title">You are responsible for anyone you bring</div>
+          <div class="c-desc">If a family member, partner, or friend attends a match with you, their behaviour is your responsibility. This Code applies to them just as it applies to you. If someone you brought is asked to leave or causes an incident, you will be held accountable alongside them.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">3</div>
+        <div class="c-body">
+          <div class="c-title">Stay behind the touchline and within the designated spectator area</div>
+          <div class="c-desc">Where a designated spectators' area is marked, stay within it. Never enter the field of play. These boundaries protect players, officials, and the game — and they apply to every match, home and away.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">4</div>
+        <div class="c-body">
+          <div class="c-title">Respect the referee — full stop</div>
+          <div class="c-desc">Referees — including youth referees — make mistakes. So does every player on the pitch. Shouting at officials, disputing decisions, or using abusive language towards them is unacceptable. If you disagree with a decision, say nothing during the game and raise it through official channels afterwards.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">5</div>
+        <div class="c-body">
+          <div class="c-title">Know your triggers — and pause before you act on them</div>
+          <div class="c-desc">Watching your child miss a penalty or get substituted is emotionally hard. That reaction is human. But it is not a reason to shout, argue, or embarrass yourself or your child. Notice the feeling, take a breath, and choose your response.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">6</div>
+        <div class="c-body">
+          <div class="c-title">Leave coaching to the coach</div>
+          <div class="c-desc">Instructions shouted from the sideline — especially contradicting what the coach has said — confuse players and undermine the coaching relationship. Trust the coach. Your job on match day is to be a supportive presence, not a second manager.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">7</div>
+        <div class="c-body">
+          <div class="c-title">When players make mistakes, offer encouragement</div>
+          <div class="c-desc">Mistakes are part of learning. Whether it's your child or another team's player, a missed shot or a poor pass, the response that helps is "keep going" — not criticism. Children remember how they were made to feel far longer than the result.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">8</div>
+        <div class="c-body">
+          <div class="c-title">Zero tolerance on discrimination</div>
+          <div class="c-desc">Any conduct referencing a player's or official's ethnicity, race, nationality, religion, gender, sexual orientation, disability, or neurodivergence — whether as a comment, gesture, or chant — will be reported to the club and may be referred to the FA. Under FA Rule E21 this may result in police action.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">9</div>
+        <div class="c-body">
+          <div class="c-title">Raise concerns the right way</div>
+          <div class="c-desc">If you have concerns about player welfare, coaching decisions, or another spectator's behaviour, speak to the Club Welfare Officer — not to the individual involved during or immediately after a match. You are also responsible for making yourself familiar with the club's safeguarding practices.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">10</div>
+        <div class="c-body">
+          <div class="c-title">Recognise that every player experiences the game differently</div>
+          <div class="c-desc">Some players in your child's team may be neurodivergent — living with ADHD, autism, dyslexia, or another condition that affects how they process, communicate, and respond under pressure. In most cases you won't know, and you don't need to. What you do need to do is avoid assumptions about a player's attitude, effort, or reactions. A child who seems to struggle with instructions, reacts differently to setbacks, or finds the matchday environment overwhelming may be dealing with something invisible. Patience, inclusion, and a supportive sideline make a real difference.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">11</div>
+        <div class="c-body">
+          <div class="c-title">Remember what this is for</div>
+          <div class="c-desc">Only 15% of young people felt safe at their football match (Suffolk FA / Active Suffolk survey). Your behaviour is either part of that problem or part of the solution. The children are watching — including yours.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="info-block amber">
+      <div class="info-block-title">
+        ⚠️ Club accountability — what you may not know
+      </div>
+      <p>Under <strong>FA Rules E20 and E21</strong>, your club is held responsible for the conduct of its supporters at both home and away fixtures. Spectator misconduct is not just a personal matter — it counts against the entire club.</p>
+      <p>A team accumulating <strong>50 or more penalty points</strong> in a season triggers a club charge. Four or more incidents of violent conduct across any of the club's teams within 12 months results in a formal charge. Sanctions include <strong>mandatory fines, league points deductions, and removal of England Football Accreditation</strong>. In 2023–24, 20 teams had their affiliation removed or placed under an action plan.</p>
+    </div>
+
+    <div class="section-label">If I do not follow this Code, I understand I may be</div>
+
+    <div class="consequences">
+      <div class="cons-list">
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Issued with a verbal warning or asked to leave the match</span></div>
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Required to meet with the club committee, league, or County FA Welfare Officer</span></div>
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Obliged to undertake an FA education course</span></div>
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Requested not to attend future games, or suspended from the ground</span></div>
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Required to leave the club — along with any dependents — and/or issued a fine</span></div>
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Reported to the FA or County FA, with potential police involvement for serious offences</span></div>
+      </div>
+    </div>
+
+    <div class="contacts-block">
+      <div class="contacts-title">📞 Key Club Contacts</div>
+      <div class="contacts-grid">
+        <div class="contact-card">
+          <div class="contact-role">Club Welfare Officer</div>
+          <div class="contact-detail">
+            <span class="cf-label">Name:</span> <span class="cwo-name cf-val">—</span><br>
+            <span class="cf-label">Mobile:</span> <span class="cwo-mobile cf-val">—</span><br>
+            <span class="cf-label">Email:</span> <span class="cwo-email cf-val">—</span>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-role">Club Secretary</div>
+          <div class="contact-detail">
+            <span class="cf-label">Name:</span> <span class="sec-name cf-val">—</span><br>
+            <span class="cf-label">Mobile:</span> <span class="sec-mobile cf-val">—</span><br>
+            <span class="cf-label">Email:</span> <span class="sec-email cf-val">—</span>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-role">Chair</div>
+          <div class="contact-detail">
+            <span class="cf-label">Name:</span> <span class="chair-name cf-val">—</span><br>
+            <span class="cf-label">Mobile:</span> <span class="chair-mobile cf-val">—</span><br>
+            <span class="cf-label">Email:</span> <span class="chair-email cf-val">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pledge-block">
+      <div class="pledge-label">My Pledge</div>
+      <div class="pledge-quote">"I commit to supporting the players with respect and positivity, upholding this Code at every match I attend, and setting the standard I want my child to see."</div>
+      <div class="sig-row" id="sig-adult">
+        <div class="sig-field">
+          <label class="sig-label">Full Name</label>
+          <input type="text" class="sig-input sig-name-input" placeholder="Type your full name">
+        </div>
+        <div class="sig-field">
+          <label class="sig-label">Date</label>
+          <input type="date" class="sig-input sig-date-input">
+        </div>
+      </div>
+      <button class="submit-btn" onclick="submitSignature('adult', 'Parent / Carer / Guardian / Spectator')">
+        ✉️ Submit my signed copy
+      </button>
+      <p class="submit-note">This will open your email app with your details pre-filled. Send it to complete your submission. If no email address has been set up by the club, please speak to your team manager.</p>
+    </div>
+
+    <div class="doc-footer">
+      <div class="doc-footer-brand">Produced by <strong>FMHA</strong> — Football Mental Health Alliance</div>
+      <a class="doc-footer-url" href="https://vault.thefmha.com" target="_blank">vault.thefmha.com</a>
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- PANEL 2 — JUNIOR U12–U16                -->
+  <!-- ════════════════════════════════════════ -->
+
+  <div id="panel-older" class="panel">
+
+    <div class="coc-head">
+      <div class="coc-badge">Code of Conduct</div>
+      <h1 class="coc-title">Junior Players — U12 to U16</h1>
+      <p class="coc-intro">Football teaches you more than how to play. How you handle a bad decision, a missed chance, or a loss tells you — and everyone watching — who you are. This Code sets out what we expect from you on and off the pitch.</p>
+    </div>
+
+    <div class="club-slot">
+      <div class="club-crest">⚽</div>
+      <div>
+        <div class="club-name-display club-name-label">Your Club Name FC</div>
+        <div class="club-name-sub">Sign and return to your coach or Club Welfare Officer</div>
+      </div>
+    </div>
+
+    <div class="section-label">When playing football, I will</div>
+
+    <div class="commitments">
+
+      <div class="commitment">
+        <div class="c-num">1</div>
+        <div class="c-body">
+          <div class="c-title">Always play my best — for the benefit of the team</div>
+          <div class="c-desc">Not just when I feel like it. Effort is the one thing every player controls, regardless of ability, the scoreline, or how the game is going.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">2</div>
+        <div class="c-body">
+          <div class="c-title">Respect the referee, even when I disagree</div>
+          <div class="c-desc">Referees miss calls — just like I miss passes. Shouting at them, arguing, or showing dissent through gestures could get me booked and it makes me look worse than the decision did. Say nothing in the moment; talk to my coach afterwards.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">3</div>
+        <div class="c-body">
+          <div class="c-title">Understand that my coach makes decisions for the whole team</div>
+          <div class="c-desc">Substitutions, game time, and tactics are decisions my coach makes based on what's best for the team overall — not just me. I will trust that process, and if I'm unhappy, I will talk about it calmly after the game rather than on the pitch.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">4</div>
+        <div class="c-body">
+          <div class="c-title">Control my reactions — breathe before I act</div>
+          <div class="c-desc">When something goes wrong, my body fires up before my brain catches up. The gap between the trigger and my response is where I actually have a choice. Three deep breaths. That's enough time to decide not to do the thing I'll regret.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">5</div>
+        <div class="c-body">
+          <div class="c-title">Encourage my teammates — especially when it's hard</div>
+          <div class="c-desc">A teammate who just made a mistake already knows. Shouting at them or blaming them makes things worse. A good teammate says "don't worry, keep going" — that takes more character than celebrating when things go well.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">6</div>
+        <div class="c-body">
+          <div class="c-title">No abusive language — towards anyone</div>
+          <div class="c-desc">This includes opponents, referees, my own teammates, and anyone watching. Language that targets someone's background, appearance, or identity is not banter — it's abuse. If I'm unsure, I ask: would I say it to their face in front of my coach?</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">7</div>
+        <div class="c-body">
+          <div class="c-title">What I post online represents my club</div>
+          <div class="c-desc">Social media is not separate from the game. Posting negative comments about opponents, referees, or teammates — or sharing videos or images intended to embarrass someone — is a breach of this Code. If I wouldn't say it in front of my coach, I shouldn't post it. Online conduct can result in the same consequences as conduct on the pitch.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">8</div>
+        <div class="c-body">
+          <div class="c-title">Win and lose with the same attitude</div>
+          <div class="c-desc">Shake hands at the end of every game — win or lose — with the other team, the officials, and the managers. The players who develop the furthest are the ones who stay level whatever the scoreline.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">9</div>
+        <div class="c-body">
+          <div class="c-title">Respect facilities home and away</div>
+          <div class="c-desc">Treat changing rooms, pitches, and club facilities with respect wherever I play. How I treat the environment tells people something about my character.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">10</div>
+        <div class="c-body">
+          <div class="c-title">Speak to someone if something's not right</div>
+          <div class="c-desc">If something is bothering me — on the pitch, in the changing room, or online — I will tell my coach or Club Welfare Officer. Staying silent when something isn't right doesn't make me tough. Speaking up takes more confidence than saying nothing.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="info-block green">
+      <div class="info-block-title">🛡️ Safeguarding</div>
+      <p>Every player at this club has the right to feel safe. If you are concerned about your own welfare or the welfare of another player, speak to the Club Welfare Officer — their details are available from the club secretary. You can also find guidance at <strong>EnglandFootball.com</strong> or contact the FMHA via <strong>thefmha.com</strong>.</p>
+    </div>
+
+    <div class="section-label">If I do not follow this Code, I understand I may be</div>
+
+    <div class="consequences">
+      <div class="cons-list">
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Asked to apologise to whoever I have upset</span></div>
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Given a formal warning by my coach or club</span></div>
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Dropped, substituted, or suspended from training</span></div>
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Required to meet with the Club Welfare Officer or club committee</span></div>
+      </div>
+    </div>
+
+    <div class="contacts-block">
+      <div class="contacts-title">📞 Key Club Contacts</div>
+      <div class="contacts-grid">
+        <div class="contact-card">
+          <div class="contact-role">Club Welfare Officer</div>
+          <div class="contact-detail">
+            <span class="cf-label">Name:</span> <span class="cwo-name cf-val">—</span><br>
+            <span class="cf-label">Mobile:</span> <span class="cwo-mobile cf-val">—</span><br>
+            <span class="cf-label">Email:</span> <span class="cwo-email cf-val">—</span>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-role">Club Secretary</div>
+          <div class="contact-detail">
+            <span class="cf-label">Name:</span> <span class="sec-name cf-val">—</span><br>
+            <span class="cf-label">Mobile:</span> <span class="sec-mobile cf-val">—</span><br>
+            <span class="cf-label">Email:</span> <span class="sec-email cf-val">—</span>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-role">Chair</div>
+          <div class="contact-detail">
+            <span class="cf-label">Name:</span> <span class="chair-name cf-val">—</span><br>
+            <span class="cf-label">Mobile:</span> <span class="chair-mobile cf-val">—</span><br>
+            <span class="cf-label">Email:</span> <span class="chair-email cf-val">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pledge-block">
+      <div class="pledge-label">My Pledge</div>
+      <div class="pledge-quote">"I commit to playing with respect, controlling my reactions, supporting my teammates, and representing my club with the standards I'd want others to hold me to."</div>
+      <div class="sig-row" id="sig-older">
+        <div class="sig-field">
+          <label class="sig-label">Full Name</label>
+          <input type="text" class="sig-input sig-name-input" placeholder="Type your full name">
+        </div>
+        <div class="sig-field">
+          <label class="sig-label">Date</label>
+          <input type="date" class="sig-input sig-date-input">
+        </div>
+      </div>
+      <button class="submit-btn" onclick="submitSignature('older', 'Player (U12–U16)')">
+        ✉️ Submit my signed copy
+      </button>
+      <p class="submit-note">This will open your email app with your details pre-filled. Send it to complete your submission.</p>
+    </div>
+
+    <div class="doc-footer">
+      <div class="doc-footer-brand">Produced by <strong>FMHA</strong> — Football Mental Health Alliance</div>
+      <a class="doc-footer-url" href="https://vault.thefmha.com" target="_blank">vault.thefmha.com</a>
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- PANEL 3 — JUNIOR U7–U11                 -->
+  <!-- ════════════════════════════════════════ -->
+
+  <div id="panel-younger" class="panel">
+
+    <div class="coc-head">
+      <div class="coc-badge">Code of Conduct</div>
+      <h1 class="coc-title">Junior Players — U7 to U11</h1>
+      <p class="coc-intro">Football is better when everyone plays with kindness, effort, and respect. Here are six things we ask every player to promise — not just because your coach said so, but because you actually mean it.</p>
+    </div>
+
+    <div class="club-slot">
+      <div class="club-crest">🌟</div>
+      <div>
+        <div class="club-name-display club-name-label">Your Club Name FC</div>
+        <div class="club-name-sub">Sign and bring back to your coach</div>
+      </div>
+    </div>
+
+    <div class="section-label">My six promises</div>
+
+    <div class="pledge-grid">
+
+      <div class="pledge-card">
+        <span class="pc-icon">🤝</span>
+        <div class="pc-statement">I will be <em>kind</em> to everyone</div>
+        <div class="pc-why">To my teammates, to the other team, and to the referee — even when things go wrong.</div>
+      </div>
+
+      <div class="pledge-card">
+        <span class="pc-icon">👂</span>
+        <div class="pc-statement">I will <em>listen</em> to my coach and the referee</div>
+        <div class="pc-why">They are here to help me get better and keep the game fair for everyone.</div>
+      </div>
+
+      <div class="pledge-card">
+        <span class="pc-icon">💪</span>
+        <div class="pc-statement">I will <em>try my best</em> — every time</div>
+        <div class="pc-why">Not just when I feel like it. Effort is the one thing I always control.</div>
+      </div>
+
+      <div class="pledge-card">
+        <span class="pc-icon">😤</span>
+        <div class="pc-statement">I will <em>stay calm</em> when things go wrong</div>
+        <div class="pc-why">Missing a shot or making a mistake doesn't make me a bad player. Getting angry about it doesn't help anyone.</div>
+      </div>
+
+      <div class="pledge-card">
+        <span class="pc-icon">🙌</span>
+        <div class="pc-statement">I will <em>encourage</em> my teammates</div>
+        <div class="pc-why">If someone makes a mistake, I'll say "don't worry" — not shout at them. Good teammates lift each other up.</div>
+      </div>
+
+      <div class="pledge-card">
+        <span class="pc-icon">🏆</span>
+        <div class="pc-statement">I will say <em>"well played"</em> to the other team</div>
+        <div class="pc-why">Whether we win or lose. That's what being a good sport actually means.</div>
+      </div>
+
+    </div>
+
+    <div class="info-block green">
+      <div class="info-block-title">🛡️ If something worries you</div>
+      <p>If anything makes you feel unsafe or unhappy at football — on the pitch, in the changing room, or anywhere else — tell your coach, a parent, carer, or guardian, or the Club Welfare Officer straight away. You can always talk to a trusted adult. You won't get in trouble for speaking up.</p>
+    </div>
+
+    <div class="section-label">If I don't keep my promises, I understand I may be</div>
+
+    <div class="consequences">
+      <div class="cons-list">
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Asked to say sorry to whoever I upset</span></div>
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Given a warning by my coach</span></div>
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Left out of training or a match</span></div>
+      </div>
+    </div>
+
+    <div class="contacts-block">
+      <div class="contacts-title">📞 Key Club Contacts</div>
+      <div class="contacts-grid">
+        <div class="contact-card">
+          <div class="contact-role">Club Welfare Officer</div>
+          <div class="contact-detail">
+            <span class="cf-label">Name:</span> <span class="cwo-name cf-val">—</span><br>
+            <span class="cf-label">Mobile:</span> <span class="cwo-mobile cf-val">—</span><br>
+            <span class="cf-label">Email:</span> <span class="cwo-email cf-val">—</span>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-role">Club Secretary</div>
+          <div class="contact-detail">
+            <span class="cf-label">Name:</span> <span class="sec-name cf-val">—</span><br>
+            <span class="cf-label">Mobile:</span> <span class="sec-mobile cf-val">—</span><br>
+            <span class="cf-label">Email:</span> <span class="sec-email cf-val">—</span>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-role">Chair</div>
+          <div class="contact-detail">
+            <span class="cf-label">Name:</span> <span class="chair-name cf-val">—</span><br>
+            <span class="cf-label">Mobile:</span> <span class="chair-mobile cf-val">—</span><br>
+            <span class="cf-label">Email:</span> <span class="chair-email cf-val">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="young-pledge">
+      <div class="yp-title">My <em>Promise</em></div>
+      <p class="yp-quote">"I promise to be kind, to try my best, to stay calm, and to be the teammate I'd want to have."</p>
+      <div class="yp-sig-row">
+        <div class="yp-sig-field">
+          <label class="sig-label">My Name</label>
+          <input type="text" class="sig-input sig-name-input" placeholder="Write your name here">
+        </div>
+        <div class="yp-sig-field">
+          <label class="sig-label">Date</label>
+          <input type="date" class="sig-input sig-date-input">
+        </div>
+      </div>
+      <button class="submit-btn" style="margin: 18px auto 0; display: flex;" onclick="submitSignature('younger', 'Player (U7–U11)')">
+        ✉️ Submit my promise
+      </button>
+      <p class="submit-note" style="text-align:center;">Ask a parent, carer, guardian, or coach to help you send this.</p>
+    </div>
+
+    <div class="doc-footer">
+      <div class="doc-footer-brand">Produced by <strong>FMHA</strong> — Football Mental Health Alliance</div>
+      <a class="doc-footer-url" href="https://vault.thefmha.com" target="_blank">vault.thefmha.com</a>
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- PANEL 4 — COACHES & MANAGERS            -->
+  <!-- ════════════════════════════════════════ -->
+
+  <div id="panel-coaches" class="panel">
+
+    <div class="coc-head">
+      <div class="coc-badge">Code of Conduct</div>
+      <h1 class="coc-title">Coaches &amp; Managers</h1>
+      <p class="coc-intro">Coaches and managers set the tone for everything. The standards you model — how you treat officials, how you respond to setbacks, how you talk about opponents — become the standards your players adopt. This Code sets out what the club and the FA expect from every person in a coaching or management role.</p>
+    </div>
+
+    <div class="club-slot">
+      <div class="club-crest">📋</div>
+      <div>
+        <div class="club-name-display club-name-label">Your Club Name FC</div>
+        <div class="club-name-sub">Please sign and return to the Club Welfare Officer</div>
+      </div>
+    </div>
+
+    <div class="section-label">As a coach or manager, I will</div>
+
+    <div class="commitments">
+
+      <div class="commitment">
+        <div class="c-num">1</div>
+        <div class="c-body">
+          <div class="c-title">Put player wellbeing above everything else</div>
+          <div class="c-desc">The safety and welfare of every player in my care comes before results, league position, or personal reputation. I will not place pressure on players — or allow others to — in ways that compromise their physical or mental health. Development of the whole person matters more than development of performance.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">2</div>
+        <div class="c-body">
+          <div class="c-title">Respect every player's dignity — without exception</div>
+          <div class="c-desc">I will treat every player fairly and with respect, regardless of ability, age, background, or personality. I will not favour, belittle, or exclude. I will not use foul, racist, discriminatory, or abusive language at any time — in training, on the touchline, or in the changing room.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">3</div>
+        <div class="c-body">
+          <div class="c-title">Recognise and support neurodivergent players</div>
+          <div class="c-desc">Some players may be neurodivergent — living with ADHD, autism, dyslexia, or another condition that shapes how they learn, communicate, and handle pressure. I will not mistake these differences for attitude problems or lack of effort. I will adapt my coaching where possible and ensure my sessions and environment are as inclusive as I can make them. If I need guidance, I will speak to the Club Welfare Officer or seek appropriate support.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">4</div>
+        <div class="c-body">
+          <div class="c-title">Make expectations clear — for both players and myself</div>
+          <div class="c-desc">From the start of the season I will make clear to players what I expect of them and what they can expect of me. Clear, consistent expectations reduce anxiety, build trust, and create the kind of environment where players can focus on playing.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">5</div>
+        <div class="c-body">
+          <div class="c-title">Respect match officials — always</div>
+          <div class="c-desc">I will not argue with, abuse, or intimidate referees or other officials. I will not encourage players or spectators to do so either. If I believe a decision was incorrect, I will raise it through official channels after the match — not on the touchline during it.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">6</div>
+        <div class="c-body">
+          <div class="c-title">Always promote fair play and the spirit of the game</div>
+          <div class="c-desc">I will never condone cheating, time-wasting, gamesmanship, or violations of the Laws of the Game. I will not permit or ignore the use of prohibited substances or techniques. I will make fair play a consistent, visible part of how my team trains and competes.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">7</div>
+        <div class="c-body">
+          <div class="c-title">Help players take responsibility for their own behaviour</div>
+          <div class="c-desc">My job is not just to coach football — it is to help players develop as people. I will guide them towards taking ownership of their conduct, their effort, and their reactions. Players who understand why behaviour matters will carry those standards beyond the pitch.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">8</div>
+        <div class="c-body">
+          <div class="c-title">Report discipline issues to the club immediately</div>
+          <div class="c-desc">Any incident involving misconduct — before, during, or after a match — will be reported to the club without delay. I will not attempt to address issues directly with the FA or league independently; all formal communications on behalf of the team go through the club secretary. This protects players, protects me, and protects the club.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">9</div>
+        <div class="c-body">
+          <div class="c-title">Ensure all registrations and safeguarding are up to date</div>
+          <div class="c-desc">I am responsible for ensuring that all team officials — including helpers and DBS applicants — are registered on the FA Club Portal and that all safeguarding qualifications are valid for the current season. I will not allow anyone to operate in an unregistered capacity.</div>
+        </div>
+      </div>
+
+      <div class="commitment">
+        <div class="c-num">10</div>
+        <div class="c-body">
+          <div class="c-title">Maintain high standards of conduct and appearance at all times</div>
+          <div class="c-desc">Players take their cue from the adults around them. My body language, my language, and how I carry myself in and around the game are all being observed and absorbed. I will hold myself to the same standards I ask of my players.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="info-block amber">
+      <div class="info-block-title">⚠️ Fines &amp; discipline</div>
+      <p>Fines issued by the FA to individual players must be paid promptly by the player. Fines issued by leagues for administrative matters are the responsibility of the manager of the relevant team and must be paid without delay. Any fines left unpaid will result in the player or official in question being suspended from playing and training until the matter is resolved.</p>
+    </div>
+
+    <div class="section-label">If I do not follow this Code, I understand I may be</div>
+
+    <div class="consequences">
+      <div class="cons-list">
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Given a formal warning by the club committee</span></div>
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Required to undertake an FA education or safeguarding course</span></div>
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Suspended from the touchline or from training duties</span></div>
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Removed from my role at the club</span></div>
+        <div class="cons-item"><span class="cons-arrow">→</span><span>Reported to the FA or County FA — with potential police involvement for serious offences</span></div>
+      </div>
+    </div>
+
+    <div class="contacts-block">
+      <div class="contacts-title">📞 Key Club Contacts</div>
+      <div class="contacts-grid">
+        <div class="contact-card">
+          <div class="contact-role">Club Welfare Officer</div>
+          <div class="contact-detail">
+            <span class="cf-label">Name:</span> <span class="cwo-name cf-val">—</span><br>
+            <span class="cf-label">Mobile:</span> <span class="cwo-mobile cf-val">—</span><br>
+            <span class="cf-label">Email:</span> <span class="cwo-email cf-val">—</span>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-role">Club Secretary</div>
+          <div class="contact-detail">
+            <span class="cf-label">Name:</span> <span class="sec-name cf-val">—</span><br>
+            <span class="cf-label">Mobile:</span> <span class="sec-mobile cf-val">—</span><br>
+            <span class="cf-label">Email:</span> <span class="sec-email cf-val">—</span>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-role">Chair</div>
+          <div class="contact-detail">
+            <span class="cf-label">Name:</span> <span class="chair-name cf-val">—</span><br>
+            <span class="cf-label">Mobile:</span> <span class="chair-mobile cf-val">—</span><br>
+            <span class="cf-label">Email:</span> <span class="chair-email cf-val">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pledge-block">
+      <div class="pledge-label">My Pledge</div>
+      <div class="pledge-quote">"I commit to leading with integrity, putting player welfare first, and modelling the standards of behaviour I want to see in every player I work with."</div>
+      <div class="sig-row" id="sig-coaches">
+        <div class="sig-field">
+          <label class="sig-label">Full Name</label>
+          <input type="text" class="sig-input sig-name-input" placeholder="Type your full name">
+        </div>
+        <div class="sig-field">
+          <label class="sig-label">Date</label>
+          <input type="date" class="sig-input sig-date-input">
+        </div>
+      </div>
+      <button class="submit-btn" onclick="submitSignature('coaches', 'Coach / Manager')">
+        ✉️ Submit my signed copy
+      </button>
+      <p class="submit-note">This will open your email app with your details pre-filled. Send it to complete your submission.</p>
+    </div>
+
+    <div class="doc-footer">
+      <div class="doc-footer-brand">Produced by <strong>FMHA</strong> — Football Mental Health Alliance</div>
+      <a class="doc-footer-url" href="https://vault.thefmha.com" target="_blank">vault.thefmha.com</a>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateClubName(val) {
+    const display = val.trim() ? val.trim() + (val.trim().toLowerCase().endsWith('fc') || val.trim().toLowerCase().endsWith('f.c.') ? '' : ' FC') : 'Your Club Name FC';
+    document.querySelectorAll('.club-name-label').forEach(el => { el.textContent = display; });
+  }
+
+  function toggleContacts() {
+    const panel = document.getElementById('setupContacts');
+    const btn = document.getElementById('contactsToggle');
+    const isOpen = panel.style.display === 'block';
+    panel.style.display = isOpen ? 'none' : 'block';
+    btn.textContent = isOpen ? 'Setup Contacts ▾' : 'Hide Contacts ▴';
+  }
+
+  function updateContact(fieldClass, value) {
+    const display = value.trim() || '—';
+    document.querySelectorAll('.' + fieldClass).forEach(el => { el.textContent = display; });
+  }
+
+  function submitSignature(panelId, roleName) {
+    const panel = document.getElementById('panel-' + panelId);
+    const nameInput = panel.querySelector('.sig-name-input');
+    const dateInput = panel.querySelector('.sig-date-input');
+
+    const name = nameInput.value.trim();
+    const dateVal = dateInput.value;
+
+    if (!name) {
+      nameInput.style.borderBottomColor = '#ff5657';
+      nameInput.focus();
+      return;
+    }
+    if (!dateVal) {
+      dateInput.style.borderBottomColor = '#ff5657';
+      dateInput.focus();
+      return;
+    }
+
+    nameInput.style.borderBottomColor = '';
+    dateInput.style.borderBottomColor = '';
+
+    const clubName = (document.getElementById('clubInput').value.trim() || 'Your Club FC');
+    const clubDisplay = clubName.toLowerCase().endsWith('fc') || clubName.toLowerCase().endsWith('f.c.') ? clubName : clubName + ' FC';
+    const secEmail = document.getElementById('secEmailInput').value.trim();
+
+    const formattedDate = new Date(dateVal).toLocaleDateString('en-GB', {
+      day: 'numeric', month: 'long', year: 'numeric'
+    });
+
+    const subject = encodeURIComponent(
+      'Code of Conduct — ' + roleName + ' — ' + name + ' — ' + clubDisplay
+    );
+    const body = encodeURIComponent(
+      'Code of Conduct Acknowledgement\n' +
+      '─────────────────────────────\n' +
+      'Club:  ' + clubDisplay + '\n' +
+      'Role:  ' + roleName + '\n' +
+      'Name:  ' + name + '\n' +
+      'Date:  ' + formattedDate + '\n\n' +
+      'I confirm that I have read and agree to abide by the ' + clubDisplay + ' Code of Conduct.'
+    );
+
+    const mailto = secEmail
+      ? 'mailto:' + secEmail + '?subject=' + subject + '&body=' + body
+      : 'mailto:?subject=' + subject + '&body=' + body;
+
+    window.location.href = mailto;
+  }
+</script>
+
+</body>
+</html>

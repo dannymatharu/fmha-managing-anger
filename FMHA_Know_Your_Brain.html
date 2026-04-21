@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Know Your Brain — FMHA</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --card: #141414;
+    --card2: #1e1e1e;
+    --border: #2a2a2a;
+    --text: #ffffff;
+    --muted: #888888;
+    --accent: #E8312A;
+    --accent-soft: rgba(232,49,42,0.12);
+    --accent-mid: rgba(232,49,42,0.28);
+
+    --chimp: #f39c12;
+    --chimp-soft: rgba(243,156,18,0.12);
+    --chimp-mid: rgba(243,156,18,0.28);
+
+    --human: #3498db;
+    --human-soft: rgba(52,152,219,0.12);
+    --human-mid: rgba(52,152,219,0.28);
+
+    --green: #27ae60;
+    --green-soft: rgba(39,174,96,0.12);
+    --green-mid: rgba(39,174,96,0.28);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 34px; height: 34px; background: var(--accent); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900; color: white;
+  }
+  .brand-name { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+  .brand-sub { font-size: 10px; color: var(--muted); }
+
+  .header-pill {
+    background: var(--chimp-soft); border: 1px solid var(--chimp-mid);
+    color: var(--chimp); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 20px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 24px 28px;
+  }
+
+  .hero-inner { max-width: 680px; margin: 0 auto; }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--accent-soft); border: 1px solid var(--accent-mid);
+    color: var(--accent); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 4px; margin-bottom: 14px;
+  }
+
+  .hero h1 {
+    font-size: clamp(26px, 5vw, 40px);
+    font-weight: 800; letter-spacing: -0.5px; line-height: 1.15; margin-bottom: 10px;
+  }
+
+  .hero h1 .chimp-word { color: var(--chimp); }
+  .hero h1 .human-word { color: var(--human); }
+
+  .hero p { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 540px; }
+
+  /* ── MODE TOGGLE ── */
+  .mode-toggle-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 24px 24px 0;
+  }
+
+  .mode-toggle-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .mode-toggle {
+    display: flex;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 5px;
+    gap: 4px;
+  }
+
+  .mode-btn {
+    flex: 1;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--muted);
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    letter-spacing: -0.1px;
+  }
+
+  .mode-btn:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+
+  .mode-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(232,49,42,0.35);
+  }
+
+  /* ── MAIN ── */
+  .main { max-width: 680px; margin: 0 auto; padding: 24px 24px 80px; }
+
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+  }
+
+  /* ── BRAIN SPLIT ── */
+  .brain-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+
+  @media (max-width: 480px) {
+    .brain-split { grid-template-columns: 1fr; }
+  }
+
+  .brain-card {
+    border-radius: 12px;
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .chimp-card { background: var(--chimp-soft); border: 1px solid var(--chimp-mid); }
+  .human-card { background: var(--human-soft); border: 1px solid var(--human-mid); }
+
+  .brain-icon { font-size: 32px; line-height: 1; }
+
+  .brain-card-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  }
+
+  .chimp-card .brain-card-label { color: var(--chimp); }
+  .human-card .brain-card-label { color: var(--human); }
+
+  .brain-card-name { font-size: 20px; font-weight: 800; line-height: 1.2; }
+
+  .chimp-card .brain-card-name { color: var(--chimp); }
+  .human-card .brain-card-name { color: var(--human); }
+
+  .brain-card-desc { font-size: 13px; color: #bbb; line-height: 1.6; }
+
+  .brain-traits { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+
+  .brain-trait {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 12px; color: #aaa; line-height: 1.4;
+  }
+
+  .trait-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .chimp-card .trait-dot { background: var(--chimp); }
+  .human-card .trait-dot { background: var(--human); }
+
+  /* ── SCENARIO ENGINE ── */
+  .scenario-engine { margin-bottom: 40px; }
+
+  .scenario-intro {
+    font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 20px;
+  }
+
+  .scenario-card {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .scenario-situation { padding: 20px 20px 0; }
+
+  .scenario-number {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px;
+  }
+
+  .scenario-text {
+    font-size: 16px; font-weight: 700; line-height: 1.4; color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .scenario-emoji { font-size: 28px; margin-bottom: 8px; display: block; }
+
+  /* Choices */
+  .choices { padding: 0 20px 20px; display: flex; flex-direction: column; gap: 8px; }
+
+  .choice-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 13px;
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    line-height: 1.4;
+    transition: all 0.2s;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .choice-btn:hover { border-color: #3a3a3a; background: rgba(255,255,255,0.03); }
+  .choice-btn.selected-chimp { background: var(--chimp-soft) !important; border-color: var(--chimp-mid) !important; }
+  .choice-btn.selected-human { background: var(--human-soft) !important; border-color: var(--human-mid) !important; }
+  .choice-btn.selected-good  { background: var(--green-soft) !important; border-color: var(--green-mid) !important; }
+  .choice-btn.disabled { pointer-events: none; opacity: 0.5; }
+
+  .choice-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .choice-text { flex: 1; }
+
+  /* Feedback panel */
+  .feedback-panel {
+    margin: 0 20px 20px;
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: none;
+    animation: fadeUp 0.3s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .feedback-panel.chimp-fb { background: var(--chimp-soft); border: 1px solid var(--chimp-mid); }
+  .feedback-panel.human-fb { background: var(--human-soft); border: 1px solid var(--human-mid); }
+  .feedback-panel.good-fb  { background: var(--green-soft); border: 1px solid var(--green-mid); }
+
+  .feedback-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px;
+  }
+
+  .chimp-fb .feedback-label { color: var(--chimp); }
+  .human-fb .feedback-label { color: var(--human); }
+  .good-fb  .feedback-label { color: var(--green); }
+
+  .feedback-text { font-size: 13px; color: #ccc; line-height: 1.65; }
+
+  .reset-btn {
+    display: none;
+    margin: 4px 0 0;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .reset-btn:hover { color: var(--text); }
+
+  /* ── BREATHING TOOL ── */
+  .breathing-section { margin-bottom: 36px; }
+
+  .breathing-card {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 22px;
+    text-align: center;
+  }
+
+  .breathing-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .breathing-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+
+  .breath-circle-wrap { display: flex; justify-content: center; margin-bottom: 20px; }
+
+  .breath-circle {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: var(--human-soft);
+    border: 2px solid var(--human-mid);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    transition: transform 1.5s ease, background 1.5s ease, border-color 1.5s ease;
+  }
+
+  .breath-circle.inhale { transform: scale(1.22); background: rgba(52,152,219,0.22); border-color: rgba(52,152,219,0.5); }
+  .breath-circle.hold   { transform: scale(1.22); background: rgba(52,152,219,0.22); border-color: rgba(52,152,219,0.5); }
+  .breath-circle.exhale { transform: scale(1.0);  background: var(--human-soft); border-color: var(--human-mid); }
+
+  .breath-phase { font-size: 13px; font-weight: 700; color: var(--human); letter-spacing: 0.08em; text-transform: uppercase; }
+  .breath-count { font-size: 28px; font-weight: 800; color: var(--text); line-height: 1; }
+
+  .breath-controls { display: flex; gap: 10px; justify-content: center; }
+
+  .breath-btn {
+    background: var(--human-soft); border: 1px solid var(--human-mid);
+    color: var(--human); padding: 10px 22px; border-radius: 8px;
+    font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit;
+    transition: all 0.2s;
+  }
+  .breath-btn:hover { background: var(--human-mid); }
+  .breath-btn.stop { background: transparent; border-color: var(--border); color: var(--muted); }
+  .breath-btn.stop:hover { border-color: #555; color: var(--text); }
+
+  /* ── KEY MESSAGE ── */
+  .key-message {
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-mid);
+    border-radius: 12px;
+    padding: 22px 20px;
+    margin-bottom: 36px;
+    text-align: center;
+  }
+
+  .key-message-icon { font-size: 30px; margin-bottom: 10px; }
+  .key-message h3 { font-size: 17px; font-weight: 800; margin-bottom: 8px; color: var(--text); }
+  .key-message p { font-size: 13px; color: var(--muted); line-height: 1.7; max-width: 440px; margin: 0 auto; }
+
+  /* ── FOOTER ── */
+  .coc-footer {
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
+  }
+
+  .footer-brand { font-size: 12px; color: var(--muted); }
+  .footer-brand strong { color: var(--accent); }
+  .footer-url { font-size: 11px; color: var(--muted); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <div class="brand-mark">FM</div>
+    <div>
+      <div class="brand-name">FMHA</div>
+      <div class="brand-sub">Football Mental Health Alliance</div>
+    </div>
+  </div>
+  <span class="header-pill" id="modePill">Junior Players</span>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Know Your Brain</div>
+    <h1>Your <span class="chimp-word">Fast Brain</span> vs Your <span class="human-word">Thinking Brain</span></h1>
+    <p>When something goes wrong — on the pitch or on the touchline — one part of your brain fires before the other one wakes up. Understanding which one just took over is the first step to actually controlling what happens next.</p>
+  </div>
+</div>
+
+<!-- MODE TOGGLE -->
+<div class="mode-toggle-wrap">
+  <div class="mode-toggle-label">Who are you?</div>
+  <div class="mode-toggle">
+    <button class="mode-btn active" id="tab-players" onclick="switchMode('players')">🎽 Players</button>
+    <button class="mode-btn" id="tab-coaches" onclick="switchMode('coaches')">📋 Coaches</button>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- BRAIN EXPLAINER -->
+  <div class="section-label" style="margin-top: 20px;">Two parts of your brain — both useful, not always at the right time</div>
+
+  <div class="brain-split">
+    <div class="brain-card chimp-card">
+      <div class="brain-icon">⚡</div>
+      <div class="brain-card-label">The Fast Brain</div>
+      <div class="brain-card-name">Reacts first</div>
+      <div class="brain-card-desc">Fires instantly. It's there to protect you — but it doesn't stop to think. It's the part that reacts before the situation has even fully registered.</div>
+      <div class="brain-traits">
+        <div class="brain-trait"><div class="trait-dot"></div><span>Emotional — angry, scared, frustrated</span></div>
+        <div class="brain-trait"><div class="trait-dot"></div><span>Fast — reacts before you can think</span></div>
+        <div class="brain-trait"><div class="trait-dot"></div><span>Protective — but often overreacts</span></div>
+        <div class="brain-trait"><div class="trait-dot"></div><span>Useful in actual danger. Less useful in football.</span></div>
+      </div>
+    </div>
+    <div class="brain-card human-card">
+      <div class="brain-icon">🧠</div>
+      <div class="brain-card-label">The Thinking Brain</div>
+      <div class="brain-card-name">Figures it out</div>
+      <div class="brain-card-desc">Slower — but smarter. When it's in charge, you can make decisions, think about consequences, and actually choose your response instead of just reacting.</div>
+      <div class="brain-traits">
+        <div class="brain-trait"><div class="trait-dot"></div><span>Logical — thinks before acting</span></div>
+        <div class="brain-trait"><div class="trait-dot"></div><span>Calm — can handle setbacks</span></div>
+        <div class="brain-trait"><div class="trait-dot"></div><span>Problem-solving — what can I do next?</span></div>
+        <div class="brain-trait"><div class="trait-dot"></div><span>The one you want in charge in tough moments</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- PLAYER SCENARIOS                        -->
+  <!-- ══════════════════════════════════════ -->
+  <div id="player-scenarios">
+    <div class="scenario-engine">
+      <div class="section-label">Scenarios — what does your brain do?</div>
+      <p class="scenario-intro">For each situation below, pick the response. There's no trick — just think honestly about which one you'd actually do first.</p>
+
+      <!-- Scenario 1 -->
+      <div class="scenario-card" id="sc1">
+        <div class="scenario-situation">
+          <div class="scenario-number">Situation 1 of 4</div>
+          <span class="scenario-emoji">⚽</span>
+          <div class="scenario-text">You step up for the penalty. You've been thinking about this moment all game. You blast it — straight at the keeper. What does your brain do first?</div>
+        </div>
+        <div class="choices">
+          <button class="choice-btn" onclick="choose('sc1','chimp','A')" id="sc1-A">
+            <span class="choice-icon">😤</span>
+            <span class="choice-text">You slam the ground with your boot and storm back to the centre circle, head down, ignoring your teammates</span>
+          </button>
+          <button class="choice-btn" onclick="choose('sc1','human','B')" id="sc1-B">
+            <span class="choice-icon">💭</span>
+            <span class="choice-text">You take a breath, put your hands up to the team, and think about the next touch you'll have</span>
+          </button>
+          <button class="choice-btn" onclick="choose('sc1','chimp','C')" id="sc1-C">
+            <span class="choice-icon">😠</span>
+            <span class="choice-text">You start muttering about how the keeper moved early, and complain to your teammate about it</span>
+          </button>
+        </div>
+        <div class="feedback-panel chimp-fb" id="fb-sc1-chimp">
+          <div class="feedback-label">⚡ Fast Brain in charge</div>
+          <div class="feedback-text">That reaction makes complete sense — your Fast Brain fired the moment the ball hit the keeper. It's not weakness, it's biology. The skill is noticing it happening and giving your Thinking Brain a chance to catch up. Three seconds is enough. What's the next thing you can control?</div>
+          <button class="reset-btn" onclick="reset('sc1')">Try again</button>
+        </div>
+        <div class="feedback-panel human-fb" id="fb-sc1-human">
+          <div class="feedback-label">🧠 Thinking Brain in charge</div>
+          <div class="feedback-text">That's hard to do. Your Fast Brain was screaming — and you still chose differently. That's not just good sportsmanship, it's one of the most useful skills you'll develop as a player. Your teammates notice it. Your coach notices it. And you'll forget about the penalty much faster.</div>
+          <button class="reset-btn" onclick="reset('sc1')">Try again</button>
+        </div>
+      </div>
+
+      <!-- Scenario 2 -->
+      <div class="scenario-card" id="sc2">
+        <div class="scenario-situation">
+          <div class="scenario-number">Situation 2 of 4</div>
+          <span class="scenario-emoji">🟨</span>
+          <div class="scenario-text">The referee gives a free kick against you. You didn't even touch the other player — you know it. You actually know it. What does your brain do?</div>
+        </div>
+        <div class="choices">
+          <button class="choice-btn" onclick="choose('sc2','chimp','A')" id="sc2-A">
+            <span class="choice-icon">🗣️</span>
+            <span class="choice-text">You walk straight over to the referee and tell them exactly what you think about that decision</span>
+          </button>
+          <button class="choice-btn" onclick="choose('sc2','human','B')" id="sc2-B">
+            <span class="choice-icon">🤐</span>
+            <span class="choice-text">You say nothing, get into position, and focus on winning the ball back instead</span>
+          </button>
+          <button class="choice-btn" onclick="choose('sc2','chimp','C')" id="sc2-C">
+            <span class="choice-icon">🙄</span>
+            <span class="choice-text">You do a big exaggerated reaction — arms out, head back — so everyone can see how wrong it was</span>
+          </button>
+        </div>
+        <div class="feedback-panel chimp-fb" id="fb-sc2-chimp">
+          <div class="feedback-label">⚡ Fast Brain in charge</div>
+          <div class="feedback-text">Every referee makes wrong calls. So do you, so does everyone. The decision is never going to change because you argued about it. But you could get booked — which is a decision that definitely won't go in your favour. The only thing arguing costs is your own focus.</div>
+          <button class="reset-btn" onclick="reset('sc2')">Try again</button>
+        </div>
+        <div class="feedback-panel human-fb" id="fb-sc2-human">
+          <div class="feedback-label">🧠 Thinking Brain in charge</div>
+          <div class="feedback-text">That takes real discipline — especially when you're convinced you're right. But the game has already moved on. By staying focused instead of arguing, you stayed in it. That's the mental edge that makes the difference between good players and great ones.</div>
+          <button class="reset-btn" onclick="reset('sc2')">Try again</button>
+        </div>
+      </div>
+
+      <!-- Scenario 3 -->
+      <div class="scenario-card" id="sc3">
+        <div class="scenario-situation">
+          <div class="scenario-number">Situation 3 of 4</div>
+          <span class="scenario-emoji">😔</span>
+          <div class="scenario-text">Your teammate gives the ball away in the last minute. You're losing 2–1. It would have been 2–2. What do you do?</div>
+        </div>
+        <div class="choices">
+          <button class="choice-btn" onclick="choose('sc3','chimp','A')" id="sc3-A">
+            <span class="choice-icon">😤</span>
+            <span class="choice-text">You glare at them and shake your head — they need to know how badly they messed up</span>
+          </button>
+          <button class="choice-btn" onclick="choose('sc3','human','B')" id="sc3-B">
+            <span class="choice-icon">🤝</span>
+            <span class="choice-text">You run past them and say "don't worry, get back" — the game isn't over yet</span>
+          </button>
+          <button class="choice-btn" onclick="choose('sc3','chimp','C')" id="sc3-C">
+            <span class="choice-icon">🗣️</span>
+            <span class="choice-text">You shout at them — they need to hear it to learn from it</span>
+          </button>
+        </div>
+        <div class="feedback-panel chimp-fb" id="fb-sc3-chimp">
+          <div class="feedback-label">⚡ Fast Brain in charge</div>
+          <div class="feedback-text">Your teammate already knows what happened — they felt it the moment they lost the ball. Anger or a glare doesn't teach them anything. What it does is knock their confidence exactly when you need them most. The best teams keep each other up, not down, when it goes wrong.</div>
+          <button class="reset-btn" onclick="reset('sc3')">Try again</button>
+        </div>
+        <div class="feedback-panel human-fb" id="fb-sc3-human">
+          <div class="feedback-label">🧠 Thinking Brain in charge</div>
+          <div class="feedback-text">That's what being a great teammate actually looks like. Not just the clapping and celebrating — the "don't worry" when it goes wrong. That kind of response builds trust in a team. Players play better when they know a mistake won't destroy the changing room atmosphere.</div>
+          <button class="reset-btn" onclick="reset('sc3')">Try again</button>
+        </div>
+      </div>
+
+      <!-- Scenario 4 -->
+      <div class="scenario-card" id="sc4">
+        <div class="scenario-situation">
+          <div class="scenario-number">Situation 4 of 4</div>
+          <span class="scenario-emoji">😤</span>
+          <div class="scenario-text">An opposition player keeps fouling you. The referee keeps missing it. You've had enough. You can feel yourself getting angrier with every touch. What do you do?</div>
+        </div>
+        <div class="choices">
+          <button class="choice-btn" onclick="choose('sc4','chimp','A')" id="sc4-A">
+            <span class="choice-icon">💥</span>
+            <span class="choice-text">Next time they foul you, you give them a little nudge back — just so they know</span>
+          </button>
+          <button class="choice-btn" onclick="choose('sc4','good','B')" id="sc4-B">
+            <span class="choice-icon">🫁</span>
+            <span class="choice-text">Between touches, you take a slow breath, tell yourself to focus on the ball, and speak to your captain</span>
+          </button>
+          <button class="choice-btn" onclick="choose('sc4','chimp','C')" id="sc4-C">
+            <span class="choice-icon">🙋</span>
+            <span class="choice-text">You go over to the sideline and tell your parent loudly exactly what's been happening</span>
+          </button>
+        </div>
+        <div class="feedback-panel chimp-fb" id="fb-sc4-chimp">
+          <div class="feedback-label">⚡ Fast Brain in charge</div>
+          <div class="feedback-text">Your Fast Brain is absolutely right that it's unfair. But retaliating means the referee sees you — not them. You get the card. They get away with it. That's not a trade worth making. The moment you feel the anger building is exactly when your Thinking Brain needs to step in. Notice it. Name it. Breathe.</div>
+          <button class="reset-btn" onclick="reset('sc4')">Try again</button>
+        </div>
+        <div class="feedback-panel good-fb" id="fb-sc4-good">
+          <div class="feedback-label">✅ Smart play</div>
+          <div class="feedback-text">That's the full toolkit working — the breath, the focus cue, and using the right channel to raise a concern. You stayed in the game, kept your head, and didn't give the opposition the reaction they were trying to get out of you. That's what composure actually looks like.</div>
+          <button class="reset-btn" onclick="reset('sc4')">Try again</button>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /player-scenarios -->
+
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- COACH SCENARIOS                         -->
+  <!-- ══════════════════════════════════════ -->
+  <div id="coach-scenarios" style="display:none;">
+    <div class="scenario-engine">
+      <div class="section-label">Scenarios — what does your brain do?</div>
+      <p class="scenario-intro">For each situation below, pick the response. These aren't obvious — think about what you'd actually do, not what you should do.</p>
+
+      <!-- Coach Scenario 1: Matchday parent -->
+      <div class="scenario-card" id="cp1">
+        <div class="scenario-situation">
+          <div class="scenario-number">Situation 1 of 3</div>
+          <span class="scenario-emoji">📣</span>
+          <div class="scenario-text">It's matchday. A parent on your touchline has been calling out instructions that contradict yours all first half. You had a quiet word at half time. Ten minutes into the second half — they're doing it again. Fourteen other parents are watching.</div>
+        </div>
+        <div class="choices">
+          <button class="choice-btn" onclick="choose('cp1','chimp','A')" id="cp1-A">
+            <span class="choice-icon">📢</span>
+            <span class="choice-text">You call across the touchline: "I've already spoken to you about this." You need the other parents to see you've tried — and that you're still in control.</span>
+          </button>
+          <button class="choice-btn" onclick="choose('cp1','human','B')" id="cp1-B">
+            <span class="choice-icon">🤐</span>
+            <span class="choice-text">You say nothing for now, focus on the game, and speak to them privately after — firmly and clearly, no audience.</span>
+          </button>
+          <button class="choice-btn" onclick="choose('cp1','chimp','C')" id="cp1-C">
+            <span class="choice-icon">📋</span>
+            <span class="choice-text">You call your player over and re-give the instruction loudly — so it's obvious to everyone nearby that the parent had it wrong, without directly confronting them.</span>
+          </button>
+        </div>
+        <div class="feedback-panel chimp-fb" id="fb-cp1-chimp">
+          <div class="feedback-label">⚡ Fast Brain in charge</div>
+          <div class="feedback-text">That instinct to protect your authority in front of the group makes sense — you've already given them a chance. But calling it out publicly rarely lands the way you hope. Other parents witness a confrontation, not a resolution. The parent gets defensive, your players pick up on the tension, and you've now made it a public event. The private conversation after the game is harder to initiate — but it's the one that actually changes anything.</div>
+          <button class="reset-btn" onclick="reset('cp1')">Try again</button>
+        </div>
+        <div class="feedback-panel human-fb" id="fb-cp1-human">
+          <div class="feedback-label">🧠 Thinking Brain in charge</div>
+          <div class="feedback-text">That's genuinely difficult when you're feeling undermined in front of everyone. But the private conversation — especially when it's firm, not soft — is the one that sticks. You've kept the touchline calm for your players rather than escalating it, and you've given the parent no audience to perform for. That actually makes it easier to get the outcome you want.</div>
+          <button class="reset-btn" onclick="reset('cp1')">Try again</button>
+        </div>
+      </div>
+
+      <!-- Coach Scenario 2: Own child -->
+      <div class="scenario-card" id="cp2">
+        <div class="scenario-situation">
+          <div class="scenario-number">Situation 2 of 3</div>
+          <span class="scenario-emoji">👨‍👦</span>
+          <div class="scenario-text">You're coaching a team that includes your own child. They lose the ball in a dangerous position late in the game and it leads directly to a goal. In the post-match debrief you find yourself addressing them directly — going into more detail than you would with any other player. It feels like you're holding them to a higher standard.</div>
+        </div>
+        <div class="choices">
+          <button class="choice-btn" onclick="choose('cp2','chimp','A')" id="cp2-A">
+            <span class="choice-icon">🎯</span>
+            <span class="choice-text">You keep going. Treating them more leniently would be the real unfairness — if anything, they need to be held to the same standard as everyone else, or higher.</span>
+          </button>
+          <button class="choice-btn" onclick="choose('cp2','human','B')" id="cp2-B">
+            <span class="choice-icon">🧠</span>
+            <span class="choice-text">You notice what you're doing mid-sentence, reframe the point for the whole group, and move on without singling them out further.</span>
+          </button>
+          <button class="choice-btn" onclick="choose('cp2','chimp','C')" id="cp2-C">
+            <span class="choice-icon">🚗</span>
+            <span class="choice-text">You leave it for now and have the full conversation privately on the drive home — better for the group that way.</span>
+          </button>
+        </div>
+        <div class="feedback-panel chimp-fb" id="fb-cp2-chimp">
+          <div class="feedback-label">⚡ Fast Brain in charge</div>
+          <div class="feedback-text">The Fast Brain is good at framing itself as the reasonable option. Whether that's "I'm holding them to a high standard" or "I'll handle it privately later" — both of those responses treat your child differently from everyone else in that room. Your child knows it. So do their teammates. Catching that mid-sentence and redirecting to the whole group is the harder call, but it's the one that keeps you in your role as their coach rather than their parent.</div>
+          <button class="reset-btn" onclick="reset('cp2')">Try again</button>
+        </div>
+        <div class="feedback-panel human-fb" id="fb-cp2-human">
+          <div class="feedback-label">🧠 Thinking Brain in charge</div>
+          <div class="feedback-text">Catching it mid-sentence is hard — most coaches don't notice until afterwards, if at all. Redirecting to the group rather than continuing to address your child directly is the move that protects them without letting the mistake go unaddressed. The group hears the coaching point. Your child doesn't carry the weight of having been singled out. And you walk out of that session as their coach, not their parent.</div>
+          <button class="reset-btn" onclick="reset('cp2')">Try again</button>
+        </div>
+      </div>
+
+      <!-- Coach Scenario 3: Final whistle handshake -->
+      <div class="scenario-card" id="cp3">
+        <div class="scenario-situation">
+          <div class="scenario-number">Situation 3 of 3</div>
+          <span class="scenario-emoji">🤝</span>
+          <div class="scenario-text">It's been a rough game. The opposition played on the edge all match and got away with a lot. Their manager spent 90 minutes making comments from their touchline — never directly at you, but loud enough. Final whistle. They walk over grinning with their hand out.</div>
+        </div>
+        <div class="choices">
+          <button class="choice-btn" onclick="choose('cp3','human','A')" id="cp3-A">
+            <span class="choice-icon">🤝</span>
+            <span class="choice-text">You shake their hand, say "well played", and walk straight back to your players.</span>
+          </button>
+          <button class="choice-btn" onclick="choose('cp3','chimp','B')" id="cp3-B">
+            <span class="choice-icon">💬</span>
+            <span class="choice-text">You shake their hand and say something brief but pointed — not a row, just enough so they know you noticed. You've earned the right to say it.</span>
+          </button>
+          <button class="choice-btn" onclick="choose('cp3','chimp','C')" id="cp3-C">
+            <span class="choice-icon">👁️</span>
+            <span class="choice-text">You shake their hand and then spend several minutes visibly speaking with the referee — not hiding that you're doing it, so they can see you haven't let it go.</span>
+          </button>
+        </div>
+        <div class="feedback-panel chimp-fb" id="fb-cp3-chimp">
+          <div class="feedback-label">⚡ Fast Brain in charge</div>
+          <div class="feedback-text">The temptation to say something — measured, not aggressive — feels like the composed response. It's not silence, it's not a scene. But the grin is bait, and anything pointed you say turns them into the victim and you into the problem. Ninety minutes of composure, handed back in the last ten seconds. Your players take their cue from you at the final whistle. The manager who walked away cleanly is always in a stronger position than the one who felt the need to make a point.</div>
+          <button class="reset-btn" onclick="reset('cp3')">Try again</button>
+        </div>
+        <div class="feedback-panel human-fb" id="fb-cp3-human">
+          <div class="feedback-label">🧠 Thinking Brain in charge</div>
+          <div class="feedback-text">Walking away cleanly after a game like that is harder than it looks. But your players will read that moment. If you're composed at the final whistle it signals that the result matters more than the argument — and next time you face that team, you've given nothing away. Sometimes the strongest thing you can do is say two words and turn back to your own people.</div>
+          <button class="reset-btn" onclick="reset('cp3')">Try again</button>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /coach-scenarios -->
+
+
+  <!-- BREATHING TOOL (shared) -->
+  <div class="breathing-section">
+    <div class="section-label">The reset — box breathing</div>
+    <div class="breathing-card">
+      <div class="breathing-title">Give your Thinking Brain a chance to catch up</div>
+      <div class="breathing-subtitle">When your Fast Brain fires, it takes about 6 seconds for your Thinking Brain to come back online. This breathing exercise fills that gap. Practice it now so it's automatic when you need it.</div>
+      <div class="breath-circle-wrap">
+        <div class="breath-circle" id="breathCircle">
+          <div class="breath-phase" id="breathPhase">Ready</div>
+          <div class="breath-count" id="breathCount">4</div>
+        </div>
+      </div>
+      <div class="breath-controls">
+        <button class="breath-btn" id="breathStart" onclick="startBreathing()">Start</button>
+        <button class="breath-btn stop" id="breathStop" onclick="stopBreathing()" style="display:none;">Stop</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY MESSAGE -->
+  <div class="key-message">
+    <div class="key-message-icon">💡</div>
+    <h3>The gap is the skill</h3>
+    <p>Between what happens and how you respond, there's a gap. It might only be a second. But that gap is where you actually have a choice. The more you practice choosing, the bigger that gap gets.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="coc-footer">
+    <div class="footer-brand">Produced by <strong>FMHA</strong> — Football Mental Health Alliance</div>
+    <a class="footer-url" href="https://vault.thefmha.com" target="_blank">vault.thefmha.com</a>
+  </div>
+
+</div>
+
+<script>
+  // ── MODE TOGGLE ──
+  function switchMode(mode) {
+    const isCoaches = mode === 'coaches';
+    document.getElementById('player-scenarios').style.display = isCoaches ? 'none' : 'block';
+    document.getElementById('coach-scenarios').style.display  = isCoaches ? 'block' : 'none';
+    document.getElementById('tab-players').classList.toggle('active', !isCoaches);
+    document.getElementById('tab-coaches').classList.toggle('active', isCoaches);
+    const pill = document.getElementById('modePill');
+    pill.textContent = isCoaches ? 'Coaches' : 'Junior Players';
+    pill.classList.toggle('coaches-mode', isCoaches);
+  }
+
+  // ── SCENARIO LOGIC ──
+  function choose(scenarioId, type, option) {
+    const card = document.getElementById(scenarioId);
+    card.querySelectorAll('.choice-btn').forEach(b => b.classList.add('disabled'));
+
+    const selectedBtn = document.getElementById(scenarioId + '-' + option);
+    if (type === 'chimp') {
+      selectedBtn.classList.add('selected-chimp');
+      showFeedback(scenarioId, 'chimp');
+    } else if (type === 'human') {
+      selectedBtn.classList.add('selected-human');
+      showFeedback(scenarioId, 'human');
+    } else if (type === 'good') {
+      selectedBtn.classList.add('selected-good');
+      showFeedback(scenarioId, 'good');
+    }
+  }
+
+  function showFeedback(scenarioId, type) {
+    const panels = {
+      'chimp': document.getElementById('fb-' + scenarioId + '-chimp'),
+      'human': document.getElementById('fb-' + scenarioId + '-human'),
+      'good':  document.getElementById('fb-' + scenarioId + '-good'),
+    };
+    const panel = panels[type];
+    if (panel) {
+      panel.style.display = 'block';
+      panel.querySelector('.reset-btn').style.display = 'inline';
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function reset(scenarioId) {
+    const card = document.getElementById(scenarioId);
+    card.querySelectorAll('.choice-btn').forEach(b => {
+      b.classList.remove('disabled','selected-chimp','selected-human','selected-good');
+    });
+    ['chimp','human','good'].forEach(t => {
+      const p = document.getElementById('fb-' + scenarioId + '-' + t);
+      if (p) p.style.display = 'none';
+    });
+  }
+
+  // ── BREATHING TOOL ──
+  let breathInterval = null;
+  let breathPhase = 0;
+  let breathCounter = 4;
+
+  const phases = [
+    { name: 'Breathe in',  duration: 4, class: 'inhale' },
+    { name: 'Hold',        duration: 4, class: 'hold'   },
+    { name: 'Breathe out', duration: 4, class: 'exhale' },
+    { name: 'Hold',        duration: 4, class: 'hold'   },
+  ];
+
+  function startBreathing() {
+    document.getElementById('breathStart').style.display = 'none';
+    document.getElementById('breathStop').style.display = 'inline-block';
+    breathPhase = 0;
+    breathCounter = phases[0].duration;
+    runBreathPhase();
+    breathInterval = setInterval(tick, 1000);
+  }
+
+  function runBreathPhase() {
+    const p = phases[breathPhase];
+    document.getElementById('breathCircle').className = 'breath-circle ' + p.class;
+    document.getElementById('breathPhase').textContent = p.name;
+    document.getElementById('breathCount').textContent = breathCounter;
+  }
+
+  function tick() {
+    breathCounter--;
+    if (breathCounter <= 0) {
+      breathPhase = (breathPhase + 1) % phases.length;
+      breathCounter = phases[breathPhase].duration;
+    }
+    document.getElementById('breathCount').textContent = breathCounter;
+    runBreathPhase();
+  }
+
+  function stopBreathing() {
+    clearInterval(breathInterval);
+    breathInterval = null;
+    document.getElementById('breathStart').style.display = 'inline-block';
+    document.getElementById('breathStop').style.display = 'none';
+    document.getElementById('breathCircle').className = 'breath-circle';
+    document.getElementById('breathPhase').textContent = 'Ready';
+    document.getElementById('breathCount').textContent = '4';
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Chimp Paradox — FMHA</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg:           #0a0a0a;
+    --card:         #141414;
+    --card2:        #1e1e1e;
+    --border:       #2a2a2a;
+    --text:         #ffffff;
+    --muted:        #888888;
+    --accent:       #E8312A;
+    --accent-soft:  rgba(232,49,42,0.10);
+    --accent-mid:   rgba(232,49,42,0.28);
+
+    --chimp:        #f39c12;
+    --chimp-soft:   rgba(243,156,18,0.12);
+    --chimp-mid:    rgba(243,156,18,0.30);
+
+    --human:        #3498db;
+    --human-soft:   rgba(52,152,219,0.12);
+    --human-mid:    rgba(52,152,219,0.28);
+
+    --computer:     #27ae60;
+    --computer-soft:rgba(39,174,96,0.12);
+    --computer-mid: rgba(39,174,96,0.28);
+
+    --player:       #9b59b6;
+    --player-soft:  rgba(155,89,182,0.12);
+    --player-mid:   rgba(155,89,182,0.28);
+
+    --coach:        #1abc9c;
+    --coach-soft:   rgba(26,188,156,0.12);
+    --coach-mid:    rgba(26,188,156,0.28);
+
+    --parent:       #3498db;
+    --parent-soft:  rgba(52,152,219,0.12);
+    --parent-mid:   rgba(52,152,219,0.28);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 200;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 34px; height: 34px; background: var(--accent); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900; color: white; flex-shrink: 0;
+  }
+  .brand-name { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+  .brand-sub  { font-size: 10px; color: var(--muted); }
+  .pill {
+    background: var(--chimp-soft); border: 1px solid var(--chimp-mid);
+    color: var(--chimp); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--card); border-bottom: 1px solid var(--border);
+    padding: 32px 24px 0;
+  }
+  .hero-inner { max-width: 720px; margin: 0 auto; }
+  .hero-eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--chimp); margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-size: clamp(24px, 5vw, 36px); font-weight: 800;
+    letter-spacing: -0.5px; line-height: 1.15; margin-bottom: 10px;
+  }
+  .hero h1 span { color: var(--chimp); }
+  .hero p { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 540px; margin-bottom: 24px; }
+
+  /* ── TAB NAV ── */
+  .tab-nav {
+    display: flex; gap: 0; overflow-x: auto;
+    scrollbar-width: none; border-top: 1px solid var(--border);
+    margin: 0 -24px; padding: 0 24px;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 14px 18px;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
+    color: var(--muted); background: none; border: none; cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--text); border-bottom-color: var(--chimp); }
+
+  /* ── MAIN ── */
+  .main { max-width: 720px; margin: 0 auto; padding: 28px 24px 80px; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── INTRO: THREE BRAINS ── */
+  .brains-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px; margin-bottom: 28px;
+  }
+  .brain-card {
+    border-radius: 12px; overflow: hidden;
+    background: var(--card2); border: 1px solid var(--border);
+  }
+  .brain-card-hd {
+    padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+  }
+  .brain-emoji { font-size: 22px; flex-shrink: 0; }
+  .brain-title { font-size: 15px; font-weight: 800; color: white; line-height: 1.2; }
+  .brain-subtitle { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
+  .brain-card-body { padding: 12px 16px 16px; }
+  .brain-points { display: flex; flex-direction: column; gap: 6px; }
+  .brain-point {
+    font-size: 13px; color: #ccc; display: flex; gap: 8px;
+    align-items: flex-start; line-height: 1.5;
+  }
+  .brain-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+
+  .brain-card.chimp   .brain-card-hd { background: var(--chimp-soft); border-bottom: 1px solid var(--chimp-mid); }
+  .brain-card.chimp   .brain-title   { color: var(--chimp); }
+  .brain-card.chimp   .brain-subtitle{ color: var(--chimp); }
+  .brain-card.chimp   .brain-dot     { background: var(--chimp); }
+
+  .brain-card.human   .brain-card-hd { background: var(--human-soft); border-bottom: 1px solid var(--human-mid); }
+  .brain-card.human   .brain-title   { color: var(--human); }
+  .brain-card.human   .brain-subtitle{ color: var(--human); }
+  .brain-card.human   .brain-dot     { background: var(--human); }
+
+  .brain-card.computer .brain-card-hd { background: var(--computer-soft); border-bottom: 1px solid var(--computer-mid); }
+  .brain-card.computer .brain-title   { color: var(--computer); }
+  .brain-card.computer .brain-subtitle{ color: var(--computer); }
+  .brain-card.computer .brain-dot     { background: var(--computer); }
+
+  .intro-callout {
+    background: var(--chimp-soft); border: 1px solid var(--chimp-mid);
+    border-radius: 12px; padding: 18px 20px; font-size: 14px;
+    color: #ccc; line-height: 1.65;
+  }
+  .intro-callout strong { color: white; }
+
+  /* ── AUDIENCE SECTIONS ── */
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+  }
+
+  .signals-block {
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 20px; margin-bottom: 16px;
+  }
+  .signals-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .signal-list { display: flex; flex-direction: column; gap: 7px; }
+  .signal-item {
+    display: flex; gap: 10px; font-size: 13px; color: #ccc; line-height: 1.5;
+  }
+  .signal-dot {
+    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+  }
+
+  .strategies-grid {
+    display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;
+  }
+  .strategy-card {
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .strategy-check {
+    width: 24px; height: 24px; border-radius: 6px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; margin-top: 1px;
+  }
+  .strategy-title { font-size: 14px; font-weight: 700; color: white; margin-bottom: 3px; }
+  .strategy-desc  { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  .example-box {
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 8px;
+  }
+  .example-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+  }
+  .example-text { font-size: 13px; color: #ccc; line-height: 1.65; font-style: italic; }
+  .example-text strong { color: white; font-style: normal; }
+
+  /* Player tab colours */
+  .player-tab .signal-dot { background: var(--player); }
+  .player-tab .strategy-check { background: var(--player-soft); border: 1px solid var(--player-mid); color: var(--player); }
+  .player-tab .example-box { background: var(--player-soft); border: 1px solid var(--player-mid); }
+  .player-tab .example-label { color: var(--player); }
+
+  /* Coach tab colours */
+  .coach-tab .signal-dot { background: var(--coach); }
+  .coach-tab .strategy-check { background: var(--coach-soft); border: 1px solid var(--coach-mid); color: var(--coach); }
+  .coach-tab .example-box { background: var(--coach-soft); border: 1px solid var(--coach-mid); }
+  .coach-tab .example-label { color: var(--coach); }
+
+  /* Parent tab colours */
+  .parent-tab .signal-dot { background: var(--parent); }
+  .parent-tab .strategy-check { background: var(--parent-soft); border: 1px solid var(--parent-mid); color: var(--parent); }
+  .parent-tab .example-box { background: var(--parent-soft); border: 1px solid var(--parent-mid); }
+  .parent-tab .example-label { color: var(--parent); }
+
+  /* ── TAKEAWAYS ── */
+  .takeaways-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .takeaway-item {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .takeaway-num {
+    width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
+    background: var(--chimp-soft); border: 1px solid var(--chimp-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900; color: var(--chimp);
+  }
+  .takeaway-title { font-size: 14px; font-weight: 700; color: white; margin-bottom: 3px; }
+  .takeaway-desc  { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  .final-thought {
+    background: var(--chimp-soft); border: 1px solid var(--chimp-mid);
+    border-radius: 12px; padding: 22px 20px;
+  }
+  .final-thought-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--chimp); margin-bottom: 10px;
+  }
+  .final-thought p { font-size: 14px; color: #ccc; line-height: 1.7; }
+  .final-thought strong { color: white; }
+
+  /* ── FOOTER ── */
+  .coc-footer {
+    padding-top: 24px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px; margin-top: 20px;
+  }
+  .footer-brand { font-size: 12px; color: var(--muted); }
+  .footer-brand strong { color: var(--accent); }
+  .footer-credit { font-size: 11px; color: var(--muted); font-style: italic; }
+  .footer-url { font-size: 11px; color: var(--muted); text-decoration: none; }
+  .footer-url:hover { color: var(--text); }
+
+  @media (max-width: 480px) {
+    .brains-grid { grid-template-columns: 1fr; }
+    .tab-btn { padding: 12px 14px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <div class="brand-mark">FM</div>
+    <div>
+      <div class="brand-name">FMHA</div>
+      <div class="brand-sub">Football Mental Health Alliance</div>
+    </div>
+  </div>
+  <span class="pill">Brain Science</span>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Based on Dr. Steve Peters' model</div>
+    <h1>The <span>Chimp</span> Paradox</h1>
+    <p>A simple but powerful model for understanding and managing our emotions — helping players, coaches, and parents respond more effectively under pressure.</p>
+
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab('intro')">The Model</button>
+      <button class="tab-btn" onclick="switchTab('players')">For Players</button>
+      <button class="tab-btn" onclick="switchTab('coaches')">For Coaches</button>
+      <button class="tab-btn" onclick="switchTab('parents')">For Parents &amp; Spectators</button>
+      <button class="tab-btn" onclick="switchTab('takeaways')">Key Takeaways</button>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ════════════════════════ -->
+  <!-- TAB: THE MODEL          -->
+  <!-- ════════════════════════ -->
+  <div class="tab-panel active" id="tab-intro">
+
+    <div class="section-label" style="margin-bottom:16px;">Your brain operates using three parts</div>
+
+    <div class="brains-grid">
+
+      <div class="brain-card chimp">
+        <div class="brain-card-hd">
+          <div class="brain-emoji">🐒</div>
+          <div>
+            <div class="brain-title">The Chimp</div>
+            <div class="brain-subtitle">Emotional &amp; Instinctive</div>
+          </div>
+        </div>
+        <div class="brain-card-body">
+          <div class="brain-points">
+            <div class="brain-point"><div class="brain-dot"></div><span>Reacts impulsively with emotion and instinct</span></div>
+            <div class="brain-point"><div class="brain-dot"></div><span>Responsible for anger, frustration, and emotional outbursts</span></div>
+            <div class="brain-point"><div class="brain-dot"></div><span>Often acts before thinking — it fires 4× faster than rational thought</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="brain-card human">
+        <div class="brain-card-hd">
+          <div class="brain-emoji">🧠</div>
+          <div>
+            <div class="brain-title">The Human</div>
+            <div class="brain-subtitle">Logical &amp; Rational</div>
+          </div>
+        </div>
+        <div class="brain-card-body">
+          <div class="brain-points">
+            <div class="brain-point"><div class="brain-dot"></div><span>Thinks things through calmly and makes rational decisions</span></div>
+            <div class="brain-point"><div class="brain-dot"></div><span>Helps regulate emotions and make good choices</span></div>
+            <div class="brain-point"><div class="brain-dot"></div><span>Slower to engage — needs 5–10 seconds to take over from the Chimp</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="brain-card computer">
+        <div class="brain-card-hd">
+          <div class="brain-emoji">💻</div>
+          <div>
+            <div class="brain-title">The Computer</div>
+            <div class="brain-subtitle">Learned Responses &amp; Habits</div>
+          </div>
+        </div>
+        <div class="brain-card-body">
+          <div class="brain-points">
+            <div class="brain-point"><div class="brain-dot"></div><span>Stores past experiences, habits, and learned behaviours</span></div>
+            <div class="brain-point"><div class="brain-dot"></div><span>Can be programmed to respond automatically in helpful ways</span></div>
+            <div class="brain-point"><div class="brain-dot"></div><span>The goal: train it so the right response becomes automatic</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="intro-callout">
+      By understanding these three parts, we can <strong>recognise emotional responses, regulate them, and make better decisions</strong> on and off the pitch. The key insight: emotional reactions are natural — but you can manage them. You are not your Chimp.
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════ -->
+  <!-- TAB: PLAYERS            -->
+  <!-- ════════════════════════ -->
+  <div class="tab-panel player-tab" id="tab-players">
+
+    <div class="section-label">Recognising your Chimp in action</div>
+    <div class="signals-block" style="margin-bottom: 20px;">
+      <div class="signal-list">
+        <div class="signal-item"><div class="signal-dot"></div><span>Feeling angry after a bad referee decision</span></div>
+        <div class="signal-item"><div class="signal-dot"></div><span>Blaming teammates when things go wrong</span></div>
+        <div class="signal-item"><div class="signal-dot"></div><span>Reacting aggressively to a foul</span></div>
+      </div>
+    </div>
+
+    <div class="section-label">Strategies to stay in control</div>
+    <div class="strategies-grid">
+      <div class="strategy-card">
+        <div class="strategy-check">✓</div>
+        <div>
+          <div class="strategy-title">Pause and Breathe</div>
+          <div class="strategy-desc">Take a deep breath before reacting. The Human brain needs those few seconds to engage.</div>
+        </div>
+      </div>
+      <div class="strategy-card">
+        <div class="strategy-check">✓</div>
+        <div>
+          <div class="strategy-title">Use a Reset Phrase</div>
+          <div class="strategy-desc">Say something like <em>"Next play"</em> or <em>"Stay composed"</em> — a pre-set phrase interrupts the Chimp and redirects focus.</div>
+        </div>
+      </div>
+      <div class="strategy-card">
+        <div class="strategy-check">✓</div>
+        <div>
+          <div class="strategy-title">Walk Away</div>
+          <div class="strategy-desc">Step away for a moment if needed. Physical distance from the trigger breaks the feedback loop.</div>
+        </div>
+      </div>
+      <div class="strategy-card">
+        <div class="strategy-check">✓</div>
+        <div>
+          <div class="strategy-title">Channel Frustration Positively</div>
+          <div class="strategy-desc">Use the energy to improve your performance rather than argue. The Chimp's energy isn't bad — it's misdirected.</div>
+        </div>
+      </div>
+      <div class="strategy-card">
+        <div class="strategy-check">✓</div>
+        <div>
+          <div class="strategy-title">Train Your Computer</div>
+          <div class="strategy-desc">Practise emotional control in training to develop automatic habits. The more you practise the response, the more automatic it becomes.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Example
+      </div>
+      <div class="example-text">A referee makes a questionable call. Your Chimp wants to argue, but your Human reminds you that complaining won't change the decision. <strong>You refocus on the game and move forward.</strong></div>
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════ -->
+  <!-- TAB: COACHES            -->
+  <!-- ════════════════════════ -->
+  <div class="tab-panel coach-tab" id="tab-coaches">
+
+    <div class="section-label">Recognising your Chimp in action</div>
+    <div class="signals-block" style="margin-bottom: 20px;">
+      <div class="signal-list">
+        <div class="signal-item"><div class="signal-dot"></div><span>Feeling frustrated when players don't follow instructions</span></div>
+        <div class="signal-item"><div class="signal-dot"></div><span>Yelling at referees or opponents</span></div>
+        <div class="signal-item"><div class="signal-dot"></div><span>Showing visible anger when the team is losing</span></div>
+      </div>
+    </div>
+
+    <div class="section-label">Strategies to stay in control</div>
+    <div class="strategies-grid">
+      <div class="strategy-card">
+        <div class="strategy-check">✓</div>
+        <div>
+          <div class="strategy-title">Model Calmness</div>
+          <div class="strategy-desc">Players take cues directly from you. Staying composed helps them stay focused — your emotional state is contagious.</div>
+        </div>
+      </div>
+      <div class="strategy-card">
+        <div class="strategy-check">✓</div>
+        <div>
+          <div class="strategy-title">Redirect Emotional Energy</div>
+          <div class="strategy-desc">Instead of shouting, give constructive feedback. The same energy that fuels frustration can fuel better coaching.</div>
+        </div>
+      </div>
+      <div class="strategy-card">
+        <div class="strategy-check">✓</div>
+        <div>
+          <div class="strategy-title">Use Rational Thinking</div>
+          <div class="strategy-desc">Remind yourself of the bigger picture — player development over match results. Ask: <em>"What does this player need from me right now?"</em></div>
+        </div>
+      </div>
+      <div class="strategy-card">
+        <div class="strategy-check">✓</div>
+        <div>
+          <div class="strategy-title">Teach Players to Manage Their Chimps</div>
+          <div class="strategy-desc">Incorporate emotional regulation drills in training. Name the model. When players understand it, they can use it.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Example
+      </div>
+      <div class="example-text">A player reacts angrily after being substituted. Your Chimp wants to snap back, but your Human calmly <strong>explains the tactical reason and reassures the player</strong> — turning a flashpoint into a coaching moment.</div>
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════ -->
+  <!-- TAB: PARENTS            -->
+  <!-- ════════════════════════ -->
+  <div class="tab-panel parent-tab" id="tab-parents">
+
+    <div class="section-label">Recognising your Chimp in action</div>
+    <div class="signals-block" style="margin-bottom: 20px;">
+      <div class="signal-list">
+        <div class="signal-item"><div class="signal-dot"></div><span>Shouting at referees after a bad call</span></div>
+        <div class="signal-item"><div class="signal-dot"></div><span>Criticising your child loudly from the sideline</span></div>
+        <div class="signal-item"><div class="signal-dot"></div><span>Comparing your child's performance to others</span></div>
+      </div>
+    </div>
+
+    <div class="section-label">Strategies to stay in control</div>
+    <div class="strategies-grid">
+      <div class="strategy-card">
+        <div class="strategy-check">✓</div>
+        <div>
+          <div class="strategy-title">Focus on Encouragement</div>
+          <div class="strategy-desc">Cheer effort, not just results. Your child performs better when they feel supported, not evaluated.</div>
+        </div>
+      </div>
+      <div class="strategy-card">
+        <div class="strategy-check">✓</div>
+        <div>
+          <div class="strategy-title">Pause Before Reacting</div>
+          <div class="strategy-desc">Take a deep breath before speaking. The 5 seconds it takes to breathe is the gap between your Chimp and your Human.</div>
+        </div>
+      </div>
+      <div class="strategy-card">
+        <div class="strategy-check">✓</div>
+        <div>
+          <div class="strategy-title">Avoid Referee Arguments</div>
+          <div class="strategy-desc">Set an example of respect and sportsmanship. Your child is watching — and so is every other child on that touchline.</div>
+        </div>
+      </div>
+      <div class="strategy-card">
+        <div class="strategy-check">✓</div>
+        <div>
+          <div class="strategy-title">Reflect on Your Role</div>
+          <div class="strategy-desc">Ask yourself: <em>"Am I helping or making things worse?"</em> Honest self-assessment is the Human brain doing its job.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Example
+      </div>
+      <div class="example-text">Your child misses a penalty. Your Chimp wants to shout advice, but your Human remembers that mistakes are learning opportunities. You instead say, <strong>"Great effort! Keep going."</strong></div>
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════ -->
+  <!-- TAB: TAKEAWAYS          -->
+  <!-- ════════════════════════ -->
+  <div class="tab-panel" id="tab-takeaways">
+
+    <div class="section-label" style="margin-bottom:16px;">Five things to take away</div>
+
+    <div class="takeaways-list">
+      <div class="takeaway-item">
+        <div class="takeaway-num">1</div>
+        <div>
+          <div class="takeaway-title">You Are Not Your Chimp</div>
+          <div class="takeaway-desc">Emotional reactions are natural, but you can manage them. The Chimp is part of you — it's not all of you.</div>
+        </div>
+      </div>
+      <div class="takeaway-item">
+        <div class="takeaway-num">2</div>
+        <div>
+          <div class="takeaway-title">Recognise Your Triggers</div>
+          <div class="takeaway-desc">Understand when your Chimp is taking over. Awareness is the first step — you can't manage what you can't see.</div>
+        </div>
+      </div>
+      <div class="takeaway-item">
+        <div class="takeaway-num">3</div>
+        <div>
+          <div class="takeaway-title">Pause &amp; Engage the Human Brain</div>
+          <div class="takeaway-desc">Take a moment before reacting impulsively. Those 5–10 seconds are everything — they're the gap where the Human can intervene.</div>
+        </div>
+      </div>
+      <div class="takeaway-item">
+        <div class="takeaway-num">4</div>
+        <div>
+          <div class="takeaway-title">Train the Computer</div>
+          <div class="takeaway-desc">Develop automatic responses to emotional situations through deliberate practice. The right habits become the default response.</div>
+        </div>
+      </div>
+      <div class="takeaway-item">
+        <div class="takeaway-num">5</div>
+        <div>
+          <div class="takeaway-title">Football Is Emotional — and That's OK</div>
+          <div class="takeaway-desc">Emotional intelligence leads to better performance, better relationships, and more enjoyment. Managing the Chimp isn't about being less passionate — it's about being more effective.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="final-thought">
+      <div class="final-thought-label">Final thought</div>
+      <p>By managing our Chimps, we create a more positive and respectful football environment where <strong>players develop resilience, coaches lead with composure, and parents support without pressure.</strong></p>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="coc-footer">
+    <div class="footer-brand">Produced by <strong>FMHA</strong> — Football Mental Health Alliance</div>
+    <div class="footer-credit">Based on <em>The Chimp Paradox</em> by Dr. Steve Peters (2012)</div>
+    <a class="footer-url" href="https://vault.thefmha.com" target="_blank">vault.thefmha.com</a>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

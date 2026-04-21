@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Managing Anger &amp; Emotional Regulation — FMHA</title>
+<style>
+/* ── Reset ──────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --acc:    #E8001C;
+  --bg:     #1a1a2e;   /* dark navy — projector-safe */
+  --card:   #222242;
+  --card2:  #2b2b52;
+  --navy:   #2e2e5e;
+  --border: #3e3e6e;
+  --text:   #ffffff;
+  --muted:  #c0c8e0;   /* 11:1 contrast ratio on --bg */
+  --green:  #1D7D2E;
+  --amber:  #E8A000;
+  --blue:   #5B8DB8;
+  --teal:   #22AA88;
+  --pink:   #CC3399;
+}
+
+html, body {
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ── Deck ───────────────────────────────────────────────── */
+#deck { width: 100%; height: 100%; position: relative; }
+
+.slide {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: 44px 68px;
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1);
+  pointer-events: none;
+}
+
+.slide.prev  { opacity: 0; transform: translateX(-50px); }
+.slide.active { opacity: 1; transform: translateX(0); pointer-events: all; }
+
+.slide::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: var(--acc);
+}
+
+.inner { max-width: 980px; width: 100%; }
+
+/* ── Nav ────────────────────────────────────────────────── */
+#nav {
+  position: fixed; bottom: 22px; right: 26px;
+  display: flex; align-items: center; gap: 10px; z-index: 200;
+}
+#ctr { font-size: 12px; color: var(--muted); font-weight: 700; letter-spacing: 1px; }
+.nb {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--card2); border: 1px solid var(--border);
+  color: var(--muted); cursor: pointer; font-size: 15px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, color .2s; user-select: none;
+}
+.nb:hover { background: var(--acc); color: #fff; border-color: var(--acc); }
+#prog {
+  position: fixed; bottom: 0; left: 0; height: 3px;
+  background: var(--acc); transition: width .4s ease; z-index: 200;
+}
+#hint {
+  position: fixed; bottom: 26px; left: 28px;
+  font-size: 11px; color: #6060a0; letter-spacing: .5px;
+}
+
+/* ── Typography ─────────────────────────────────────────── */
+.lbl {
+  font-size: 13px; font-weight: 800; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--acc); margin-bottom: 12px;
+}
+h1 {
+  font-size: 60px; font-weight: 900; line-height: 1.06;
+  color: var(--text); letter-spacing: -.5px;
+}
+h2 {
+  font-size: 42px; font-weight: 900; line-height: 1.1;
+  color: var(--text); letter-spacing: -.3px;
+}
+.sub { font-size: 21px; color: var(--muted); line-height: 1.45; margin-top: 14px; }
+.acc { color: var(--acc); }
+
+/* ── Big stat ───────────────────────────────────────────── */
+.stat { font-size: 96px; font-weight: 900; color: var(--acc); line-height: 1; letter-spacing: -2px; }
+.stat-lbl { font-size: 20px; color: var(--muted); margin-top: 10px; line-height: 1.45; max-width: 580px; }
+
+/* ── Metric row ─────────────────────────────────────────── */
+.metrics {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 12px; margin-top: 22px;
+}
+.mbox {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px 12px; text-align: center;
+}
+.mval { font-size: 36px; font-weight: 900; color: var(--acc); line-height: 1; }
+.mdsc { font-size: 14px; color: var(--muted); margin-top: 7px; line-height: 1.4; }
+
+/* ── Banner ─────────────────────────────────────────────── */
+.banner {
+  background: var(--acc); border-radius: 8px;
+  padding: 12px 20px; margin-top: 16px;
+  font-size: 15px; font-weight: 700; color: white; text-align: center;
+}
+
+/* ── Cards ──────────────────────────────────────────────── */
+.cards { display: grid; gap: 12px; margin-top: 22px; }
+.c2 { grid-template-columns: 1fr 1fr; }
+.c3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.card {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 11px; padding: 20px 22px; position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; background: var(--acc);
+}
+.card .ctag { font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--acc); margin-bottom: 10px; }
+.card .ctit { font-size: 16px; font-weight: 800; color: white; margin-bottom: 8px; line-height: 1.25; }
+.card .cbod { font-size: 15px; color: var(--muted); line-height: 1.55; }
+
+/* ── Compare ────────────────────────────────────────────── */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 22px; }
+.col {
+  background: var(--card2); border-radius: 11px; padding: 22px;
+  border: 1px solid var(--border);
+}
+.col.red { border-color: var(--acc); }
+.col.blue { border-color: var(--blue); }
+.col .chd {
+  font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 5px; margin-bottom: 16px; display: inline-block;
+}
+.chd.r { background: var(--acc); color: white; }
+.chd.b { background: var(--blue); color: white; }
+.chd.n { background: var(--navy); color: white; border: 1px solid var(--border); }
+.col li {
+  list-style: none; font-size: 15px; color: var(--muted);
+  padding: 6px 0 6px 14px; border-bottom: 1px solid var(--border);
+  position: relative; line-height: 1.45;
+}
+.col li::before { content: '›'; position: absolute; left: 0; color: var(--acc); font-weight: 700; }
+
+/* ── Ladder ─────────────────────────────────────────────── */
+.ladder { display: flex; flex-direction: column; gap: 7px; margin-top: 18px; }
+.rung {
+  display: flex; align-items: center; gap: 12px;
+  padding: 9px 16px; border-radius: 7px;
+  background: var(--card); border: 1px solid var(--border);
+}
+.rn { width: 32px; height: 32px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; color: white; flex-shrink: 0; }
+.rl { font-size: 14px; font-weight: 800; color: white; width: 140px; flex-shrink: 0; }
+.rd { font-size: 14px; color: var(--muted); line-height: 1.35; }
+
+/* ── Technique grid ─────────────────────────────────────── */
+.techgrid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr; gap: 11px; margin-top: 20px;
+}
+.tc {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 18px;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.tnum { font-size: 26px; font-weight: 900; color: var(--acc); line-height: 1; min-width: 32px; }
+.ttit { font-size: 15px; font-weight: 800; color: white; margin-bottom: 3px; }
+.tdsc { font-size: 14px; color: var(--muted); line-height: 1.4; }
+
+/* ── Five types ─────────────────────────────────────────── */
+.types { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-top: 22px; }
+.typ { border-radius: 10px; overflow: hidden; background: var(--card2); border: 1px solid var(--border); }
+.typh { padding: 9px 6px; text-align: center; font-size: 20px; font-weight: 900; color: white; }
+.typt { padding: 9px 8px; font-size: 14px; font-weight: 800; color: white; text-align: center; line-height: 1.35; }
+.typd { padding: 7px 8px 10px; font-size: 13px; color: var(--muted); text-align: center; line-height: 1.45; background: var(--card); border-top: 1px solid var(--border); }
+
+/* ── Quote ──────────────────────────────────────────────── */
+.qblock {
+  background: var(--card2); border-left: 4px solid var(--acc);
+  border-radius: 0 11px 11px 0; padding: 22px 26px; margin-top: 20px;
+}
+.qmark { font-size: 56px; color: var(--acc); line-height: .75; font-family: Georgia, serif; margin-bottom: 6px; }
+.qtxt { font-size: 19px; color: white; font-style: italic; line-height: 1.55; }
+.qatt { font-size: 14px; color: var(--muted); margin-top: 10px; }
+
+/* ── Icon list ──────────────────────────────────────────── */
+.ilist { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.iitem {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 16px; background: var(--card);
+  border: 1px solid var(--border); border-radius: 9px;
+}
+.inum {
+  width: 30px; height: 30px; background: var(--acc); border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 900; color: white; flex-shrink: 0;
+}
+.itit { font-size: 15px; font-weight: 800; color: white; margin-bottom: 3px; }
+.idsc { font-size: 15px; color: var(--muted); line-height: 1.4; }
+
+/* ── Scripts ────────────────────────────────────────────── */
+.scripts { display: flex; flex-direction: column; gap: 0; margin-top: 16px; }
+.scr {
+  display: grid; grid-template-columns: 180px 1fr; gap: 14px;
+  padding: 12px 4px; border-bottom: 1px solid var(--border); align-items: center;
+}
+.ssit { font-size: 13px; font-weight: 800; color: var(--acc); text-transform: uppercase; letter-spacing: .5px; line-height: 1.3; }
+.ssay { font-size: 15px; color: white; font-style: italic; line-height: 1.5; }
+
+/* ── Actions ────────────────────────────────────────────── */
+.actions { display: flex; flex-direction: column; gap: 11px; margin-top: 20px; }
+.act {
+  display: flex; align-items: stretch; gap: 0;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden;
+}
+.anum {
+  width: 54px; background: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 900; color: var(--acc); flex-shrink: 0;
+}
+.abod { padding: 13px 16px; flex: 1; }
+.atit { font-size: 15px; font-weight: 800; color: white; margin-bottom: 3px; }
+.adsc { font-size: 15px; color: var(--muted); line-height: 1.4; }
+.atag {
+  padding: 13px 10px; background: var(--acc); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.5px; line-height: 1.3;
+  color: white; text-transform: uppercase; width: 70px;
+}
+
+/* ── Cover ──────────────────────────────────────────────── */
+.cover-badge {
+  display: inline-block; background: var(--acc); color: white;
+  font-size: 12px; font-weight: 800; letter-spacing: 3px;
+  text-transform: uppercase; padding: 5px 13px; border-radius: 4px; margin-top: 22px;
+}
+.cover-meta {
+  display: flex; gap: 22px; margin-top: 28px; flex-wrap: wrap;
+}
+.cmeta-item {
+  font-size: 14px; color: var(--muted); border-left: 2px solid var(--acc);
+  padding-left: 11px; line-height: 1.45;
+}
+
+/* ── Insight box ────────────────────────────────────────── */
+.insight {
+  background: var(--navy); border: 1px solid var(--border);
+  border-left: 4px solid var(--acc); border-radius: 10px;
+  padding: 20px 24px; margin-top: 22px; font-size: 17px;
+  color: var(--muted); line-height: 1.6;
+}
+.insight strong { color: white; }
+
+/* ── Two-col detail cards ───────────────────────────────── */
+.detail2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 22px; }
+.dcard {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 11px; padding: 22px; position: relative; overflow: hidden;
+}
+.dcard::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.dcard.red::before { background: var(--acc); }
+.dcard.navy::before { background: var(--blue); }
+.dnum { font-size: 36px; font-weight: 900; color: var(--acc); line-height: 1; margin-bottom: 6px; }
+.dtit { font-size: 18px; font-weight: 800; color: white; margin-bottom: 10px; line-height: 1.2; }
+.dwhy { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--acc); margin-bottom: 5px; }
+.dbod { font-size: 15px; color: var(--muted); line-height: 1.55; }
+
+/* ── Type profile cards ─────────────────────────────────── */
+.type-grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 20px; }
+.type-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+.type-single { margin-top: 20px; }
+.type-single .tcard-name { font-size: 18px; }
+.type-single .tdrive { font-size: 15px; }
+.type-single .tbullets li { font-size: 15px; }
+.type-single .tsec { font-size: 12px; }
+.type-single .tcard-body { padding: 18px 20px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.type-single .tcard-section { display: flex; flex-direction: column; gap: 6px; }
+.tcard { background: var(--card2); border: 1px solid var(--border); border-radius: 11px; overflow: hidden; }
+.tcard-hd { padding: 11px 16px; display: flex; align-items: center; gap: 10px; }
+.tcard-num { font-size: 22px; font-weight: 900; color: white; line-height: 1; min-width: 28px; }
+.tcard-name { font-size: 14px; font-weight: 800; color: white; line-height: 1.2; }
+.tcard-body { padding: 12px 14px; }
+.tsec { font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; margin-top: 10px; }
+.tsec:first-child { margin-top: 0; }
+.tdrive { font-size: 13px; color: var(--muted); font-style: italic; line-height: 1.45; }
+.tbullets { list-style: none; padding: 0; }
+.tbullets li { font-size: 13px; color: var(--muted); padding: 2px 0 2px 13px; position: relative; line-height: 1.4; }
+.tbullets li::before { content: '›'; position: absolute; left: 0; font-weight: 700; }
+
+/* De-escalation practice */
+.practice-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+.pbox { background: var(--card2); border: 1px solid var(--border); border-radius: 11px; padding: 18px; }
+.pbox-hd { font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 5px 11px; border-radius: 5px; display: inline-block; margin-bottom: 12px; }
+.pbox-hd.wrong { background: #7a1010; color: #ffaaaa; }
+.pbox-hd.right { background: #1a5a1a; color: #aaffaa; }
+.psay { font-size: 14px; font-style: italic; color: white; padding: 7px 11px; border-radius: 6px; margin-bottom: 7px; line-height: 1.45; }
+.psay.w { background: #3a1010; }
+.psay.r { background: #1a3a1a; }
+.pnote { font-size: 13px; color: var(--muted); line-height: 1.45; margin-top: 8px; }
+
+/* Post-incident */
+.reflect-list { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+.ritem { display: flex; align-items: flex-start; gap: 12px; padding: 11px 14px; background: var(--card2); border: 1px solid var(--border); border-radius: 9px; }
+.rnum { width: 28px; height: 28px; background: var(--navy); border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; color: var(--acc); flex-shrink: 0; }
+.rq { font-size: 15px; font-weight: 700; color: white; line-height: 1.35; }
+.rhint { font-size: 13px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+/* ── Resource cards ─────────────────────────────────────── */
+.resources { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 20px; }
+.res {
+  background: var(--card2); border-radius: 11px; padding: 20px;
+  border: 2px solid var(--border); overflow: hidden; position: relative;
+}
+.rhead {
+  font-size: 14px; font-weight: 800; color: white;
+  padding: 7px 12px; border-radius: 6px; margin-bottom: 14px; display: inline-block;
+}
+.rbod { font-size: 14px; color: var(--muted); line-height: 1.55; margin-bottom: 12px; }
+.rlink { font-size: 14px; font-weight: 700; font-style: italic; color: white; }
+
+/* ── Hub of Hope ────────────────────────────────────────── */
+.support-cats {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-top: 20px;
+}
+.scat {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 12px; text-align: center;
+}
+.scat-icon { font-size: 22px; margin-bottom: 8px; }
+.scat-lbl { font-size: 13px; font-weight: 800; color: white; line-height: 1.3; }
+.scat-dsc { font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.35; }
+
+/* ── Academy ────────────────────────────────────────────── */
+.because-list { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.because {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 18px; background: var(--card2); border: 1px solid var(--border);
+  border-left: 4px solid var(--acc); border-radius: 0 10px 10px 0;
+}
+.because-tag { font-size: 12px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: var(--acc); flex-shrink: 0; padding-top: 2px; width: 80px; }
+.because-txt { font-size: 16px; color: var(--muted); line-height: 1.5; }
+.because-txt strong { color: white; }
+
+/* ── Contact / Thank You ────────────────────────────────── */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 24px; }
+.cbox {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px 20px; text-align: center;
+}
+.cbox-icon { font-size: 40px; margin-bottom: 12px; line-height: 1.1; }
+.cbox-lbl { font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--acc); margin-bottom: 8px; }
+.cbox-val { font-size: 16px; font-weight: 700; color: white; line-height: 1.4; }
+</style>
+</head>
+<body>
+<div id="deck">
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 1 — COVER                                     -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide active">
+  <div class="inner">
+    <div class="lbl">Football Mental Health Alliance</div>
+    <h1>Managing Anger &amp;<br>Emotional Regulation<br>in Grassroots Football</h1>
+    <div class="cover-badge">Reference Deck</div>
+    <div class="cover-meta">
+      <div class="cmeta-item">2025–26 Season</div>
+      <div class="cmeta-item">For coaches, managers, parents/carers/guardians &amp; club officials</div>
+      <div class="cmeta-item">21 slides · Core framework</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 2 — SCALE OF THE PROBLEM                      -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">The Problem</div>
+    <div style="display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap">
+      <div>
+        <div class="stat">4,649</div>
+        <div class="stat-lbl">FA-reported incidents of touchline abuse in a single season</div>
+      </div>
+    </div>
+    <div class="metrics">
+      <div class="mbox"><div class="mval">97%</div><div class="mdsc">of referees report verbal abuse</div></div>
+      <div class="mbox"><div class="mval">57%</div><div class="mdsc">have considered quitting because of it</div></div>
+      <div class="mbox"><div class="mval">68%</div><div class="mdsc">of players say it affects their enjoyment</div></div>
+      <div class="mbox"><div class="mval">78%</div><div class="mdsc">of coaches say it undermines their authority</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 3 — THE COST                                   -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">Why It Matters</div>
+    <h2>What unchecked anger<br>costs the game</h2>
+    <div class="cards c3">
+      <div class="card">
+        <div class="ctag">Referees</div>
+        <div class="ctit">Referee Abuse</div>
+        <div class="cbod">Verbal abuse towards officials is endemic in grassroots football. It normalises aggression, affects the wellbeing of young referees, and drives officials out of the game.</div>
+      </div>
+      <div class="card">
+        <div class="ctag">Players</div>
+        <div class="ctit">Players Dropping Out</div>
+        <div class="cbod">Children cite sideline negativity as a top reason for leaving sport. Anxiety around matchdays recorded from age 9.</div>
+      </div>
+      <div class="card">
+        <div class="ctag">Clubs</div>
+        <div class="ctit">Clubs Losing Standing</div>
+        <div class="cbod">Repeated misconduct leads to FA fines, points deductions, and loss of Charter Standard — affecting funding and facilities.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 4 — THE CRITICAL INSIGHT: SPEED               -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">The Key Insight</div>
+    <div class="stat">5,000</div>
+    <div class="stat-lbl">emotional reactions per day — most before you've consciously thought about them</div>
+    <div class="insight">
+      The gap between trigger and response <strong>is where everything happens.</strong>
+      Most people believe their anger is caused by the event — the bad tackle, the referee's call.
+      It isn't. It's caused by the <strong>story they tell themselves in the milliseconds that follow.</strong>
+      That story is changeable. That is the whole point of this training.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 5 — YOUR CHIMP BRAIN                          -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">The Science</div>
+    <h2>Your Chimp Brain</h2>
+    <div class="sub" style="margin-top:6px;margin-bottom:0">Two systems. One very fast. One much more useful.</div>
+    <div class="compare">
+      <div class="col red">
+        <div class="chd r">THE CHIMP</div>
+        <div style="font-size:14px;color:var(--muted);font-weight:700;margin-bottom:8px">Limbic system / emotional brain</div>
+        <ul>
+          <li>Fires 4× faster than rational thought</li>
+          <li>Cannot tell physical danger from social embarrassment</li>
+          <li>Hijacks body — heart rate, voice, posture</li>
+          <li>Thinks in black and white</li>
+          <li>Once active, it's running the show</li>
+        </ul>
+      </div>
+      <div class="col blue">
+        <div class="chd b">THE HUMAN</div>
+        <div style="font-size:14px;color:var(--muted);font-weight:700;margin-bottom:8px">Prefrontal cortex / thinking brain</div>
+        <ul>
+          <li>Slower — takes 5–10 seconds to engage</li>
+          <li>Capable of perspective, reason, empathy</li>
+          <li>Can override the Chimp — if given the chance</li>
+          <li>Responds to deliberate pause and slow breathing</li>
+          <li>The goal: buy it those 5–10 seconds</li>
+        </ul>
+      </div>
+    </div>
+    <div style="font-size:13px;color:var(--muted);margin-top:12px;font-style:italic">Based on Prof. Steve Peters' Chimp Paradox model (2012)</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 6 — ESCALATION LADDER                         -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">The Model</div>
+    <h2>The Escalation Ladder</h2>
+    <div class="sub" style="margin-top:6px;margin-bottom:0">Five levels. It climbs fast — and the earlier you catch it, the easier it is to manage.</div>
+    <!-- Levels listed 5→1 so Level 5 sits at the top visually, Level 1 at the bottom — matching the ladder metaphor -->
+    <div class="ladder" style="margin-top:14px">
+      <div class="rung" style="border-color:#E8001C"><div class="rn" style="background:#E8001C">5</div><div class="rl" style="color:#ff9999;width:160px">PHYSICAL</div><div class="rd">Assault, throwing objects, uncontrollable rage</div></div>
+      <div class="rung" style="border-color:#C03030"><div class="rn" style="background:#C03030">4</div><div class="rl" style="color:#f87171;width:160px">THREATENING</div><div class="rd">Direct threats, squaring up, intimidation</div></div>
+      <div class="rung" style="border-color:#E8A000"><div class="rn" style="background:#E8A000">3</div><div class="rl" style="color:#fcd34d;width:160px">VERBAL</div><div class="rd">Shouting, swearing, personal insults, discriminatory language</div></div>
+      <div class="rung" style="border-color:#5B8DB8"><div class="rn" style="background:#5B8DB8">2</div><div class="rl" style="color:#93c5fd;width:160px">AGITATED</div><div class="rd">Muttering, pacing, exaggerated reactions, tense body</div></div>
+      <div class="rung" style="border-color:#1D7D2E"><div class="rn" style="background:#1D7D2E">1</div><div class="rl" style="color:#4ade80;width:160px">FRUSTRATED</div><div class="rd">Sighing, eye-rolling, quiet complaints to the person next to them</div></div>
+    </div>
+    <div style="margin-top:12px;background:var(--navy);border-radius:7px;padding:9px 16px;font-size:14px;font-weight:700;color:var(--muted);text-align:center;font-style:italic">
+      Intervention is most effective at levels 1–2. By level 4, physical risk is real.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 7 — ANGER VS OVERLOAD                         -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">Important Distinction</div>
+    <h2>When it's not anger —<br>it's <span class="acc">overload</span></h2>
+    <div class="compare">
+      <div class="col red">
+        <div class="chd r">ANGER</div>
+        <ul>
+          <li>Intentional — the person is choosing their behaviour</li>
+          <li>Escalates with attention or challenge</li>
+          <li>Calms when removed from the trigger</li>
+          <li>Linked to a specific perceived injustice</li>
+          <li>Responds to boundary-setting and consequence</li>
+        </ul>
+      </div>
+      <div class="col blue">
+        <div class="chd b">OVERLOAD / OVERWHELM</div>
+        <ul>
+          <li>Unintentional — the person has lost capacity to regulate</li>
+          <li>Escalates with instructions or demands</li>
+          <li>Needs a calm, low-stimulation space to recover</li>
+          <li>Often linked to sensory processing or anxiety (incl. neurodivergence)</li>
+          <li>Responds to patience, simplicity, and physical space</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:12px;font-size:14px;font-style:italic;color:var(--acc);font-weight:700;text-align:center">
+      If unsure which you're looking at — default to the Overload response. It is never harmful.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 8 — 6 TECHNIQUES OVERVIEW                     -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">The Toolkit</div>
+    <h2>6 Techniques to Calm the Chimp</h2>
+    <div class="techgrid">
+      <div class="tc"><div class="tnum">01</div><div><div class="ttit">Pause &amp; Breathe</div><div class="tdsc">The physiological interrupt</div></div></div>
+      <div class="tc"><div class="tnum">02</div><div><div class="ttit">Acknowledge the Emotion</div><div class="tdsc">Name it to tame it</div></div></div>
+      <div class="tc"><div class="tnum">03</div><div><div class="ttit">Trigger Question</div><div class="tdsc">A pre-set reset question</div></div></div>
+      <div class="tc"><div class="tnum">04</div><div><div class="ttit">Rest Phrase</div><div class="tdsc">A mental anchor word or image</div></div></div>
+      <div class="tc"><div class="tnum">05</div><div><div class="ttit">Step Outside</div><div class="tdsc">Physical removal from the trigger</div></div></div>
+      <div class="tc"><div class="tnum">06</div><div><div class="ttit">Create Distance</div><div class="tdsc">Emotionally detach from the outcome</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 9 — TECHNIQUES 01 & 02                        -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">Techniques 01 &amp; 02</div>
+    <h2>Pause, Breathe &amp; Name It</h2>
+    <div class="detail2">
+      <div class="dcard red">
+        <div class="dnum">01</div>
+        <div class="dtit">Pause &amp; Breathe</div>
+        <div class="dwhy">Why it works</div>
+        <div class="dbod">Slow diaphragmatic breathing activates the parasympathetic nervous system, counteracting the Chimp's adrenaline surge. A single 5-second exhale starts reducing heart rate and cortisol. You don't need to feel calm — you just need to breathe slowly.<br><br><strong style="color:white">5 seconds in · 5 seconds out · repeat ×3</strong></div>
+      </div>
+      <div class="dcard navy">
+        <div class="dnum">02</div>
+        <div class="dtit">Acknowledge the Emotion</div>
+        <div class="dwhy">Why it works</div>
+        <div class="dbod">Labelling an emotion ("I'm feeling angry right now") activates the prefrontal cortex and dampens the Chimp's response. This is not suppression — it's acknowledgement.<br><br>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
+            <div style="background:var(--navy);border-radius:6px;padding:8px 12px;font-size:14px;color:white;font-style:italic">"I'm frustrated right now."</div>
+            <div style="background:var(--navy);border-radius:6px;padding:8px 12px;font-size:14px;color:white;font-style:italic">"That's anger. Not danger."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="font-size:13px;color:var(--muted);margin-top:10px;font-style:italic">Lieberman et al., 2007 — "Putting Feelings into Words", Psychological Science</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 10 — TECHNIQUES 03 & 04                       -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">Techniques 03 &amp; 04</div>
+    <h2>Reset &amp; Anchor</h2>
+    <div class="detail2">
+      <div class="dcard red">
+        <div class="dnum">03</div>
+        <div class="dtit">Trigger Question</div>
+        <div class="dwhy">Why it works</div>
+        <div class="dbod">"Is what I'm about to do going to help or harm the young person in front of me?" Any pre-set question that redirects focus from the trigger to the purpose. Ask it before you speak. Every time.</div>
+      </div>
+      <div class="dcard navy">
+        <div class="dnum">04</div>
+        <div class="dtit">Rest Phrase</div>
+        <div class="dwhy">Why it works</div>
+        <div class="dbod">A single word or short phrase — your mental anchor. Interrupts rumination. Pre-choose it in calm moments.<br><br>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
+            <div style="background:var(--navy);border-radius:6px;padding:8px 12px;font-size:14px;color:white;font-style:italic">"Just coach."</div>
+            <div style="background:var(--navy);border-radius:6px;padding:8px 12px;font-size:14px;color:white;font-style:italic">"My kids."</div>
+            <div style="background:var(--navy);border-radius:6px;padding:8px 12px;font-size:14px;color:white;font-style:italic">"This moment."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 11 — TECHNIQUES 05 & 06                       -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">Techniques 05 &amp; 06</div>
+    <h2>Step Back &amp; Let Go</h2>
+    <div class="detail2">
+      <div class="dcard red">
+        <div class="dnum">05</div>
+        <div class="dtit">Step Outside</div>
+        <div class="dwhy">Why it works</div>
+        <div class="dbod">Physically leave — even 10 metres — when activation is high. Removes the sensory triggers feeding the Chimp. Breaks the feedback loop that crowd noise and visuals sustain.<br><br><strong style="color:white">Move first. Think second.</strong></div>
+      </div>
+      <div class="dcard navy">
+        <div class="dnum">06</div>
+        <div class="dtit">Create Distance</div>
+        <div class="dwhy">Why it works</div>
+        <div class="dbod">Emotionally detach from the result. Become the observer. Most touchline anger is outcome-linked — release investment in the result and you remove the Chimp's fuel.<br><br>
+          <div style="background:var(--navy);border-radius:6px;padding:8px 12px;font-size:14px;color:white;font-style:italic;margin-top:8px">"The result is not mine to control."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 12 — TYPE 1                                    -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">Know Who You're Dealing With — Type 1 of 5</div>
+    <h2>The Disinterested Parent/Carer/Guardian</h2>
+    <div class="type-single">
+      <div class="tcard" style="border-color:var(--blue)">
+        <div class="tcard-hd" style="background:var(--blue)">
+          <div class="tcard-num">1</div>
+          <div class="tcard-name">Disinterested Parent/Carer/Guardian</div>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--blue)">What drives them</div>
+            <div class="tdrive">Attendance feels obligatory. Not invested in football — they're counting down, checking their phone. Boredom turns into critical commentary when they've got nothing else to do.</div>
+          </div>
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--muted)">What it looks like</div>
+            <ul class="tbullets">
+              <li>Eye-rolling, sarcasm, side conversations</li>
+              <li>Sporadic outbursts — then goes back to their phone</li>
+              <li>Critical of decisions without real investment</li>
+            </ul>
+          </div>
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--blue)">How to respond</div>
+            <ul class="tbullets">
+              <li>Give them a role before they disengage: "Can you watch the left flank and give me a read at half-time?"</li>
+              <li>Purpose changes behaviour faster than any confrontation</li>
+              <li>Don't challenge — recruit</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 13 — TYPE 2                                    -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">Know Who You're Dealing With — Type 2 of 5</div>
+    <h2>The Injustice Seeker</h2>
+    <div class="type-single">
+      <div class="tcard" style="border-color:var(--amber)">
+        <div class="tcard-hd" style="background:var(--amber)">
+          <div class="tcard-num">2</div>
+          <div class="tcard-name">Injustice Seeker</div>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--amber)">What drives them</div>
+            <div class="tdrive">A deep need for fairness to be acknowledged — even when their reading of the situation is wrong. The call is secondary. What they need is to feel heard.</div>
+          </div>
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--muted)">What it looks like</div>
+            <ul class="tbullets">
+              <li>Fixates on one decision and repeats it</li>
+              <li>Gets louder when challenged or dismissed</li>
+              <li>Arguments with officials, coaches, even other parents/carers/guardians</li>
+            </ul>
+          </div>
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--amber)">How to respond</div>
+            <ul class="tbullets">
+              <li>Never argue the call — you won't win, and trying escalates them</li>
+              <li>"I know that felt wrong — let's not let it cost us"</li>
+              <li>Acknowledge the frustration without agreeing. Then redirect to what they can control.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 14 — TYPE 3                                    -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">Know Who You're Dealing With — Type 3 of 5</div>
+    <h2>The Status Protector</h2>
+    <div class="type-single">
+      <div class="tcard" style="border-color:var(--acc)">
+        <div class="tcard-hd" style="background:var(--acc)">
+          <div class="tcard-num">3</div>
+          <div class="tcard-name">Status Protector</div>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--acc)">What drives them</div>
+            <div class="tdrive">Their identity is entangled with their child's performance. A poor game is a public failure for them personally. The pitch has become a stage for their self-worth.</div>
+          </div>
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--muted)">What it looks like</div>
+            <ul class="tbullets">
+              <li>Directed criticism at their own child from the touchline</li>
+              <li>Comparing their child to others; undermining the coach</li>
+              <li>Performing outrage for other parents/carers/guardians watching</li>
+            </ul>
+          </div>
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--acc)">How to respond</div>
+            <ul class="tbullets">
+              <li>Remove the audience — move them away from the group first</li>
+              <li>"They're having a tough one — they need your voice, not the result"</li>
+              <li>Separate their identity from the child's performance, gently and privately</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 15 — TYPE 4                                    -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">Know Who You're Dealing With — Type 4 of 5</div>
+    <h2>The Contagion Carrier</h2>
+    <div class="type-single">
+      <div class="tcard" style="border-color:var(--pink)">
+        <div class="tcard-hd" style="background:var(--pink)">
+          <div class="tcard-num">4</div>
+          <div class="tcard-name">Contagion Carrier</div>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--pink)">What drives them</div>
+            <div class="tdrive">Social contagion — they're feeding off and amplifying the group's energy. Often not the initial trigger. They didn't start the fire but they're the ones keeping it burning.</div>
+          </div>
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--muted)">What it looks like</div>
+            <ul class="tbullets">
+              <li>Validates whoever is loudest with "exactly" and "that's right"</li>
+              <li>Escalation is social, not personal — they're performing for the group</li>
+              <li>Often visibly surprised when challenged directly</li>
+            </ul>
+          </div>
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--pink)">How to respond</div>
+            <ul class="tbullets">
+              <li>Physical separation is the most reliable tool — break the feedback loop</li>
+              <li>A quiet word away from the group often works; without an audience, the behaviour loses its fuel</li>
+              <li>"Come and stand with me for a bit" — calm and non-confrontational</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 16 — TYPE 5                                    -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">Know Who You're Dealing With — Type 5 of 5</div>
+    <h2>The Digital Chimp</h2>
+    <div class="type-single">
+      <div class="tcard" style="border-color:var(--teal)">
+        <div class="tcard-hd" style="background:var(--teal)">
+          <div class="tcard-num">5</div>
+          <div class="tcard-name">Digital Chimp</div>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--teal)">What drives them</div>
+            <div class="tdrive">Online disinhibition — keyboard distance removes social consequence. Behaviour crosses lines that would never happen face-to-face. The Chimp runs unchecked because there's no physical social feedback to stop it.</div>
+          </div>
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--muted)">What it looks like</div>
+            <ul class="tbullets">
+              <li>Post-match WhatsApp complaints that become pile-ons</li>
+              <li>Public social media criticism of players, referees, or club officials</li>
+              <li>Behaviour escalates as others join in online</li>
+            </ul>
+          </div>
+          <div class="tcard-section">
+            <div class="tsec" style="color:var(--teal)">How to respond</div>
+            <ul class="tbullets">
+              <li>Screenshot before you do anything else</li>
+              <li>Address privately, one-to-one, within 24 hours — never respond in the thread</li>
+              <li>If it involves threats or a child, escalate to your welfare officer and the FA</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:14px;background:var(--navy);border-radius:7px;padding:10px 16px;font-size:14px;color:var(--muted);text-align:center;font-style:italic">
+      Most people move between types depending on context. Know the pattern, not just the label.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 12 — THE CONTAGION EFFECT                     -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">The Multiplier</div>
+    <h2>The Contagion Effect</h2>
+    <div class="sub" style="margin-top:6px">One person can change the emotional temperature of an entire touchline.</div>
+
+    <div style="display:flex;gap:14px;margin-top:20px;align-items:stretch">
+      <!-- Visual: expanding circles -->
+      <div style="display:flex;align-items:flex-end;gap:10px;padding:20px 24px;background:var(--card2);border-radius:11px;border:1px solid var(--border);flex:1.2">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <div style="width:30px;height:30px;border-radius:50%;background:#E8001C;opacity:.9"></div>
+          <div style="font-size:12px;color:var(--muted);text-align:center">1 person</div>
+        </div>
+        <div style="font-size:16px;color:var(--muted);padding-bottom:18px">→</div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <div style="width:54px;height:54px;border-radius:50%;background:#C03030;opacity:.85"></div>
+          <div style="font-size:12px;color:var(--muted);text-align:center">3 people</div>
+        </div>
+        <div style="font-size:16px;color:var(--muted);padding-bottom:28px">→</div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <div style="width:84px;height:84px;border-radius:50%;background:#902020;opacity:.8"></div>
+          <div style="font-size:12px;color:var(--muted);text-align:center">Half<br>touchline</div>
+        </div>
+        <div style="font-size:16px;color:var(--muted);padding-bottom:46px">→</div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <div style="width:120px;height:120px;border-radius:50%;background:#601010;opacity:.75"></div>
+          <div style="font-size:12px;color:var(--muted);text-align:center">Everyone<br>+ fallout</div>
+        </div>
+      </div>
+      <!-- Key points -->
+      <div style="background:var(--card2);border:1px solid var(--acc);border-radius:11px;padding:20px;flex:.9;display:flex;flex-direction:column;gap:12px">
+        <div style="font-size:15px;color:var(--muted);line-height:1.5;border-bottom:1px solid var(--border);padding-bottom:10px">Mirror neurons mean emotions are <strong style="color:white">literally contagious</strong> — we feel what we see others feel.</div>
+        <div style="font-size:15px;color:var(--muted);line-height:1.5;border-bottom:1px solid var(--border);padding-bottom:10px">A calm, positive parent/carer/guardian standing near the angry one is <strong style="color:white">measurably effective</strong>.</div>
+        <div style="font-size:15px;color:var(--muted);line-height:1.5">Clubs with a designated positive-voice role see <strong style="color:white">40% fewer</strong> recorded incidents.</div>
+      </div>
+    </div>
+
+    <div class="qblock" style="padding:16px 22px;margin-top:14px">
+      <div class="qtxt" style="font-size:15px">"The most powerful intervention isn't what you say to the angry person — it's making sure the people around them aren't joining in."</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 13 — DE-ESCALATION PRINCIPLES                 -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">The Framework</div>
+    <h2>5 Principles of De-escalation</h2>
+    <div class="sub" style="margin-top:6px;margin-bottom:0">Whether you're managing yourself or someone else on the touchline.</div>
+    <div class="ilist">
+      <div class="iitem"><div class="inum">1</div><div><div class="itit">Regulate Yourself First</div><div class="idsc">You cannot de-escalate someone else while you are escalated. Check your own rung before you approach.</div></div></div>
+      <div class="iitem"><div class="inum">2</div><div><div class="itit">Acknowledge Before Redirecting</div><div class="idsc">People who feel dismissed escalate. People who feel heard calm down. Acknowledgement is not agreement.</div></div></div>
+      <div class="iitem"><div class="inum">3</div><div><div class="itit">Calibrate Your Voice &amp; Body</div><div class="idsc">Slow, low, and still. Speak 20% slower. Drop your pitch. Hands visible and low. Turn slightly sideways.</div></div></div>
+      <div class="iitem"><div class="inum">4</div><div><div class="itit">Use Distance, Not Authority</div><div class="idsc">Moving someone 20 metres away breaks the stimulus loop and removes the audience that sustains the behaviour.</div></div></div>
+      <div class="iitem"><div class="inum">5</div><div><div class="itit">Know When to Stop</div><div class="idsc">Past rung 4, continued engagement often escalates. Your job is not to win — it's to protect the environment.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 14 — DE-ESCALATION IN PRACTICE                -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">In Practice</div>
+    <h2>De-escalation In Practice</h2>
+    <div class="sub" style="margin-top:6px;margin-bottom:0">The principles are only useful if you know what they look like in the moment.</div>
+
+    <div class="practice-row">
+      <!-- Voice & Body Language (Principle 3) -->
+      <div style="background:var(--card2);border:1px solid var(--border);border-radius:11px;padding:18px">
+        <div style="font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--acc);margin-bottom:12px">Principle 3 — Voice &amp; Body</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div>
+            <div class="pbox-hd wrong">WRONG</div>
+            <ul class="tbullets" style="margin-top:8px">
+              <li style="font-size:13px;color:#ffaaaa">Matching their volume</li>
+              <li style="font-size:13px;color:#ffaaaa">Pointing or stepping toward them</li>
+              <li style="font-size:13px;color:#ffaaaa">Arms crossed, squared on</li>
+              <li style="font-size:13px;color:#ffaaaa">Same pace and pitch as normal</li>
+            </ul>
+          </div>
+          <div>
+            <div class="pbox-hd right">RIGHT</div>
+            <ul class="tbullets" style="margin-top:8px">
+              <li style="font-size:13px;color:#aaffaa">20% slower speech, lower pitch</li>
+              <li style="font-size:13px;color:#aaffaa">Palms visible, hands below the waist</li>
+              <li style="font-size:13px;color:#aaffaa">Turn 45° sideways — less confrontational</li>
+              <li style="font-size:13px;color:#aaffaa">Keep 2 metres minimum distance</li>
+            </ul>
+          </div>
+        </div>
+        <div style="margin-top:12px;font-size:13px;color:var(--muted);font-style:italic;border-top:1px solid var(--border);padding-top:10px">Your body language either escalates or de-escalates before you've said a single word.</div>
+      </div>
+
+      <!-- Acknowledge Before Redirect (Principle 2) -->
+      <div style="background:var(--card2);border:1px solid var(--border);border-radius:11px;padding:18px">
+        <div style="font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--acc);margin-bottom:12px">Principle 2 — Acknowledge First</div>
+        <div class="pbox-hd wrong" style="margin-bottom:8px">SAY THIS INSTEAD</div>
+        <div class="psay w">"Calm down."</div>
+        <div class="psay w">"You're overreacting."</div>
+        <div class="psay w">"The referee is just doing his job."</div>
+        <div class="pbox-hd right" style="margin-top:12px;margin-bottom:8px">SAY THIS</div>
+        <div class="psay r">"I can see you're really frustrated."</div>
+        <div class="psay r">"That call was hard to take."</div>
+        <div class="psay r">"I get it — that looked wrong from here. Let's stay focused on the team."</div>
+        <div style="margin-top:10px;font-size:13px;color:var(--muted);font-style:italic">Acknowledgement is not agreement. You're not conceding the point — you're lowering the temperature.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;background:var(--navy);border:1px solid var(--border);border-left:4px solid var(--acc);border-radius:0 10px 10px 0;padding:12px 18px;display:flex;align-items:center;gap:16px">
+      <div style="font-size:28px;font-weight:900;color:var(--acc);line-height:1;flex-shrink:0">5s</div>
+      <div style="font-size:15px;color:var(--muted);line-height:1.5"><strong style="color:white">The 5-second rule:</strong> Never respond to escalating behaviour within the first 5 seconds. Your physiological state won't let you respond well. Pause. Breathe once. Then approach.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 15 — POST-INCIDENT REFLECTION                 -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">After the Incident</div>
+    <h2>The Reflection &amp; Recovery Framework</h2>
+    <div class="sub" style="margin-top:6px;margin-bottom:0">Managing the moment is crisis management. Reflection is what changes culture.</div>
+
+    <div style="display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:18px">
+      <!-- Left: 5-question framework -->
+      <div>
+        <div style="font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--acc);margin-bottom:10px">The 24-hour review — ask these 5 questions</div>
+        <div class="reflect-list">
+          <div class="ritem">
+            <div class="rnum">1</div>
+            <div><div class="rq">What actually happened?</div><div class="rhint">Facts only — no story, no interpretation. Who, what, where.</div></div>
+          </div>
+          <div class="ritem">
+            <div class="rnum">2</div>
+            <div><div class="rq">What was my role in how it escalated or de-escalated?</div><div class="rhint">Honest self-assessment. Not blame — learning.</div></div>
+          </div>
+          <div class="ritem">
+            <div class="rnum">3</div>
+            <div><div class="rq">What did I do well?</div><div class="rhint">Anchor what worked so you can repeat it.</div></div>
+          </div>
+          <div class="ritem">
+            <div class="rnum">4</div>
+            <div><div class="rq">What would I do differently?</div><div class="rhint">One specific change for next time. Keep it concrete.</div></div>
+          </div>
+          <div class="ritem">
+            <div class="rnum">5</div>
+            <div><div class="rq">Does this need to be formally logged?</div><div class="rhint">See the reporting thresholds on the right.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: When to report + culture note -->
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="background:var(--card2);border:1px solid var(--acc);border-radius:11px;padding:16px">
+          <div style="font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--acc);margin-bottom:10px">Always report formally if:</div>
+          <ul class="tbullets">
+            <li style="font-size:14px;color:var(--muted)">Any physical contact occurred</li>
+            <li style="font-size:14px;color:var(--muted)">Direct threats were made to a person</li>
+            <li style="font-size:14px;color:var(--muted)">A child was present and distressed</li>
+            <li style="font-size:14px;color:var(--muted)">This is a repeated pattern from the same person</li>
+            <li style="font-size:14px;color:var(--muted)">A referee or official was targeted</li>
+          </ul>
+          <div style="margin-top:10px;font-size:13px;color:var(--muted);font-style:italic;border-top:1px solid var(--border);padding-top:8px">Log via your club welfare officer or directly through FA Whole Game System.</div>
+        </div>
+        <div style="background:var(--navy);border:1px solid var(--border);border-radius:11px;padding:16px">
+          <div style="font-size:14px;color:var(--muted);line-height:1.6">Clubs that conduct structured post-incident reviews see significantly fewer repeat incidents. Reflection isn't paperwork — it's the mechanism that turns one bad matchday into lasting culture change.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 16 — PRACTICAL SCRIPTS                        -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">Say This, Not That</div>
+    <h2>Phrases That Work</h2>
+    <div class="scripts">
+      <div class="scr">
+        <div class="ssit">Parent/Carer/Guardian shouting at referee</div>
+        <div class="ssay">"I need you to step back with me for a second — let's go." <span style="color:var(--muted);font-style:normal;font-size:14px">[Walk away as you say it — they usually follow]</span></div>
+      </div>
+      <div class="scr">
+        <div class="ssit">Player argues with opponent</div>
+        <div class="ssay">"Leave it. Not today. I've got you." <span style="color:var(--muted);font-style:normal;font-size:14px">[Short, calm, no debate. Walk them away]</span></div>
+      </div>
+      <div class="scr">
+        <div class="ssit">Your own anger rising</div>
+        <div class="ssay">"I'm going to give myself 10 seconds before I respond to that." <span style="color:var(--muted);font-style:normal;font-size:14px">[Say it aloud if needed]</span></div>
+      </div>
+      <div class="scr">
+        <div class="ssit">Crowd getting hostile</div>
+        <div class="ssay">"Folks — I need everyone on this side to take it down a level. We're better than this."</div>
+      </div>
+      <div class="scr" style="border:none">
+        <div class="ssit">Reflective conversation after</div>
+        <div class="ssay">"That was a tough one. What was going through your head in that moment?" <span style="color:var(--muted);font-style:normal;font-size:14px">[Curiosity, not judgment]</span></div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:13px;color:var(--muted);font-style:italic">Starting points only — adapt to your voice and the specific context.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 15 — THREE MOVES THAT MATTER                  -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">Action</div>
+    <h2>Three Moves That Matter</h2>
+    <div class="actions">
+      <div class="act">
+        <div class="anum">01</div>
+        <div class="abod">
+          <div class="atit">Share the Escalation Ladder</div>
+          <div class="adsc">Send slide 6 to every manager and parent/carer/guardian group. Ask one question: "Which rung do you sometimes find yourself on?" Starting the conversation is the intervention.</div>
+        </div>
+        <div class="atag">Low effort<br>High impact</div>
+      </div>
+      <div class="act">
+        <div class="anum">02</div>
+        <div class="abod">
+          <div class="atit">Assign a Positive-Voice Role</div>
+          <div class="adsc">At each match, designate one parent/carer/guardian as Atmosphere Coordinator. Rotate it. When people have a role, they rise to it.</div>
+        </div>
+        <div class="atag">Low effort<br>High impact</div>
+      </div>
+      <div class="act">
+        <div class="anum">03</div>
+        <div class="abod">
+          <div class="atit">Create a 30-Second Team Reset Ritual</div>
+          <div class="adsc">End every pre-match huddle with one line about how you play — not the result. Repeated consistently, it sets a cultural norm before the ball is kicked.</div>
+        </div>
+        <div class="atag">Medium effort<br>Culture-changing</div>
+      </div>
+    </div>
+    <div class="qblock" style="padding:14px 20px;margin-top:14px">
+      <div class="qtxt" style="font-size:15px">"The goal isn't a perfect touchline. It's a touchline where people know what to do when they feel the Chimp wake up."</div>
+      <div class="qatt">Football Mental Health Alliance · The Vault &amp; FMHA Academy for further resources</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 16 — HUB OF HOPE                              -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">Mental Health Support</div>
+    <h2>Hub of Hope</h2>
+    <div style="display:flex;gap:20px;margin-top:18px;align-items:flex-start">
+      <div style="flex:1">
+        <div style="font-size:17px;color:var(--muted);line-height:1.6;margin-bottom:18px">
+          FMHA is proud to partner with <strong style="color:white">Hub of Hope</strong> — the UK's leading mental health support database, created by the <strong style="color:white">Chasing the Stigma</strong> charity.
+        </div>
+        <div style="background:var(--navy);border:1px solid var(--border);border-left:4px solid var(--acc);border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:18px">
+          <div style="font-size:15px;color:var(--muted);line-height:1.6">For anyone experiencing <strong style="color:white">mental or emotional distress</strong> — Hub of Hope brings local, national, peer, community, charity, private, and NHS support into one place.</div>
+        </div>
+        <div style="font-size:15px;color:var(--muted);margin-bottom:6px">Access it through The FMHA Vault:</div>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+          <a href="https://vault.thefmha.com/" target="_blank" style="font-size:17px;font-weight:800;color:white;text-decoration:none">vault.thefmha.com</a>
+          <a href="https://vault.thefmha.com/mental-health-support-for-football/" target="_blank" style="background:var(--acc);color:white;font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:7px 16px;border-radius:6px;text-decoration:none">GET SUPPORT</a>
+        </div>
+      </div>
+      <div style="flex:.85">
+        <div style="font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--acc);margin-bottom:12px">Support available through</div>
+        <div class="support-cats">
+          <div class="scat">
+            <div class="scat-icon" style="color:#5B8DB8;font-size:20px;font-weight:900">NHS</div>
+            <div class="scat-lbl">NHS Services</div>
+            <div class="scat-dsc">Clinical pathways &amp; crisis support</div>
+          </div>
+          <div class="scat">
+            <div class="scat-icon" style="color:#22AA88;font-size:20px;font-weight:900">PEER</div>
+            <div class="scat-lbl">Peer Support</div>
+            <div class="scat-dsc">People with lived experience</div>
+          </div>
+          <div class="scat">
+            <div class="scat-icon" style="color:#CC3399;font-size:20px;font-weight:900">CHAR</div>
+            <div class="scat-lbl">Charities</div>
+            <div class="scat-dsc">National &amp; specialist organisations</div>
+          </div>
+          <div class="scat">
+            <div class="scat-icon" style="color:#E8A000;font-size:20px;font-weight:900">LOCAL</div>
+            <div class="scat-lbl">Local Services</div>
+            <div class="scat-dsc">Nearby community &amp; private options</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:14px;color:var(--muted);line-height:1.55">
+          <strong style="color:white">You are not alone.</strong> If you, a player, a parent/carer/guardian, or someone at your club is struggling — Hub of Hope can find the right support, wherever they are in the UK.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 17 — FMHA ACADEMY                             -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner">
+    <div class="lbl">Go Deeper</div>
+    <h2 style="font-size:34px">The FMHA Neurodiversity, Mental Health<br>&amp; Safeguarding Academy</h2>
+    <div style="font-size:17px;color:var(--muted);margin-top:10px;margin-bottom:4px;font-style:italic;line-height:1.5">
+      "Stop working in silos. Start building inclusive, legally compliant grassroots football clubs."
+    </div>
+    <div style="font-size:15px;color:var(--muted);margin-bottom:16px">
+      The only ongoing support system built specifically for grassroots football clubs — combining training, resources, and expert guidance all in one place.
+    </div>
+    <div class="because-list">
+      <div class="because">
+        <div class="because-tag">Because</div>
+        <div class="because-txt"><strong>1 in 5 young players</strong> has a neurodivergent profile — yet most clubs have no framework to support them, and no training to recognise what they're seeing.</div>
+      </div>
+      <div class="because">
+        <div class="because-tag">Because</div>
+        <div class="because-txt"><strong>Safeguarding compliance</strong> isn't a one-off tick-box — it requires ongoing education, updated annually, at every level of your club.</div>
+      </div>
+      <div class="because">
+        <div class="because-tag">Because</div>
+        <div class="because-txt">Your club may be the <strong>most consistent mental health environment</strong> a young person has access to. That responsibility deserves the right tools.</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:20px;margin-top:18px;flex-wrap:wrap">
+      <a href="https://www.fmha.academy" target="_blank" style="font-size:19px;font-weight:800;color:white;text-decoration:none">www.fmha.academy</a>
+      <a href="https://www.fmha.academy" target="_blank" style="background:var(--acc);color:white;font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:8px 18px;border-radius:6px;text-decoration:none">JOIN THE ACADEMY</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SLIDE 18 — CONTACT / THANK YOU                      -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="inner" style="text-align:center">
+    <div class="lbl" style="text-align:center">Football Mental Health Alliance</div>
+    <h2 style="font-size:36px;line-height:1.2">Thank you for completing<br><span class="acc">'Managing Anger and Emotional<br>Regulation in Grassroots Football'</span></h2>
+    <div style="font-size:17px;color:var(--muted);margin-top:16px;margin-bottom:28px;line-height:1.6">
+      If you have any questions about today's session, the FMHA Academy,<br>or how we can support your club — get in touch.
+    </div>
+    <div class="contact-grid">
+      <a href="tel:03330500399" style="text-decoration:none">
+        <div class="cbox">
+          <div class="cbox-icon">📞</div>
+          <div class="cbox-lbl">Call Us</div>
+          <div class="cbox-val">03330 500 399</div>
+        </div>
+      </a>
+      <a href="mailto:support@withinu.net" style="text-decoration:none">
+        <div class="cbox">
+          <div class="cbox-icon">✉️</div>
+          <div class="cbox-lbl">Email Us</div>
+          <div class="cbox-val">support@withinu.net</div>
+        </div>
+      </a>
+      <a href="https://vault.thefmha.com/" target="_blank" style="text-decoration:none">
+        <div class="cbox">
+          <div class="cbox-icon">🌐</div>
+          <div class="cbox-lbl">The Vault</div>
+          <div class="cbox-val">vault.thefmha.com</div>
+        </div>
+      </a>
+    </div>
+    <div style="margin-top:28px;padding-top:20px;border-top:1px solid var(--border);font-size:14px;color:var(--muted)">
+      © 2026 Danny Matharu · Football Mental Health Alliance · All rights reserved
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<div id="nav">
+  <span id="ctr">1 / 18</span>
+  <button class="nb" onclick="nav(-1)">&#8592;</button>
+  <button class="nb" onclick="nav(1)">&#8594;</button>
+</div>
+<div id="prog"></div>
+<div id="hint">← → to navigate · click to advance</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total  = slides.length;
+  let cur = 0;
+
+  function show(n) {
+    slides.forEach((s, i) => {
+      s.classList.remove('active','prev');
+      if (i < n) s.classList.add('prev');
+    });
+    slides[n].classList.add('active');
+    document.getElementById('ctr').textContent = `${n+1} / ${total}`;
+    document.getElementById('prog').style.width = `${((n+1)/total)*100}%`;
+  }
+
+  function nav(d) {
+    cur = Math.max(0, Math.min(total-1, cur+d));
+    show(cur);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); nav(1); }
+    if (['ArrowLeft','ArrowUp'].includes(e.key))        { e.preventDefault(); nav(-1); }
+  });
+
+  // Click anywhere on deck (not on nav)
+  document.getElementById('deck').addEventListener('click', () => nav(1));
+
+  show(0);
+</script>
+</body>
+</html>

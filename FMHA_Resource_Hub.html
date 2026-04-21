@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Managing Anger & Emotional Regulation — FMHA Resources</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg:           #0a0a0a;
+    --surface:      #141414;
+    --surface2:     #1e1e1e;
+    --border:       #2a2a2a;
+    --text:         #ffffff;
+    --muted:        #888888;
+    --muted2:       #555555;
+    --accent:       #E8312A;
+    --accent-soft:  rgba(232,49,42,0.10);
+    --accent-mid:   rgba(232,49,42,0.25);
+    --amber:        #f39c12;
+    --amber-soft:   rgba(243,156,18,0.10);
+    --blue:         #3498db;
+    --blue-soft:    rgba(52,152,219,0.10);
+    --green:        #27ae60;
+    --green-soft:   rgba(39,174,96,0.10);
+    --purple:       #9b59b6;
+    --purple-soft:  rgba(155,89,182,0.10);
+    --teal:         #1abc9c;
+    --teal-soft:    rgba(26,188,156,0.10);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    gap: 16px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .brand-mark {
+    width: 30px; height: 30px;
+    background: var(--accent);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 900; color: white; letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+  .brand-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.2px;
+  }
+  .brand-name span {
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .header-badge {
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 10px;
+    white-space: nowrap;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, #141414 0%, #0a0a0a 60%);
+    border-bottom: 1px solid var(--border);
+    padding: 56px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(232,49,42,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 16px; height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 16px; height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+  }
+  .hero h1 {
+    font-size: clamp(26px, 5vw, 40px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    color: #fff;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero p {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto 28px;
+    line-height: 1.7;
+  }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 12px;
+  }
+  .meta-pill svg { flex-shrink: 0; }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted2);
+    margin-bottom: 16px;
+    margin-top: 40px;
+  }
+  .section-label:first-of-type { margin-top: 0; }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── CARDS GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .grid-wide {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── CARD ── */
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: var(--card-accent, var(--accent));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .card:hover {
+    border-color: var(--card-accent, var(--accent));
+    background: var(--surface2);
+    transform: translateY(-2px);
+  }
+  .card:hover::after { opacity: 1; }
+
+  .card-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--card-icon-bg, var(--accent-soft));
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+    flex-shrink: 0;
+  }
+  .card-icon svg { display: block; }
+
+  .card-type {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--card-accent, var(--accent));
+    margin-bottom: 4px;
+  }
+  .card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+    line-height: 1.3;
+    color: var(--text);
+  }
+  .card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .card-arrow {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--card-accent, var(--accent));
+    margin-top: 14px;
+    opacity: 0.7;
+    transition: opacity 0.2s, gap 0.2s;
+  }
+  .card:hover .card-arrow {
+    opacity: 1;
+    gap: 8px;
+  }
+
+  /* Colour themes per card */
+  .card.amber  { --card-accent: var(--amber);  --card-icon-bg: var(--amber-soft); }
+  .card.blue   { --card-accent: var(--blue);   --card-icon-bg: var(--blue-soft); }
+  .card.green  { --card-accent: var(--green);  --card-icon-bg: var(--green-soft); }
+  .card.purple { --card-accent: var(--purple); --card-icon-bg: var(--purple-soft); }
+  .card.teal   { --card-accent: var(--teal);   --card-icon-bg: var(--teal-soft); }
+
+  /* ── DOWNLOAD CARD (horizontal) ── */
+  .download-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+  .download-card:hover {
+    border-color: var(--card-accent, var(--accent));
+    background: var(--surface2);
+  }
+  .download-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--card-icon-bg, var(--accent-soft));
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .download-info { flex: 1; min-width: 0; }
+  .download-info .card-type { margin-bottom: 2px; }
+  .download-info h3 { font-size: 14px; font-weight: 700; letter-spacing: -0.2px; margin: 0 0 2px; }
+  .download-info p { font-size: 12px; color: var(--muted); margin: 0; }
+  .download-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    transition: border-color 0.2s, color 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .download-card:hover .download-btn {
+    border-color: var(--card-accent, var(--accent));
+    color: var(--text);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted2);
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 520px) {
+    .hero { padding: 40px 20px 36px; }
+    main { padding: 32px 16px 60px; }
+    .download-card { flex-wrap: wrap; }
+    .download-btn { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a class="brand" href="#">
+      <div class="brand-mark">FM</div>
+      <span class="brand-name">FMHA <span>/ Managing Anger</span></span>
+    </a>
+    <span class="header-badge">Delegate Resources</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Grassroots Football</div>
+  <h1>Managing <em>Anger</em> &amp;<br>Emotional Regulation</h1>
+  <p>Everything from the session in one place. Open any tool on your phone or laptop — no login required.</p>
+  <div class="hero-meta">
+    <span class="meta-pill">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+      6 interactive tools
+    </span>
+    <span class="meta-pill">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      1 printable download
+    </span>
+    <span class="meta-pill">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      Works on mobile
+    </span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- SECTION: Interactive Tools -->
+  <div class="section-label">Interactive tools</div>
+  <div class="grid">
+
+    <!-- Managing Anger Deck -->
+    <a class="card" href="FMHA_Managing_Anger_Deck.html" target="_blank">
+      <div class="card-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8312A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </div>
+      <div class="card-type">Session Deck</div>
+      <h3>Managing Anger &amp; Emotional Regulation</h3>
+      <p>Revisit the key concepts, strategies, and frameworks from the session — at your own pace, whenever you need a refresher.</p>
+      <div class="card-arrow">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+    </a>
+
+    <!-- Know Your Brain -->
+    <a class="card amber" href="FMHA_Know_Your_Brain.html" target="_blank">
+      <div class="card-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f39c12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+      </div>
+      <div class="card-type">Brain Science</div>
+      <h3>Know Your Brain</h3>
+      <p>Explore the Chimp Paradox model — understand how the emotional and rational parts of your brain work, and why the chimp often wins.</p>
+      <div class="card-arrow">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+    </a>
+
+    <!-- Sideline Signals -->
+    <a class="card blue" href="FMHA_Sideline_Signals.html" target="_blank">
+      <div class="card-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <div class="card-type">Awareness Tool</div>
+      <h3>Sideline Signals</h3>
+      <p>Spot the warning signs before they escalate. A practical guide to recognising emotional triggers in yourself and others on the touchline.</p>
+      <div class="card-arrow">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+    </a>
+
+    <!-- FA Rules Explained -->
+    <a class="card green" href="FMHA_FA_Rules_Explained.html" target="_blank">
+      <div class="card-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="card-type">Regulation</div>
+      <h3>FA Rules Explained</h3>
+      <p>The FA's discipline and misconduct rules, clearly explained — what counts, what the consequences are, and how to stay on the right side of them.</p>
+      <div class="card-arrow">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+    </a>
+
+    <!-- Code of Conduct -->
+    <a class="card purple" href="FMHA_Code_of_Conduct.html" target="_blank">
+      <div class="card-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9b59b6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      </div>
+      <div class="card-type">Standards</div>
+      <h3>Code of Conduct</h3>
+      <p>The expected standards of behaviour for coaches, parents, and spectators — for reference, sharing with your club, or displaying at fixtures.</p>
+      <div class="card-arrow">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+    </a>
+
+    <!-- The Chimp Paradox -->
+    <a class="card amber" href="FMHA_Chimp_Paradox.html" target="_blank">
+      <div class="card-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f39c12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8 14s-4 1-4 4v2h16v-2c0-3-4-4-4-4"/><line x1="12" y1="14" x2="12" y2="22"/></svg>
+      </div>
+      <div class="card-type">Brain Science</div>
+      <h3>The Chimp Paradox</h3>
+      <p>Prof. Steve Peters' model unpacked — how the Chimp, Human, and Computer parts of your brain interact, and practical strategies for coaches, parents, and players.</p>
+      <div class="card-arrow">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+    </a>
+
+  </div>
+
+  <!-- SECTION: Downloads -->
+  <div class="section-label">Printable downloads</div>
+  <div class="grid grid-wide" style="gap: 10px;">
+
+    <!-- Junior Player Cards -->
+    <a class="download-card amber" href="FMHA_Junior_Player_Cards.pdf" download target="_blank" style="--card-accent: var(--amber); --card-icon-bg: var(--amber-soft);">
+      <div class="download-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f39c12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      </div>
+      <div class="download-info">
+        <div class="card-type">PDF · Print</div>
+        <h3>Junior Player Cards</h3>
+        <p>Pocket-sized cards for young players — reminders for how to manage their emotions and behave positively at fixtures.</p>
+      </div>
+      <div class="download-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download
+      </div>
+    </a>
+
+
+  </div>
+
+  <!-- SECTION: Questions -->
+  <div class="section-label" style="margin-top: 40px;">Get in touch</div>
+  <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center;">
+    <div style="font-size: 28px; margin-bottom: 10px;">✉️</div>
+    <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Questions about the session?</h3>
+    <p style="font-size: 13px; color: var(--muted); max-width: 400px; margin: 0 auto;">For any further information, <a href="mailto:support@withinu.net" style="color: var(--accent); text-decoration: none;">contact us</a> — we're here to help you put this into practice at your club.</p>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 FMHA · Managing Anger &amp; Emotional Regulation Programme &nbsp;·&nbsp; <a href="FMHA_Code_of_Conduct.html" target="_blank">Code of Conduct</a> &nbsp;·&nbsp; <a href="https://vault.thefmha.com" target="_blank">vault.thefmha.com</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sideline Signals — FMHA</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --card: #141414;
+    --card2: #1e1e1e;
+    --border: #2a2a2a;
+    --text: #ffffff;
+    --muted: #888888;
+    --accent: #E8312A;
+    --accent-soft: rgba(232,49,42,0.12);
+    --accent-mid: rgba(232,49,42,0.3);
+
+    /* Level 1 — Frustrated — Green */
+    --l1: #27ae60;
+    --l1-soft: rgba(39,174,96,0.12);
+    --l1-mid: rgba(39,174,96,0.28);
+
+    /* Level 2 — Agitated — Blue */
+    --l2: #5B8DB8;
+    --l2-soft: rgba(91,141,184,0.12);
+    --l2-mid: rgba(91,141,184,0.28);
+
+    /* Level 3 — Verbal — Amber */
+    --l3: #E8A000;
+    --l3-soft: rgba(232,160,0,0.12);
+    --l3-mid: rgba(232,160,0,0.28);
+
+    /* Level 4 — Threatening — Dark Red */
+    --l4: #C03030;
+    --l4-soft: rgba(192,48,48,0.12);
+    --l4-mid: rgba(192,48,48,0.30);
+
+    /* Level 5 — Physical — Bright Red */
+    --l5: #E8001C;
+    --l5-soft: rgba(232,0,28,0.12);
+    --l5-mid: rgba(232,0,28,0.32);
+
+    --green: #27ae60;
+    --green-soft: rgba(39,174,96,0.12);
+    --green-mid: rgba(39,174,96,0.28);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+
+  .brand { display: flex; align-items: center; gap: 12px; }
+
+  .brand-mark {
+    width: 34px; height: 34px;
+    background: var(--accent);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900; color: white; letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+
+  .brand-name {
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--text);
+  }
+
+  .brand-sub { font-size: 10px; color: var(--muted); letter-spacing: 0.04em; }
+
+  .header-right { display: flex; align-items: center; gap: 8px; }
+
+  .pill {
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-mid);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 24px 28px;
+  }
+
+  .hero-inner { max-width: 700px; margin: 0 auto; }
+
+  .hero h1 {
+    font-size: clamp(24px, 5vw, 36px);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+
+  .hero h1 span { color: var(--accent); }
+
+  .hero p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+
+  /* ── PROGRESS BAR — 5 segments ── */
+  .level-bar {
+    display: flex;
+    gap: 3px;
+    margin: 24px 0 0;
+    height: 6px;
+  }
+
+  .level-bar-seg {
+    flex: 1;
+    border-radius: 3px;
+    transition: opacity 0.3s;
+  }
+
+  .level-bar-seg:nth-child(1) { background: var(--l1); }
+  .level-bar-seg:nth-child(2) { background: var(--l2); }
+  .level-bar-seg:nth-child(3) { background: var(--l3); }
+  .level-bar-seg:nth-child(4) { background: var(--l4); }
+  .level-bar-seg:nth-child(5) { background: var(--l5); }
+
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 700px; margin: 0 auto; padding: 28px 24px 80px; }
+
+  /* ── SECTION LABELS ── */
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .prep-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 36px;
+  }
+
+  .prep-card {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .prep-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+  .prep-text strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+
+  .prep-text span {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ── ESCALATION LEVELS ── */
+  .levels { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+
+  .level-card {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .level-card.open { border-color: #3a3a3a; }
+
+  .level-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .level-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  .level-1 .level-indicator { background: var(--l1); color: var(--l1); }
+  .level-2 .level-indicator { background: var(--l2); color: var(--l2); }
+  .level-3 .level-indicator { background: var(--l3); color: var(--l3); }
+  .level-4 .level-indicator { background: var(--l4); color: var(--l4); }
+  .level-5 .level-indicator { background: var(--l5); color: var(--l5); }
+
+  .level-meta { flex: 1; min-width: 0; }
+
+  .level-number {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+
+  .level-1 .level-number { color: var(--l1); }
+  .level-2 .level-number { color: var(--l2); }
+  .level-3 .level-number { color: var(--l3); }
+  .level-4 .level-number { color: var(--l4); }
+  .level-5 .level-number { color: var(--l5); }
+
+  .level-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .level-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  .chevron {
+    font-size: 14px;
+    color: var(--muted);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .level-card.open .chevron { transform: rotate(180deg); }
+
+  /* Badges */
+  .best-window {
+    background: var(--green-soft);
+    border: 1px solid var(--green-mid);
+    color: var(--green);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-left: 4px;
+    flex-shrink: 0;
+  }
+
+  .danger-badge {
+    background: var(--l5-soft);
+    border: 1px solid var(--l5-mid);
+    color: var(--l5);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-left: 4px;
+    flex-shrink: 0;
+  }
+
+  /* ── LEVEL BODY ── */
+  .level-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .level-body-inner {
+    padding: 0 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 4px;
+  }
+
+  /* Signs */
+  .block-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .signs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .sign-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: #ccc;
+    line-height: 1.5;
+  }
+
+  .sign-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  .level-1 .sign-dot { background: var(--l1); }
+  .level-2 .sign-dot { background: var(--l2); }
+  .level-3 .sign-dot { background: var(--l3); }
+  .level-4 .sign-dot { background: var(--l4); }
+  .level-5 .sign-dot { background: var(--l5); }
+
+  /* Script box */
+  .script-box {
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+
+  .level-1 .script-box { background: var(--l1-soft); border: 1px solid var(--l1-mid); }
+  .level-2 .script-box { background: var(--l2-soft); border: 1px solid var(--l2-mid); }
+  .level-3 .script-box { background: var(--l3-soft); border: 1px solid var(--l3-mid); }
+  .level-4 .script-box { background: var(--l4-soft); border: 1px solid var(--l4-mid); }
+  .level-5 .script-box { background: var(--l5-soft); border: 1px solid var(--l5-mid); }
+
+  .script-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .level-1 .script-label { color: var(--l1); }
+  .level-2 .script-label { color: var(--l2); }
+  .level-3 .script-label { color: var(--l3); }
+  .level-4 .script-label { color: var(--l4); }
+  .level-5 .script-label { color: var(--l5); }
+
+  .script-lines { display: flex; flex-direction: column; gap: 8px; }
+
+  .script-line {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #ddd;
+  }
+
+  .script-line .quote-mark {
+    font-size: 20px;
+    line-height: 1;
+    flex-shrink: 0;
+    color: var(--muted);
+    margin-top: -2px;
+  }
+
+  .script-line .script-text { font-style: italic; }
+
+  /* Avoid box */
+  .avoid-box {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  .avoid-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 8px;
+  }
+
+  .avoid-list { display: flex; flex-direction: column; gap: 5px; }
+
+  .avoid-item {
+    font-size: 12px;
+    color: #888;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .avoid-x { color: #555; flex-shrink: 0; }
+
+  /* ── AFTER SECTION ── */
+  .after-block {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 20px;
+    margin-bottom: 32px;
+  }
+
+  .after-block h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+
+  .after-steps { display: flex; flex-direction: column; gap: 12px; }
+
+  .after-step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 26px;
+    height: 26px;
+    background: var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .step-body strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .step-body span { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ── BREATHING LINK ── */
+  .resource-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-decoration: none;
+    margin-bottom: 32px;
+    transition: border-color 0.2s;
+  }
+
+  .resource-link:hover { border-color: #3a3a3a; }
+
+  .resource-icon {
+    width: 38px; height: 38px;
+    background: var(--accent-soft);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .resource-text strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .resource-text span { font-size: 12px; color: var(--muted); }
+
+  .resource-arrow { color: var(--muted); font-size: 16px; margin-left: auto; }
+
+  /* ── FOOTER ── */
+  .coc-footer {
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .footer-brand { font-size: 12px; color: var(--muted); }
+  .footer-brand strong { color: var(--accent); }
+  .footer-url { font-size: 11px; color: var(--muted); text-decoration: none; }
+
+  /* ── PRINT ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    body { background: #fff !important; color: #111 !important; }
+    .site-header { display: none !important; }
+    .hero { background: #f8f8f8 !important; border-color: #ddd !important; padding: 20px !important; }
+    .hero h1, .hero p { color: #111 !important; }
+    .hero h1 span { color: #E8312A !important; }
+    .hero p { color: #555 !important; }
+    .level-card { background: #f8f8f8 !important; border-color: #ddd !important; break-inside: avoid; }
+    .level-body { max-height: none !important; overflow: visible !important; }
+    .level-header { cursor: default; }
+    .chevron { display: none; }
+    .best-window { background: #e8f5e9 !important; color: #27ae60 !important; border-color: #a5d6a7 !important; }
+    .danger-badge { background: #fde8e7 !important; color: #E8001C !important; border-color: #f5b0ab !important; }
+    .level-name, .level-number, .block-title, .script-label { color: #333 !important; }
+    .level-desc, .sign-item, .avoid-item, .script-line { color: #555 !important; }
+    .level-1 .script-box { background: #e8f5e9 !important; border-color: #a5d6a7 !important; }
+    .level-2 .script-box { background: #e3f0f8 !important; border-color: #90bbda !important; }
+    .level-3 .script-box { background: #fff8e1 !important; border-color: #ffe082 !important; }
+    .level-4 .script-box { background: #fde8e7 !important; border-color: #f5b0ab !important; }
+    .level-5 .script-box { background: #fde8e7 !important; border-color: #f5b0ab !important; }
+    .prep-card, .after-block, .avoid-box { background: #f8f8f8 !important; border-color: #ddd !important; }
+    .resource-link { border-color: #ddd !important; background: #f8f8f8 !important; }
+    @page { margin: 16mm 14mm; size: A4; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <div class="brand-mark">FM</div>
+    <div>
+      <div class="brand-name">FMHA</div>
+      <div class="brand-sub">Football Mental Health Alliance</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="pill">Coaches &amp; CWOs</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>Sideline <span>Signals</span></h1>
+    <p>A matchday reference for coaches and welfare officers. Know what to look for, when to step in, and exactly what to say at each of the five escalation levels before a situation becomes an incident.</p>
+    <div class="level-bar">
+      <div class="level-bar-seg"></div>
+      <div class="level-bar-seg"></div>
+      <div class="level-bar-seg"></div>
+      <div class="level-bar-seg"></div>
+      <div class="level-bar-seg"></div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- BEFORE THE MATCH -->
+  <div class="section-label" style="margin-bottom:14px;">Before the match</div>
+  <div class="prep-grid" style="margin-bottom:36px;">
+    <div class="prep-card">
+      <div class="prep-icon">📋</div>
+      <div class="prep-text">
+        <strong>Brief a designated person</strong>
+        <span>Assign one adult per match specifically to monitor the sideline. Not the coach — someone with bandwidth to watch the crowd, not the game.</span>
+      </div>
+    </div>
+    <div class="prep-card">
+      <div class="prep-icon">🧘</div>
+      <div class="prep-text">
+        <strong>Teach breathing before it's needed</strong>
+        <span>Breathing techniques only work in a crisis if people have practiced them first. Use training sessions to run them. Box breathing takes 90 seconds to learn.</span>
+      </div>
+    </div>
+    <div class="prep-card">
+      <div class="prep-icon">📍</div>
+      <div class="prep-text">
+        <strong>Position spectators deliberately</strong>
+        <span>Separate the two sets of supporters if possible. Proximity fuels escalation. Distance gives everyone room to stay calm.</span>
+      </div>
+    </div>
+    <div class="prep-card">
+      <div class="prep-icon">🤝</div>
+      <div class="prep-text">
+        <strong>Set expectations early</strong>
+        <span>A brief, friendly word to parents before kick-off — "just a reminder, positive support only today" — resets the tone before anything has gone wrong.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ESCALATION LEVELS -->
+  <div class="section-label">The escalation ladder — tap each level to expand</div>
+
+  <div class="levels">
+
+    <!-- ════════════════════════════════════ -->
+    <!-- LEVEL 1 — FRUSTRATED                -->
+    <!-- ════════════════════════════════════ -->
+    <div class="level-card level-1" id="card-1">
+      <div class="level-header" onclick="toggleLevel('card-1')">
+        <div class="level-indicator"></div>
+        <div class="level-meta">
+          <div class="level-number">Level 1 · Frustrated</div>
+          <div class="level-name">Early warning signs</div>
+          <div class="level-desc">Low-level tension. No intervention needed yet — but watch.</div>
+        </div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="level-body" id="body-1">
+        <div class="level-body-inner">
+          <div class="divider"></div>
+
+          <div class="signs-block">
+            <div class="block-title">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Signs to watch for
+            </div>
+            <div class="signs-list">
+              <div class="sign-item"><div class="sign-dot"></div><span>Sighing, eye-rolling, visible exasperation at decisions</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Quiet complaints to the person standing next to them</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Nervous or restless energy — shifting weight, can't stand still</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Fists clenching and unclenching quietly</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Avoiding eye contact with other spectators or the CWO</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Low-level moaning at referee decisions — audible but not aggressive</span></div>
+            </div>
+          </div>
+
+          <div class="script-box">
+            <div class="script-label">At this stage</div>
+            <div class="script-lines">
+              <div class="script-line">
+                <div class="quote-mark">"</div>
+                <div class="script-text">No script needed yet. Stay visible. Make eye contact and smile — a calm, friendly presence can settle tension before it surfaces. You don't need to say anything.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="avoid-box">
+            <div class="avoid-title">Don't</div>
+            <div class="avoid-list">
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Ignore it — things that are noticed early rarely escalate to level 4 or 5</span></div>
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Over-react — a formal warning at level 1 can itself create a confrontation</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════ -->
+    <!-- LEVEL 2 — AGITATED                  -->
+    <!-- ════════════════════════════════════ -->
+    <div class="level-card level-2" id="card-2">
+      <div class="level-header" onclick="toggleLevel('card-2')">
+        <div class="level-indicator"></div>
+        <div class="level-meta">
+          <div class="level-number">Level 2 · Agitated</div>
+          <div class="level-name">It's building</div>
+          <div class="level-desc">Visible tension. This is your best window — act before it turns verbal.</div>
+        </div>
+        <span class="best-window">Best window</span>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="level-body" id="body-2">
+        <div class="level-body-inner">
+          <div class="divider"></div>
+
+          <div style="background: var(--green-soft); border: 1px solid var(--green-mid); border-radius: 8px; padding: 12px 14px; font-size: 12px; color: #aaa; line-height: 1.6;">
+            <strong style="color: var(--green); display: block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px;">This is your best window</strong>
+            Intervention is most effective at levels 1–2. The person is still reachable — their rational brain is still in the game. Wait until level 3 and you're dealing with a very different situation.
+          </div>
+
+          <div class="signs-block">
+            <div class="block-title">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Signs to watch for
+            </div>
+            <div class="signs-list">
+              <div class="sign-item"><div class="sign-dot"></div><span>Pacing along the touchline — unable or unwilling to stay in one place</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Muttering louder, exaggerated groans at decisions</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Tense body language — arms crossed, jaw tight, stiff posture</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Constant, controlling direction-giving to players from the touchline</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Dismissing or brushing off attempts by others to calm them down</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Tension starting to spread to those standing nearby</span></div>
+            </div>
+          </div>
+
+          <div class="script-box">
+            <div class="script-label">What to say — word for word</div>
+            <div class="script-lines">
+              <div class="script-line">
+                <div class="quote-mark">"</div>
+                <div class="script-text">Hi — are you OK?" <span style="font-style:normal; color: var(--muted); font-size:12px;">(Simple, non-accusatory. Asking if they're OK breaks the pattern — it shifts them from reactive to reflective.)</span></div>
+              </div>
+              <div class="script-line" style="margin-top:10px;">
+                <div class="quote-mark">"</div>
+                <div class="script-text">I can see you're frustrated — totally understandable. Let's have a proper chat about it after the game. Right now the kids need to enjoy this and the ref needs to be able to do their job."</div>
+              </div>
+              <div class="script-line" style="margin-top:10px;">
+                <div class="quote-mark">"</div>
+                <div class="script-text">Come and stand with me over here for a minute." <span style="font-style:normal; color: var(--muted); font-size:12px;">(Moving them physically — even a few metres — changes the dynamic entirely.)</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="avoid-box">
+            <div class="avoid-title">Don't</div>
+            <div class="avoid-list">
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Start with "you need to calm down" — it almost always makes things worse</span></div>
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Challenge them publicly in front of a crowd</span></div>
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Argue about whether they're right about the referee's decision</span></div>
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Walk away once you've approached — stay with them</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════ -->
+    <!-- LEVEL 3 — VERBAL                    -->
+    <!-- ════════════════════════════════════ -->
+    <div class="level-card level-3" id="card-3">
+      <div class="level-header" onclick="toggleLevel('card-3')">
+        <div class="level-indicator"></div>
+        <div class="level-meta">
+          <div class="level-number">Level 3 · Verbal</div>
+          <div class="level-name">Verbal abuse</div>
+          <div class="level-desc">Shouting, swearing, or insulting. Intervention required now.</div>
+        </div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="level-body" id="body-3">
+        <div class="level-body-inner">
+          <div class="divider"></div>
+
+          <div class="signs-block">
+            <div class="block-title">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Signs — intervention is now required
+            </div>
+            <div class="signs-list">
+              <div class="sign-item"><div class="sign-dot"></div><span>Audible shouting — louder than communication, with a clear edge of aggression</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Swearing — either directed or as a general release</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Personal insults directed at players, officials, or other spectators</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Discriminatory language or gestures of any kind</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Shouting instructions or criticism directly at players or the referee</span></div>
+            </div>
+          </div>
+
+          <div class="script-box">
+            <div class="script-label">What to say</div>
+            <div class="script-lines">
+              <div class="script-line">
+                <div class="quote-mark">"</div>
+                <div class="script-text">I can see you're really frustrated — and I get it. But I need you to stop. The kids are watching and the language isn't OK." <span style="font-style:normal; color: var(--muted); font-size:12px;">(Acknowledge first — then set the boundary. Don't lead with the rule.)</span></div>
+              </div>
+              <div class="script-line" style="margin-top:10px;">
+                <div class="quote-mark">"</div>
+                <div class="script-text">That call was hard to take — I know. Let's stay focused on the team. Come on." <span style="font-style:normal; color: var(--muted); font-size:12px;">(Then move them. Walking away as you say it invites them to follow.)</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="avoid-box">
+            <div class="avoid-title">Don't</div>
+            <div class="avoid-list">
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Argue about whether the referee's decision was correct</span></div>
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Allow discriminatory language to go unchallenged, even once</span></div>
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Walk away once you've approached — stay with them until they've settled</span></div>
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Challenge them publicly with other spectators watching — move them first</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════ -->
+    <!-- LEVEL 4 — THREATENING               -->
+    <!-- ════════════════════════════════════ -->
+    <div class="level-card level-4" id="card-4">
+      <div class="level-header" onclick="toggleLevel('card-4')">
+        <div class="level-indicator"></div>
+        <div class="level-meta">
+          <div class="level-number">Level 4 · Threatening</div>
+          <div class="level-name">Threats &amp; intimidation</div>
+          <div class="level-desc">Direct threats or physical intimidation. Do not approach alone.</div>
+        </div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="level-body" id="body-4">
+        <div class="level-body-inner">
+          <div class="divider"></div>
+
+          <div style="background: var(--l4-soft); border: 1px solid var(--l4-mid); border-radius: 8px; padding: 12px 14px; font-size: 12px; color: #aaa; line-height: 1.6;">
+            <strong style="color: var(--l4); display: block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px;">Physical risk is now real</strong>
+            By level 4, continued one-to-one engagement often escalates rather than de-escalates. Get a second person with you before you approach. Inform the referee immediately.
+          </div>
+
+          <div class="signs-block">
+            <div class="block-title">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Signs to watch for
+            </div>
+            <div class="signs-list">
+              <div class="sign-item"><div class="sign-dot"></div><span>Direct verbal threats to officials, coaches, or other spectators</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Squaring up — moving into someone's personal space in a confrontational way</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Advancing toward or pursuing the referee or match officials</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Encroaching on or moving toward the field of play</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Posturing for a fight — weight forward, arms out, voice dropping to a menacing low</span></div>
+            </div>
+          </div>
+
+          <div class="script-box">
+            <div class="script-label">What to say — clear and brief</div>
+            <div class="script-lines">
+              <div class="script-line">
+                <div class="quote-mark">"</div>
+                <div class="script-text">I'm going to need you to step away from the touchline now. This isn't a discussion." <span style="font-style:normal; color: var(--muted); font-size:12px;">(Calm, direct, no negotiation. Don't explain or justify — it gives them something to argue against.)</span></div>
+              </div>
+              <div class="script-line" style="margin-top:10px;">
+                <div class="quote-mark">"</div>
+                <div class="script-text">The game will be stopped if this continues." <span style="font-style:normal; color: var(--muted); font-size:12px;">(State the consequence. Then inform the referee immediately — they have the authority to suspend or abandon the match.)</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: var(--l4-soft); border: 1px solid var(--l4-mid); border-radius: 10px; padding: 16px 18px;">
+            <div class="block-title" style="color: var(--l4); margin-bottom: 10px;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Immediate actions
+            </div>
+            <div class="signs-list">
+              <div class="sign-item"><div class="sign-dot" style="background: var(--l4);"></div><span>Get a second adult with you before approaching — do not go alone</span></div>
+              <div class="sign-item"><div class="sign-dot" style="background: var(--l4);"></div><span>Inform the referee — they can suspend the game immediately</span></div>
+              <div class="sign-item"><div class="sign-dot" style="background: var(--l4);"></div><span>Begin moving children away from the area while others manage the individual</span></div>
+              <div class="sign-item"><div class="sign-dot" style="background: var(--l4);"></div><span>Start documenting — notes, voice memo, photos of the scene if safe to do so</span></div>
+            </div>
+          </div>
+
+          <div class="avoid-box">
+            <div class="avoid-title">Don't</div>
+            <div class="avoid-list">
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Approach alone — at level 4 you need a second person present</span></div>
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Try to reason or negotiate — it almost always escalates at this stage</span></div>
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Allow the game to continue without informing the referee</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════ -->
+    <!-- LEVEL 5 — PHYSICAL                  -->
+    <!-- ════════════════════════════════════ -->
+    <div class="level-card level-5" id="card-5">
+      <div class="level-header" onclick="toggleLevel('card-5')">
+        <div class="level-indicator"></div>
+        <div class="level-meta">
+          <div class="level-number">Level 5 · Physical</div>
+          <div class="level-name">Physical incident</div>
+          <div class="level-desc">Assault, throwing objects, uncontrollable rage. Child safety is the only priority.</div>
+        </div>
+        <span class="danger-badge">Call 999</span>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="level-body" id="body-5">
+        <div class="level-body-inner">
+          <div class="divider"></div>
+
+          <div class="signs-block">
+            <div class="block-title">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Signs — this is now a formal incident
+            </div>
+            <div class="signs-list">
+              <div class="sign-item"><div class="sign-dot"></div><span>Physical assault — pushing, grabbing, striking another person</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Throwing objects onto or near the field of play</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Uncontrollable rage — the person has lost the ability to regulate themselves</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Pursuing or attempting to physically confront the referee</span></div>
+              <div class="sign-item"><div class="sign-dot"></div><span>Any situation where a child is at immediate risk of harm</span></div>
+            </div>
+          </div>
+
+          <div class="script-box">
+            <div class="script-label">What to do</div>
+            <div class="script-lines">
+              <div class="script-line">
+                <div class="quote-mark">"</div>
+                <div class="script-text">Do not engage physically unless a child's immediate safety demands it. Your first job is to get children away from the situation. Call 999 if there is active violence or a child is in danger.</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: var(--l5-soft); border: 1px solid var(--l5-mid); border-radius: 10px; padding: 16px 18px;">
+            <div class="block-title" style="color: var(--l5); margin-bottom: 10px;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Immediate actions — in order
+            </div>
+            <div class="signs-list">
+              <div class="sign-item"><div class="sign-dot" style="background: var(--l5);"></div><span>Get children physically away from the incident — this takes priority over everything else</span></div>
+              <div class="sign-item"><div class="sign-dot" style="background: var(--l5);"></div><span>Inform the referee — the match must be stopped immediately</span></div>
+              <div class="sign-item"><div class="sign-dot" style="background: var(--l5);"></div><span>Call 999 if there is active violence, a weapon, or a child is at risk</span></div>
+              <div class="sign-item"><div class="sign-dot" style="background: var(--l5);"></div><span>Do not physically intervene yourself unless absolutely necessary to protect a child</span></div>
+              <div class="sign-item"><div class="sign-dot" style="background: var(--l5);"></div><span>Document everything immediately — notes, photos if safe, witness names</span></div>
+              <div class="sign-item"><div class="sign-dot" style="background: var(--l5);"></div><span>Notify your club welfare officer before you leave the ground</span></div>
+            </div>
+          </div>
+
+          <div class="avoid-box">
+            <div class="avoid-title">Don't</div>
+            <div class="avoid-list">
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Attempt to physically restrain the person unless a child is in immediate danger</span></div>
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Allow the match to continue — it must be stopped</span></div>
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Wait until after the match to report — this must be logged now while details are fresh</span></div>
+              <div class="avoid-item"><span class="avoid-x">✕</span><span>Handle this alone — involve your club committee and welfare officer immediately</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- AFTER THE INCIDENT -->
+  <div class="section-label">After the match — if something happened</div>
+
+  <div class="after-block">
+    <h3>What to do before you leave the ground</h3>
+    <div class="after-steps">
+      <div class="after-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Write it down — now</strong>
+          <span>Time, location, what was said, who witnessed it. Memory degrades fast under stress. Even a voice note is better than waiting until you get home.</span>
+        </div>
+      </div>
+      <div class="after-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Speak to the referee and ask for their report</strong>
+          <span>Referee reports carry significant weight in FA disciplinary proceedings. They need to know you're taking it seriously so they file formally.</span>
+        </div>
+      </div>
+      <div class="after-step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Notify your club committee</strong>
+          <span>Under FA Rules E20 and E21, the club — not just the individual — is responsible. The committee needs to know immediately. Don't manage this alone.</span>
+        </div>
+      </div>
+      <div class="after-step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Check in on the children</strong>
+          <span>Young players who witnessed or were near a serious incident may need a quiet word. Ask how they're feeling — don't assume they're fine because the game ended.</span>
+        </div>
+      </div>
+      <div class="after-step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>Follow up in writing with the individual</strong>
+          <span>If the person is a club member, a written communication — not a pitch-side conversation — sets the right tone for what happens next. Keep it factual, not emotional.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BREATHING RESOURCE -->
+  <a class="resource-link" href="https://vault.thefmha.com/box-breathing/" target="_blank">
+    <div class="resource-icon">🫁</div>
+    <div class="resource-text">
+      <strong>Box Breathing — FMHA Resource</strong>
+      <span>A practical breathing technique coaches can teach players and parents before it's ever needed in a crisis. Takes 90 seconds to learn.</span>
+    </div>
+    <div class="resource-arrow">→</div>
+  </a>
+
+  <!-- FOOTER -->
+  <div class="coc-footer">
+    <div class="footer-brand">Produced by <strong>FMHA</strong> — Football Mental Health Alliance</div>
+    <a class="footer-url" href="https://vault.thefmha.com" target="_blank">vault.thefmha.com</a>
+  </div>
+
+</div>
+
+<script>
+  function toggleLevel(id) {
+    const card = document.getElementById(id);
+    const num  = id.split('-')[1];
+    const body = document.getElementById('body-' + num);
+    const isOpen = card.classList.contains('open');
+
+    if (isOpen) {
+      card.classList.remove('open');
+      body.style.maxHeight = '0';
+    } else {
+      card.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  }
+
+  // Open level 2 by default — it's the most important intervention window
+  window.addEventListener('DOMContentLoaded', () => {
+    toggleLevel('card-2');
+  });
+</script>
+
+</body>
+</html>

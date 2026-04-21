@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FA Rules Explained — FMHA</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --card: #141414;
+    --card2: #1e1e1e;
+    --border: #2a2a2a;
+    --text: #ffffff;
+    --muted: #888888;
+    --accent: #E8312A;
+    --accent-soft: rgba(232,49,42,0.10);
+    --accent-mid: rgba(232,49,42,0.28);
+    --amber: #f39c12;
+    --amber-soft: rgba(243,156,18,0.10);
+    --amber-mid: rgba(243,156,18,0.28);
+    --green: #27ae60;
+    --green-soft: rgba(39,174,96,0.10);
+    --green-mid: rgba(39,174,96,0.28);
+    --blue: #3498db;
+    --blue-soft: rgba(52,152,219,0.10);
+    --blue-mid: rgba(52,152,219,0.28);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    min-height: 100vh; line-height: 1.6;
+  }
+
+  .site-header {
+    background: var(--card); border-bottom: 1px solid var(--border);
+    padding: 16px 24px; display: flex; align-items: center;
+    justify-content: space-between; position: sticky; top: 0; z-index: 200;
+  }
+
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 34px; height: 34px; background: var(--accent); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900; color: white; flex-shrink: 0;
+  }
+  .brand-name { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+  .brand-sub  { font-size: 10px; color: var(--muted); }
+
+  .pill {
+    background: var(--blue-soft); border: 1px solid var(--blue-mid);
+    color: var(--blue); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 20px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--card); border-bottom: 1px solid var(--border);
+    padding: 32px 24px 28px;
+  }
+  .hero-inner { max-width: 720px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-block;
+    background: var(--accent-soft); border: 1px solid var(--accent-mid);
+    color: var(--accent); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 4px; margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-size: clamp(24px, 5vw, 38px); font-weight: 800;
+    letter-spacing: -0.5px; line-height: 1.15; margin-bottom: 10px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 560px; }
+
+  /* ── MAIN ── */
+  .main { max-width: 720px; margin: 0 auto; padding: 28px 24px 80px; }
+
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+  }
+
+  /* ── RULE CARDS ── */
+  .rule-pair {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px;
+  }
+
+  @media (max-width: 500px) { .rule-pair { grid-template-columns: 1fr; } }
+
+  .rule-card {
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 18px;
+  }
+
+  .rule-ref {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 6px;
+  }
+
+  .rule-name {
+    font-size: 16px; font-weight: 700; line-height: 1.25;
+    color: var(--text); margin-bottom: 10px;
+  }
+
+  .rule-plain {
+    font-size: 13px; color: #bbb; line-height: 1.65;
+  }
+
+  /* ── TRIGGER TABLE ── */
+  .trigger-section { margin-bottom: 32px; }
+
+  .trigger-table { width: 100%; border-collapse: collapse; }
+
+  .trigger-table th {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); padding: 10px 14px; text-align: left;
+    border-bottom: 1px solid var(--border);
+    background: var(--card2);
+  }
+
+  .trigger-table th:first-child { border-radius: 8px 0 0 0; }
+  .trigger-table th:last-child  { border-radius: 0 8px 0 0; }
+
+  .trigger-table td {
+    font-size: 13px; color: #ccc; padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top; line-height: 1.55;
+    background: var(--card2);
+  }
+
+  .trigger-table tr:last-child td { border-bottom: none; }
+  .trigger-table tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+  .trigger-table tr:last-child td:last-child  { border-radius: 0 0 8px 0; }
+
+  .trigger-table tr:hover td { background: #222; }
+
+  .threshold {
+    display: inline-block;
+    font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .t-red    { background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent-mid); }
+  .t-amber  { background: var(--amber-soft);  color: var(--amber);  border: 1px solid var(--amber-mid);  }
+
+  /* ── SANCTIONS ── */
+  .sanctions-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px; margin-bottom: 32px;
+  }
+
+  .sanction-card {
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  .sanction-icon { font-size: 22px; }
+
+  .sanction-title {
+    font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.25;
+  }
+
+  .sanction-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ── HOME & AWAY ── */
+  .info-block {
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 20px;
+    margin-bottom: 28px;
+  }
+
+  .info-block-title {
+    font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .info-block p {
+    font-size: 13px; color: #bbb; line-height: 1.65; margin-bottom: 8px;
+  }
+
+  .info-block p:last-child { margin-bottom: 0; }
+
+  /* ── DEFENCE BLOCK ── */
+  .defence-block {
+    background: var(--green-soft); border: 1px solid var(--green-mid);
+    border-radius: 12px; padding: 20px 20px; margin-bottom: 32px;
+  }
+
+  .defence-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--green); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .defence-block p { font-size: 13px; color: #aaa; line-height: 1.65; margin-bottom: 8px; }
+  .defence-block p:last-child { margin-bottom: 0; }
+  .defence-block strong { color: var(--text); }
+
+  /* ── STAT CALLOUT ── */
+  .stat-callout {
+    background: var(--accent-soft); border: 1px solid var(--accent-mid);
+    border-radius: 12px; padding: 22px 20px;
+    display: flex; gap: 18px; align-items: flex-start;
+    margin-bottom: 32px;
+  }
+
+  .stat-number {
+    font-size: 42px; font-weight: 900; color: var(--accent);
+    line-height: 1; flex-shrink: 0;
+  }
+
+  .stat-label { font-size: 13px; color: #aaa; line-height: 1.6; padding-top: 4px; }
+  .stat-label strong { color: var(--text); display: block; font-size: 14px; margin-bottom: 4px; }
+
+  /* ── ACTION LIST ── */
+  .action-block {
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 22px 20px; margin-bottom: 32px;
+  }
+
+  .action-block h3 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+
+  .action-items { display: flex; flex-direction: column; gap: 12px; }
+
+  .action-item { display: flex; gap: 12px; align-items: flex-start; }
+
+  .action-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+    background: var(--border);
+  }
+
+  .action-item strong {
+    display: block; font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px;
+  }
+
+  .action-item span { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ── FOOTER ── */
+  .coc-footer {
+    padding-top: 24px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .footer-brand { font-size: 12px; color: var(--muted); }
+  .footer-brand strong { color: var(--accent); }
+  .footer-url { font-size: 11px; color: var(--muted); text-decoration: none; }
+
+  /* ── PRINT ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    body { background: #fff !important; color: #111 !important; }
+    .site-header { display: none !important; }
+    .hero { background: #f8f8f8 !important; border-color: #ddd !important; }
+    .hero h1 { color: #111 !important; }
+    .hero h1 span { color: #E8312A !important; }
+    .hero p { color: #555 !important; }
+    .rule-card, .info-block, .action-block, .sanction-card, .trigger-table th, .trigger-table td {
+      background: #f8f8f8 !important; border-color: #ddd !important; color: #333 !important;
+    }
+    .stat-callout { background: #fde8e7 !important; border-color: #f5b0ab !important; }
+    .stat-number { color: #E8312A !important; }
+    .stat-label { color: #555 !important; }
+    .defence-block { background: #e8f5e9 !important; border-color: #a5d6a7 !important; }
+    @page { margin: 16mm 14mm; size: A4; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <div class="brand-mark">FM</div>
+    <div>
+      <div class="brand-name">FMHA</div>
+      <div class="brand-sub">Football Mental Health Alliance</div>
+    </div>
+  </div>
+  <span class="pill">Club Committees</span>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">FA Rules — Plain English</div>
+    <h1>Your Club Is <span>Responsible.</span> Here's What That Actually Means.</h1>
+    <p>Most club officials know spectator behaviour is "bad for the club." Very few know that the FA has a specific, structured framework that can result in fines, points deductions, and the removal of your club's affiliation. This is that framework, in plain English.</p>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- THE TWO RULES -->
+  <div class="section-label">The two rules that govern your club's liability</div>
+
+  <div class="rule-pair">
+    <div class="rule-card">
+      <div class="rule-ref">FA Rule E20</div>
+      <div class="rule-name">Club responsibility for players and officials</div>
+      <div class="rule-plain">Your club is responsible for the conduct of its directors, players, coaches, officials, employees, and any representatives attending a match. When they don't behave properly, the charge comes to the club — not just the individual. Note: spectator and supporter behaviour is a separate liability governed by Rule E21.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-ref">FA Rule E21</div>
+      <div class="rule-name">Club responsibility for spectators</div>
+      <div class="rule-plain">Your club is responsible for the behaviour of its supporters at home <em>and</em> away fixtures. If a parent or follower of your club behaves badly — anywhere, at any of your teams' games — your club is answerable for it.</div>
+    </div>
+  </div>
+
+  <!-- STAT -->
+  <div class="stat-callout">
+    <div class="stat-number">20</div>
+    <div class="stat-label">
+      <strong>Teams had affiliation removed or action-planned in 2024–25</strong>
+      In the 2024–25 season alone, 20 teams had their FA affiliation immediately removed or placed under a formal action plan due to accumulated conduct issues. This is not a theoretical risk.
+    </div>
+  </div>
+
+  <!-- HOME AND AWAY -->
+  <div class="info-block">
+    <div class="info-block-title">
+      <span>🏟️</span> Home AND away — yes, both
+    </div>
+    <p>A common misconception: many clubs assume they're only liable for behaviour at their home ground. Under Rule E21, you are responsible for your supporters at every fixture your teams play — home or away.</p>
+    <p>If one of your parents abuses a referee or an opposition player at an away ground, your club will be charged. The location is irrelevant. The connection to your club is what matters.</p>
+  </div>
+
+  <!-- TRIGGER TABLE -->
+  <div class="trigger-section">
+    <div class="section-label">What triggers a club charge</div>
+    <table class="trigger-table">
+      <thead>
+        <tr>
+          <th>Trigger</th>
+          <th>Threshold</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="3" style="background:#1a1a1a; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); padding:8px 14px; border-bottom:1px solid var(--border);">Penalty-points behaviour system — three separate stages</td>
+        </tr>
+        <tr>
+          <td>A single team accumulates behaviour penalty points</td>
+          <td><span class="threshold t-amber">25 pts</span></td>
+          <td>Formal warning issued to the club</td>
+        </tr>
+        <tr>
+          <td>Same team continues to accumulate penalty points</td>
+          <td><span class="threshold t-amber">50 pts</span></td>
+          <td>Financial penalty and mandatory intervention — the club must engage with a support process</td>
+        </tr>
+        <tr>
+          <td>Same team reaches the charge threshold</td>
+          <td><span class="threshold t-red">100 pts</span></td>
+          <td>Formal disciplinary charge — sanctions can include an action plan, suspension, or cancellation of team affiliation and accreditation</td>
+        </tr>
+        <tr>
+          <td colspan="3" style="background:#1a1a1a; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); padding:8px 14px; border-bottom:1px solid var(--border);">RESPECT offence track — a separate system running alongside penalty points</td>
+        </tr>
+        <tr>
+          <td>A team accumulates RESPECT offences (dissent, encroachment, misconduct toward officials)</td>
+          <td>Stage 4 <span style="font-size:11px; color:var(--muted); display:block; margin-top:3px;">triggered at 20 RESPECT offences</span></td>
+          <td>Club charge triggered under this track regardless of that team's penalty-point total or other teams' records</td>
+        </tr>
+        <tr>
+          <td colspan="3" style="background:#1a1a1a; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); padding:8px 14px; border-bottom:1px solid var(--border);">Additional club-charge thresholds</td>
+        </tr>
+        <tr>
+          <td>Violent conduct incidents across any of the club's teams</td>
+          <td><span class="threshold t-red">4 incidents</span> within 12 months</td>
+          <td>Club charge — the size of the club and number of teams it runs may be considered when sanction is decided, but does not remove the charge threshold itself</td>
+        </tr>
+        <tr>
+          <td>Two proven charges of aggravated offences (e.g. discrimination) by a single team</td>
+          <td>2 proven charges</td>
+          <td>Club charge — applies to discrimination and serious offences against match officials</td>
+        </tr>
+        <tr>
+          <td>Spectator abuse, pitch encroachment, or throwing objects (Rule E21)</td>
+          <td>Subject to FA assessment</td>
+          <td>These incidents can lead to a club charge under Rule E21. Whether action is taken depends on FA assessment of the facts, the nature of the conduct, steps taken by the club during the incident, and the club's prior record</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SANCTIONS -->
+  <div class="section-label">What happens to your club if found responsible</div>
+  <div class="sanctions-grid">
+    <div class="sanction-card">
+      <div class="sanction-icon">💷</div>
+      <div class="sanction-title">Fines</div>
+      <div class="sanction-desc">For individuals, the mandatory minimum fine is £75. For club misconduct charges involving a protected characteristic (e.g. discrimination), the recommended entry point is £100–£200 depending on the level of football. Fines scale with severity and prior history.</div>
+    </div>
+    <div class="sanction-card">
+      <div class="sanction-icon">📉</div>
+      <div class="sanction-title">League points deductions</div>
+      <div class="sanction-desc">For repeated serious misconduct — including spectator abuse — the FA can deduct league points from any or all of your teams.</div>
+    </div>
+    <div class="sanction-card">
+      <div class="sanction-icon">🏅</div>
+      <div class="sanction-title">Loss of accreditation</div>
+      <div class="sanction-desc">Accumulated penalty points can result in removal of your England Football Accreditation — affecting funding, facilities access, and reputation.</div>
+    </div>
+    <div class="sanction-card" style="grid-column: 1 / -1; flex-direction: row; align-items: flex-start; gap: 16px;">
+      <div class="sanction-icon" style="flex-shrink:0; font-size:26px;">🚫</div>
+      <div>
+      <div class="sanction-title">Removal from competition</div>
+      <div class="sanction-desc">A specific team can be removed from their league mid-season. In the most serious cases, a team's FA affiliation can be suspended or cancelled — England Football's own headline example in 2025 was the first-ever team affiliation removal under the toughened sanctions regime.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEFENCE -->
+  <div class="defence-block">
+    <div class="defence-title">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Can your club defend itself?
+    </div>
+    <p>Yes — but the bar is high, and the defence does not apply to every charge. For charges under <strong>E21.1–E21.3</strong> (improper conduct, missile throwing, and pitch encroachment), your club can raise a defence if it can prove two things: that the incident was <strong>completely outside its control</strong>, and that its officials used <strong>"all due diligence"</strong> to prevent it.</p>
+    <p><strong>This defence does not apply in the same way to E21.4 — discriminatory supporter conduct.</strong> If a supporter engages in discriminatory behaviour, the due-diligence route is not available to the club in the same way. The threshold for what the club must demonstrate is materially higher, and the charge framework is different. Do not assume "all due diligence" covers every type of spectator misconduct charge.</p>
+    <p>For E21.1–E21.3 charges, the Regulatory Commission will consider the severity of the incident, the steps the club took beforehand, and whether there is a history of similar issues. Having a documented Code of Conduct, trained welfare officers, and a pre-match briefing process all count as evidence of due diligence. Not having them makes any defence significantly harder.</p>
+    <p><strong>In short:</strong> the clubs that escape charges are the ones who can show they were actively trying to prevent the problem — not the ones who say they didn't know it was their responsibility.</p>
+  </div>
+
+  <!-- WHAT TO DO NOW -->
+  <div class="action-block">
+    <h3>What your club should have in place — now</h3>
+    <div class="action-items">
+      <div class="action-item">
+        <div class="action-icon">📄</div>
+        <div>
+          <strong>A signed Code of Conduct for every parent and spectator</strong>
+          <span>Collected at registration — not just posted on a noticeboard. Signature matters if you ever need to evidence due diligence.</span>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-icon">🎓</div>
+        <div>
+          <strong>Trained welfare officers who understand their role on match days</strong>
+          <span>The CWO's job isn't just DBS checks and admin. They need to know how to recognise and de-escalate sideline tension before it becomes a formal incident.</span>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-icon">📋</div>
+        <div>
+          <strong>A documented incident log</strong>
+          <span>Every behavioural incident — however minor — should be logged with time, date, witnesses, and outcome. This is your evidence trail if charges are brought.</span>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-icon">📢</div>
+        <div>
+          <strong>A pre-match briefing process for high-risk fixtures</strong>
+          <span>Designating a sideline monitor, welcoming both sets of supporters before kick-off, and reminding everyone of the Code of Conduct — all demonstrable steps.</span>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-icon">🔄</div>
+        <div>
+          <strong>Regular committee agenda items on behaviour and culture</strong>
+          <span>FMHA training data consistently shows voluntary attendance at behaviour workshops runs at roughly 15–20% of eligible club staff. Making behaviour and welfare a standing agenda item — not a one-off workshop — is the difference between clubs that improve and those that wait for a charge.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="coc-footer">
+    <div class="footer-brand">Produced by <strong>FMHA</strong> — Football Mental Health Alliance</div>
+    <a class="footer-url" href="https://www.vault.thefmha.com" target="_blank">www.vault.thefmha.com</a>
+  </div>
+
+</div>
+
+</body>
+</html>
