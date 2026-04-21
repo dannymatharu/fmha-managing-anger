@@ -56,9 +56,8 @@
   .brand-mark {
     width: 34px; height: 34px; background: var(--accent); border-radius: 7px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 900; color: white;
+    font-size: 9px; font-weight: 900; color: white; letter-spacing: -0.5px;
   }
-  .brand-name { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
   .brand-sub { font-size: 10px; color: var(--muted); }
 
   .header-pill {
@@ -381,13 +380,12 @@
 <body>
 
 <header class="site-header">
-  <div class="brand">
-    <div class="brand-mark">FM</div>
+  <a class="brand" href="https://assets.thefmha.com/FMHA_Resource_Hub.html" style="text-decoration:none;">
+    <div class="brand-mark">FMHA</div>
     <div>
-      <div class="brand-name">FMHA</div>
       <div class="brand-sub">Football Mental Health Alliance</div>
     </div>
-  </div>
+  </a>
   <span class="header-pill" id="modePill">Junior Players</span>
 </header>
 
@@ -724,7 +722,10 @@
   <!-- FOOTER -->
   <div class="coc-footer">
     <div class="footer-brand">Produced by <strong>FMHA</strong> — Football Mental Health Alliance</div>
-    <a class="footer-url" href="https://vault.thefmha.com" target="_blank">vault.thefmha.com</a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a class="footer-url" href="https://assets.thefmha.com/FMHA_Resource_Hub.html">← Session hub</a>
+      <a class="footer-url" href="https://vault.thefmha.com" target="_blank">vault.thefmha.com</a>
+    </div>
   </div>
 
 </div>
