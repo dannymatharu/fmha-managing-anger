@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FMHA Player Cards</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --c1: #0e8c9e;
+    --c2: #E8312A;
+    --c3: #0077b6;
+    --c4: #7b2fbf;
+    --c5: #2ea84e;
+    --text: #111;
+    --muted: #666;
+    --bg: #f5f5f7;
+    --radius: 16px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  .header {
+    background: #111;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-logo { font-size: 18px; font-weight: 900; color: white; }
+  .header-logo span { color: #E8312A; }
+  .header-sub { font-size: 11px; color: #888; margin-top: 2px; }
+
+  .tab-nav {
+    background: #111;
+    padding: 0 16px 16px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 30px;
+    border: none;
+    background: #2a2a2a;
+    color: #888;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn[data-card="0"].active { background: var(--c1); color: white; }
+  .tab-btn[data-card="1"].active { background: var(--c2); color: white; }
+  .tab-btn[data-card="2"].active { background: var(--c3); color: white; }
+  .tab-btn[data-card="3"].active { background: var(--c4); color: white; }
+  .tab-btn[data-card="4"].active { background: var(--c5); color: white; }
+
+  .card-container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+
+  .card { display: none; animation: fadeIn 0.25s ease; }
+  .card.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-hero {
+    border-radius: var(--radius) var(--radius) 0 0;
+    padding: 28px 24px 24px;
+    color: white;
+  }
+  .card-hero h1 { font-size: 28px; font-weight: 900; line-height: 1.1; margin-bottom: 6px; }
+  .card-hero p { font-size: 15px; opacity: 0.85; font-style: italic; }
+
+  .card-body {
+    background: white;
+    border-radius: 0 0 var(--radius) var(--radius);
+    padding: 24px 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .card-intro {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .card-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+  }
+  .nav-btn {
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    background: #f0f0f0;
+    color: #333;
+    transition: background 0.15s;
+  }
+  .nav-btn:hover { background: #e0e0e0; }
+  .nav-btn.primary { background: #111; color: white; }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .card-counter { font-size: 13px; color: var(--muted); font-weight: 600; }
+
+  .key-callout {
+    margin-top: 24px;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .key-callout .key-title {
+    font-size: 15px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    color: white;
+  }
+  .key-callout .key-body { font-size: 15px; color: rgba(255,255,255,0.88); line-height: 1.5; }
+
+  /* ── CARD 1: Brain ── */
+  .brain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .brain-col { border-radius: 12px; overflow: hidden; }
+  .brain-col-header {
+    padding: 12px 16px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+  .brain-col-header.chimp { background: var(--c2); }
+  .brain-col-header.human { background: var(--c1); }
+  .brain-traits {
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+  }
+  .brain-trait {
+    padding: 11px 13px;
+    border-bottom: 1px solid #eee;
+  }
+  .brain-trait:last-child { border-bottom: none; }
+  .brain-trait strong { display: block; font-size: 13px; font-weight: 800; margin-bottom: 2px; }
+  .brain-trait span { font-size: 12px; color: var(--muted); line-height: 1.3; }
+
+  .example-box {
+    background: #f8f8f8;
+    border-left: 4px solid var(--c1);
+    border-radius: 0 10px 10px 0;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+  .example-box .ex-label {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--c1);
+    margin-bottom: 8px;
+  }
+  .example-box p { font-size: 14px; line-height: 1.6; color: #333; }
+
+  /* ── CARD 2: Timer ── */
+  .steps-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: #fafafa;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid #eee;
+  }
+  .step-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--c2);
+    color: white;
+    font-size: 16px;
+    font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-content strong { display: block; font-size: 16px; font-weight: 900; color: var(--c2); margin-bottom: 2px; }
+  .step-content .step-sub { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 4px; }
+  .step-content p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  .timer-box {
+    background: #111;
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .timer-label { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #777; margin-bottom: 8px; }
+  .timer-count { font-size: 88px; font-weight: 900; color: white; line-height: 1; transition: color 0.4s; }
+  .timer-count.running { color: var(--c2); }
+  .timer-count.done { color: var(--c5); }
+  .timer-sub { font-size: 14px; color: #888; margin: 10px 0 20px; min-height: 20px; transition: all 0.3s; }
+  .timer-btn {
+    padding: 14px 36px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    background: var(--c2);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background 0.15s;
+  }
+  .timer-btn:hover { filter: brightness(1.1); }
+  .timer-btn.reset { background: #444; }
+
+  /* ── CARD 3: What to Say ── */
+  .say-headers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+  .say-header {
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+  .say-header.dont { background: #c0392b; }
+  .say-header.do { background: #1a7a3f; }
+  .say-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .say-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .say-cell { border-radius: 10px; padding: 13px; }
+  .say-cell.dont { background: #fff5f5; border: 1px solid #fecaca; }
+  .say-cell.do { background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .say-cell .say-phrase { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+  .say-cell.dont .say-phrase { color: #c0392b; }
+  .say-cell.do .say-phrase { color: #1a7a3f; }
+  .say-cell .say-why { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+  /* ── CARD 4: Not Always ── */
+  .scenario-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+  .scenario-card {
+    border-radius: 12px;
+    border: 1px solid #e8e0f5;
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+  }
+  .scenario-card:hover { box-shadow: 0 2px 12px rgba(123,47,191,0.15); }
+  .scenario-see { padding: 16px; background: white; }
+  .scenario-see-label {
+    font-size: 10px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--c4); margin-bottom: 6px;
+  }
+  .scenario-see p { font-size: 14px; font-weight: 700; color: #222; line-height: 1.4; }
+  .scenario-tap {
+    padding: 10px 16px;
+    background: #f8f4ff;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--c4);
+    border-top: 1px solid #ede8f8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .tap-arrow { transition: transform 0.25s; display: inline-block; }
+  .scenario-card.revealed .tap-arrow { transform: rotate(180deg); }
+  .scenario-reveal {
+    display: none;
+    padding: 14px 16px;
+    background: #faf8ff;
+    border-top: 1px solid #ede8f8;
+  }
+  .scenario-reveal-label {
+    font-size: 10px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--c4); margin-bottom: 6px;
+  }
+  .scenario-reveal p { font-size: 13px; color: #333; line-height: 1.5; }
+  .scenario-card.revealed .scenario-reveal { display: block; }
+
+  .what-you-can {
+    background: #f8f4ff;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+  }
+  .what-you-can h3 { font-size: 15px; font-weight: 900; color: var(--c4); margin-bottom: 12px; }
+  .what-you-can-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-bottom: 10px; font-size: 14px; color: #333; line-height: 1.5;
+  }
+  .what-you-can-item:last-child { margin-bottom: 0; }
+  .what-you-can-item::before { content: '→'; color: var(--c4); font-weight: 900; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── CARD 5: Your Club ── */
+  .phase { margin-bottom: 20px; }
+  .phase-header {
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 900;
+    color: white;
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .phase-header.before { background: var(--c1); }
+  .phase-header.during { background: #e67e22; }
+  .phase-header.after { background: var(--c5); }
+  .phase-items { display: flex; flex-direction: column; gap: 8px; }
+  .phase-item {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .phase-item strong { display: block; font-size: 14px; font-weight: 800; color: #222; margin-bottom: 4px; }
+  .phase-item p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* Footer */
+  .footer { text-align: center; padding: 20px; font-size: 11px; color: #aaa; }
+  .footer a { color: #aaa; text-decoration: none; }
+  .footer a:hover { color: #666; }
+
+  @media (max-width: 420px) {
+    .brain-grid { grid-template-columns: 1fr; }
+    .say-row { grid-template-columns: 1fr; }
+    .say-headers { grid-template-columns: 1fr; }
+    .card-hero h1 { font-size: 22px; }
+    .timer-count { font-size: 72px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-logo"><span>FMHA</span> Player Cards</div>
+    <div class="header-sub">Managing Anger & Emotional Regulation</div>
+  </div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" data-card="0" onclick="showCard(0)">🧠 Your Brain</button>
+  <button class="tab-btn" data-card="1" onclick="showCard(1)">⏱ 10 Seconds</button>
+  <button class="tab-btn" data-card="2" onclick="showCard(2)">💬 What to Say</button>
+  <button class="tab-btn" data-card="3" onclick="showCard(3)">👁 Look Closer</button>
+  <button class="tab-btn" data-card="4" onclick="showCard(4)">⚽ Your Club</button>
+</div>
+
+<div class="card-container">
+
+  <!-- CARD 1: Your Brain on Match Day -->
+  <div class="card active" id="card-0">
+    <div class="card-hero" style="background: var(--c1)">
+      <h1>Your Brain on Match Day</h1>
+      <p>Why sometimes you react before you think</p>
+    </div>
+    <div class="card-body">
+      <p class="card-intro">Everyone has two systems in their brain that compete for control. Understanding them is the first step to staying in control on the pitch.</p>
+
+      <div class="brain-grid">
+        <div class="brain-col">
+          <div class="brain-col-header chimp">THE CHIMP 🐒</div>
+          <div class="brain-traits">
+            <div class="brain-trait">
+              <strong style="color:var(--c2)">Reacts FAST</strong>
+              <span>5x faster than your thinking brain</span>
+            </div>
+            <div class="brain-trait">
+              <strong style="color:var(--c2)">Emotional</strong>
+              <span>Runs on feelings, not facts</span>
+            </div>
+            <div class="brain-trait">
+              <strong style="color:var(--c2)">Fight or flight</strong>
+              <span>Sees everything as a threat</span>
+            </div>
+            <div class="brain-trait">
+              <strong style="color:var(--c2)">No consequences</strong>
+              <span>Doesn't think about what happens next</span>
+            </div>
+            <div class="brain-trait">
+              <strong style="color:var(--c2)">Loud</strong>
+              <span>Shouts over your thinking brain</span>
+            </div>
+          </div>
+        </div>
+        <div class="brain-col">
+          <div class="brain-col-header human">THE HUMAN 🧠</div>
+          <div class="brain-traits">
+            <div class="brain-trait">
+              <strong style="color:var(--c1)">Thinks first</strong>
+              <span>Considers what's actually happening</span>
+            </div>
+            <div class="brain-trait">
+              <strong style="color:var(--c1)">Rational</strong>
+              <span>Uses facts, not just feelings</span>
+            </div>
+            <div class="brain-trait">
+              <strong style="color:var(--c1)">Sees the big picture</strong>
+              <span>Thinks about the whole game</span>
+            </div>
+            <div class="brain-trait">
+              <strong style="color:var(--c1)">Knows consequences</strong>
+              <span>Understands what a red card means</span>
+            </div>
+            <div class="brain-trait">
+              <strong style="color:var(--c1)">Calm</strong>
+              <span>Makes better decisions under pressure</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-label">Match Day Example</div>
+        <p>Someone shouts something nasty about your teammate. Your Chimp wants to shout back or push them. Your Human knows that if you react, <strong>YOU</strong> get the card, <strong>YOUR</strong> team plays with 10, and <strong>YOU</strong> miss next week. The person who shouted? Nothing happens to them. The Chimp makes it worse. The Human protects you.</p>
+      </div>
+
+      <div class="key-callout" style="background:#111">
+        <div class="key-title">The Key Thing to Remember</div>
+        <div class="key-body">Your Chimp is faster. But your Human is smarter. Train your Human to catch up.</div>
+      </div>
+
+      <div class="card-nav">
+        <button class="nav-btn" disabled>← Back</button>
+        <span class="card-counter">1 of 5</span>
+        <button class="nav-btn primary" onclick="showCard(1)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: The 10-Second Rule -->
+  <div class="card" id="card-1">
+    <div class="card-hero" style="background: var(--c2)">
+      <h1>The 10-Second Rule</h1>
+      <p>How to stop your Chimp from taking over</p>
+    </div>
+    <div class="card-body">
+      <p class="card-intro">When something makes you angry, your brain floods with chemicals that last about 90 seconds. You don't need to count to 90. You just need to survive the first 10.</p>
+
+      <div class="steps-list">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <strong>STOP</strong>
+            <div class="step-sub">Don't move. Don't speak. Just stop.</div>
+            <p>Your Chimp wants you to react RIGHT NOW. Every second you wait is a second your Human brain is catching up.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <strong>BREATHE</strong>
+            <div class="step-sub">One deep breath in through your nose, out through your mouth.</div>
+            <p>This isn't soft — it's science. Deep breathing slows the chemicals flooding your brain. Elite athletes do it before every penalty.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <strong>LOOK</strong>
+            <div class="step-sub">Look at something that isn't the problem.</div>
+            <p>Breaking eye contact stops your Chimp from locking on. It gives your Human space to think.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <strong>CHOOSE</strong>
+            <div class="step-sub">Now decide. What's the SMART thing to do?</div>
+            <p>After 10 seconds, your Human has caught up. You can still be angry — but now you choose what to do instead of just reacting.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timer-box">
+        <div class="timer-label">Try it now</div>
+        <div class="timer-count" id="timerDisplay">10</div>
+        <div class="timer-sub" id="timerSub">Hit start when you're ready</div>
+        <button class="timer-btn" id="timerBtn" onclick="handleTimer()">START</button>
+      </div>
+
+      <div class="key-callout" style="background:#111">
+        <div class="key-title">You Can't Control What Happens.</div>
+        <div class="key-body">But you can control what you do next. Ten seconds is all it takes.</div>
+      </div>
+
+      <div class="card-nav">
+        <button class="nav-btn" onclick="showCard(0)">← Back</button>
+        <span class="card-counter">2 of 5</span>
+        <button class="nav-btn primary" onclick="showCard(2)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3: What to Say When It Kicks Off -->
+  <div class="card" id="card-2">
+    <div class="card-hero" style="background: var(--c3)">
+      <h1>What to Say When It Kicks Off</h1>
+      <p>Words that help — and words that make it worse</p>
+    </div>
+    <div class="card-body">
+      <p class="card-intro">When someone around you is losing it — a teammate, an opponent, a parent — what you say matters. Some words pour water on the fire. Others pour petrol.</p>
+
+      <div class="say-headers">
+        <div class="say-header dont">✗ Don't Say This</div>
+        <div class="say-header do">✓ Say This Instead</div>
+      </div>
+
+      <div class="say-grid">
+        <div class="say-row">
+          <div class="say-cell dont">
+            <div class="say-phrase">"Calm down!"</div>
+            <div class="say-why">Their Chimp hears this as a challenge. Makes it worse every time.</div>
+          </div>
+          <div class="say-cell do">
+            <div class="say-phrase">"Yeah, that was well out of order"</div>
+            <div class="say-why">You're on their side without making things bigger. Their Chimp feels heard.</div>
+          </div>
+        </div>
+        <div class="say-row">
+          <div class="say-cell dont">
+            <div class="say-phrase">"What's your problem?"</div>
+            <div class="say-why">Sounds aggressive even if you don't mean it. Their Chimp hears a fight.</div>
+          </div>
+          <div class="say-cell do">
+            <div class="say-phrase">"Come on, let's go get some water"</div>
+            <div class="say-why">Moving someone away from the situation gives their brain a chance to reset.</div>
+          </div>
+        </div>
+        <div class="say-row">
+          <div class="say-cell dont">
+            <div class="say-phrase">"You're being ridiculous"</div>
+            <div class="say-why">Judging someone when they're emotional shuts them down completely.</div>
+          </div>
+          <div class="say-cell do">
+            <div class="say-phrase">"Leave it, they're not worth it"</div>
+            <div class="say-why">Gives them a way out that doesn't feel like backing down. Much easier to take.</div>
+          </div>
+        </div>
+        <div class="say-row">
+          <div class="say-cell dont">
+            <div class="say-phrase">"It's only a game"</div>
+            <div class="say-why">To them right now it's NOT just a game. This dismisses their feelings.</div>
+          </div>
+          <div class="say-cell do">
+            <div class="say-phrase">"That was so frustrating, I get it"</div>
+            <div class="say-why">Showing you understand what they're feeling helps them calm down faster.</div>
+          </div>
+        </div>
+        <div class="say-row">
+          <div class="say-cell dont">
+            <div class="say-phrase">"Whatever"</div>
+            <div class="say-why">Walking away with attitude feels like winning. It actually escalates things.</div>
+          </div>
+          <div class="say-cell do">
+            <div class="say-phrase">"You alright? What happened?"</div>
+            <div class="say-why">Letting them tell you releases the pressure. You don't have to fix anything.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="key-callout" style="background:#111">
+        <div class="key-title">You don't have to fix it. You don't have to win it.</div>
+        <div class="key-body">Sometimes the best thing you can do is just not make it worse.</div>
+      </div>
+
+      <div class="card-nav">
+        <button class="nav-btn" onclick="showCard(1)">← Back</button>
+        <span class="card-counter">3 of 5</span>
+        <button class="nav-btn primary" onclick="showCard(3)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: It's Not Always What You Think -->
+  <div class="card" id="card-3">
+    <div class="card-hero" style="background: var(--c4)">
+      <h1>It's Not Always What You Think</h1>
+      <p>Why people sometimes react in ways you don't expect</p>
+    </div>
+    <div class="card-body">
+      <p class="card-intro">You know that teammate who always seems to overreact? Or the kid on the other team who can't stop arguing with the ref? Before you judge them — <strong>tap each card to see what might really be going on.</strong></p>
+
+      <div class="scenario-list">
+        <div class="scenario-card" onclick="toggleScenario(this)">
+          <div class="scenario-see">
+            <div class="scenario-see-label">What you see</div>
+            <p>A player kicks off after a foul and gets a yellow card. After the game, they're really upset and sorry.</p>
+          </div>
+          <div class="scenario-tap">
+            <span>Tap to see what might be happening</span>
+            <span class="tap-arrow">↓</span>
+          </div>
+          <div class="scenario-reveal">
+            <div class="scenario-reveal-label">What might be happening</div>
+            <p>They might be neurodivergent — meaning their brain is wired differently. Some people's brains react more intensely and they genuinely can't always control it. The remorse afterwards is real.</p>
+          </div>
+        </div>
+
+        <div class="scenario-card" onclick="toggleScenario(this)">
+          <div class="scenario-see">
+            <div class="scenario-see-label">What you see</div>
+            <p>A parent starts shouting at the ref over a throw-in. It seems totally over the top.</p>
+          </div>
+          <div class="scenario-tap">
+            <span>Tap to see what might be happening</span>
+            <span class="tap-arrow">↓</span>
+          </div>
+          <div class="scenario-reveal">
+            <div class="scenario-reveal-label">What might be happening</div>
+            <p>You don't know what's happening in their life. They might be dealing with problems at work, at home, or with their health. The throw-in isn't really what they're angry about.</p>
+          </div>
+        </div>
+
+        <div class="scenario-card" onclick="toggleScenario(this)">
+          <div class="scenario-see">
+            <div class="scenario-see-label">What you see</div>
+            <p>Someone on the other team says something offensive. Their teammates look embarrassed.</p>
+          </div>
+          <div class="scenario-tap">
+            <span>Tap to see what might be happening</span>
+            <span class="tap-arrow">↓</span>
+          </div>
+          <div class="scenario-reveal">
+            <div class="scenario-reveal-label">What might be happening</div>
+            <p>Sometimes people repeat things they've heard at home or online without fully understanding how it lands. That doesn't make it okay — but understanding why helps you respond better.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="what-you-can">
+        <h3>What YOU can do</h3>
+        <div class="what-you-can-item">Don't laugh at someone who's lost control. They probably feel worse about it than you do.</div>
+        <div class="what-you-can-item">Check in with a teammate after the game. A simple "you alright?" is enough — you don't need to say anything else.</div>
+        <div class="what-you-can-item">If someone says something offensive, you don't have to confront them yourself. Tell your coach. That's not grassing — that's the right call.</div>
+        <div class="what-you-can-item">Being kind costs nothing. Being unkind can cost everything.</div>
+      </div>
+
+      <div class="key-callout" style="background:#111">
+        <div class="key-title">You Never Know the Full Story.</div>
+        <div class="key-body">How you treat people when they're at their worst says everything about you.</div>
+      </div>
+
+      <div class="card-nav">
+        <button class="nav-btn" onclick="showCard(2)">← Back</button>
+        <span class="card-counter">4 of 5</span>
+        <button class="nav-btn primary" onclick="showCard(4)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5: Your Club, Your Rules -->
+  <div class="card" id="card-4">
+    <div class="card-hero" style="background: var(--c5)">
+      <h1>Your Club, Your Rules</h1>
+      <p>What a great matchday actually looks like</p>
+    </div>
+    <div class="card-body">
+      <p class="card-intro">Everyone talks about bad behaviour in football. But most matchdays are brilliant. Here's what the best clubs and the best players do — and how you can be part of it.</p>
+
+      <div class="phase">
+        <div class="phase-header before">Before the Game</div>
+        <div class="phase-items">
+          <div class="phase-item">
+            <strong>Shake hands like you mean it</strong>
+            <p>Not because someone told you to. Because you're about to share a pitch with these people for 90 minutes.</p>
+          </div>
+          <div class="phase-item">
+            <strong>Leave your baggage at the gate</strong>
+            <p>Bad day at school? Argument at home? That's real — but it doesn't belong on the pitch. Park it for now.</p>
+          </div>
+          <div class="phase-item">
+            <strong>Agree with your mates</strong>
+            <p>"Let's not give them anything to complain about today." Set the standard before kickoff.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header during">During the Game</div>
+        <div class="phase-items">
+          <div class="phase-item">
+            <strong>Clap the other team's good play</strong>
+            <p>Seriously. It changes the whole atmosphere. And it confuses the opposition — which is a bonus.</p>
+          </div>
+          <div class="phase-item">
+            <strong>Talk to the ref, don't shout at them</strong>
+            <p>"Ref, I thought that was a foul" works. "REF, ARE YOU BLIND?" doesn't. Same message, very different result.</p>
+          </div>
+          <div class="phase-item">
+            <strong>Pick people up</strong>
+            <p>Opponent down injured? Help them up. Teammate made an error? Encourage them. That's leadership.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header after">After the Game</div>
+        <div class="phase-items">
+          <div class="phase-item">
+            <strong>Win or lose, be the same person</strong>
+            <p>Nobody respects a bad winner. Losing with dignity takes more guts than winning ever does.</p>
+          </div>
+          <div class="phase-item">
+            <strong>Thank the ref</strong>
+            <p>Even if they had a shocker. They turned up so you could play. Most weekends, not enough of them do.</p>
+          </div>
+          <div class="phase-item">
+            <strong>Check in on someone</strong>
+            <p>If someone had a tough game, a simple "you alright?" makes more difference than you think.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="key-callout" style="background:#111">
+        <div class="key-title">Football is the best thing going.</div>
+        <div class="key-body">The people who make it brilliant aren't the ones who shout the loudest. They're the ones who set the standard. That can be you.</div>
+      </div>
+
+      <div class="card-nav">
+        <button class="nav-btn" onclick="showCard(3)">← Back</button>
+        <span class="card-counter">5 of 5</span>
+        <button class="nav-btn" disabled>Done ✓</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  FMHA — The Football Mental Health Alliance<br>
+  <a href="https://vault.thefmha.com" target="_blank">vault.thefmha.com</a> · Managing Anger & Emotional Regulation
+</div>
+
+<script>
+  function showCard(index) {
+    document.querySelectorAll('.card').forEach((c, i) => c.classList.toggle('active', i === index));
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === index));
+    document.querySelectorAll('.tab-btn')[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleScenario(card) {
+    card.classList.toggle('revealed');
+  }
+
+  let timerInterval = null;
+  let timerRunning = false;
+  let timerCount = 10;
+
+  function handleTimer() {
+    if (timerRunning) return;
+    if (timerCount === 0) {
+      timerCount = 10;
+      document.getElementById('timerDisplay').textContent = '10';
+      document.getElementById('timerDisplay').className = 'timer-count';
+      document.getElementById('timerSub').textContent = "Hit start when you're ready";
+      document.getElementById('timerBtn').textContent = 'START';
+      document.getElementById('timerBtn').className = 'timer-btn';
+      return;
+    }
+    timerRunning = true;
+    document.getElementById('timerBtn').textContent = 'COUNTING...';
+    document.getElementById('timerDisplay').className = 'timer-count running';
+
+    timerInterval = setInterval(() => {
+      timerCount--;
+      document.getElementById('timerDisplay').textContent = timerCount;
+      if (timerCount === 8) document.getElementById('timerSub').textContent = "🛑 Stop. Don't move.";
+      if (timerCount === 6) document.getElementById('timerSub').textContent = "💨 Breathe. In through your nose.";
+      if (timerCount === 4) document.getElementById('timerSub').textContent = "👀 Look away from the problem.";
+      if (timerCount === 2) document.getElementById('timerSub').textContent = "🧠 Your Human is arriving...";
+      if (timerCount === 0) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        document.getElementById('timerDisplay').className = 'timer-count done';
+        document.getElementById('timerSub').textContent = 'Your Human has caught up. Now choose.';
+        document.getElementById('timerBtn').textContent = 'RESET';
+        document.getElementById('timerBtn').className = 'timer-btn reset';
+      }
+    }, 1000);
+  }
+</script>
+
+</body>
+</html>
