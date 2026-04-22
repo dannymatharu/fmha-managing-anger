@@ -366,6 +366,176 @@ h2 {
 .cbox-icon { font-size: 40px; margin-bottom: 12px; line-height: 1.1; }
 .cbox-lbl { font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--acc); margin-bottom: 8px; }
 .cbox-val { font-size: 16px; font-weight: 700; color: white; line-height: 1.4; }
+
+/* ── Mobile Responsive (≤ 600px / iPhone) ───────────────── */
+@media (max-width: 600px) {
+  .slide {
+    padding: 18px 18px 76px;
+    align-items: flex-start;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  .inner { max-width: 100%; }
+
+  /* Typography */
+  h1 { font-size: 28px; letter-spacing: -.2px; }
+  h2 { font-size: 21px; letter-spacing: -.1px; }
+  .sub { font-size: 14px; margin-top: 8px; }
+  .lbl { font-size: 11px; margin-bottom: 8px; letter-spacing: 2px; }
+  .stat { font-size: 52px; letter-spacing: -1px; }
+  .stat-lbl { font-size: 13px; max-width: 100%; }
+
+  /* Metrics: 2-up on mobile */
+  .metrics { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+  .mbox { padding: 12px 8px; }
+  .mval { font-size: 26px; }
+  .mdsc { font-size: 12px; }
+
+  /* Cards: single column */
+  .cards.c2, .cards.c3 { grid-template-columns: 1fr; }
+  .card { padding: 14px 16px; }
+  .ctit { font-size: 14px; }
+  .cbod { font-size: 13px; line-height: 1.5; }
+
+  /* Compare: stack vertically */
+  .compare { grid-template-columns: 1fr; gap: 10px; }
+  .col { padding: 16px; }
+  .col li { font-size: 13px; }
+
+  /* Escalation ladder */
+  .ladder { gap: 5px; margin-top: 12px; }
+  .rung { padding: 7px 10px; gap: 8px; }
+  .rn { width: 26px; height: 26px; font-size: 12px; border-radius: 4px; }
+  .rl { width: auto !important; min-width: 70px; font-size: 11px; }
+  .rd { font-size: 12px; line-height: 1.3; }
+
+  /* Tech grid: 2-up */
+  .techgrid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 8px; margin-top: 14px;
+  }
+  .tc { padding: 12px 12px; gap: 8px; }
+  .tnum { font-size: 20px; min-width: 26px; }
+  .ttit { font-size: 13px; }
+  .tdsc { font-size: 12px; }
+
+  /* Five types: 2-up */
+  .types { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+  .typh { font-size: 16px; }
+  .typt { font-size: 12px; padding: 7px 6px; }
+  .typd { font-size: 11px; padding: 6px 6px 8px; }
+
+  /* Quote */
+  .qblock { padding: 14px 16px; margin-top: 14px; }
+  .qmark { font-size: 36px; }
+  .qtxt { font-size: 14px; }
+  .qatt { font-size: 12px; }
+
+  /* Icon list */
+  .ilist { gap: 8px; margin-top: 14px; }
+  .iitem { padding: 10px 12px; gap: 10px; }
+  .itit { font-size: 14px; }
+  .idsc { font-size: 13px; }
+  .inum { width: 28px; height: 28px; font-size: 13px; }
+
+  /* Scripts: single column */
+  .scr { grid-template-columns: 1fr; gap: 5px; padding: 10px 0; }
+  .ssit { font-size: 11px; }
+  .ssay { font-size: 13px; line-height: 1.45; }
+
+  /* Actions: stack */
+  .act { flex-direction: column; }
+  .anum { width: 100%; height: 38px; font-size: 18px; }
+  .atag { width: 100%; padding: 8px; font-size: 10px; }
+  .atit { font-size: 14px; }
+  .adsc { font-size: 13px; }
+
+  /* Detail 2: single column */
+  .detail2 { grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
+  .dcard { padding: 14px 16px; }
+  .dnum { font-size: 26px; }
+  .dtit { font-size: 15px; }
+  .dbod { font-size: 13px; }
+
+  /* Type profile cards: single column */
+  .type-grid3 { grid-template-columns: 1fr; }
+  .type-grid2 { grid-template-columns: 1fr; }
+  .type-single .tcard-body {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 14px 14px !important;
+  }
+  .tcard-name { font-size: 13px; }
+  .tsec { font-size: 10px; letter-spacing: 1px; }
+  .tdrive { font-size: 12px; }
+  .tbullets li { font-size: 12px; }
+
+  /* Reflect list */
+  .reflect-list { gap: 6px; margin-top: 12px; }
+  .ritem { padding: 8px 10px; gap: 10px; }
+  .rq { font-size: 13px; }
+  .rhint { font-size: 12px; }
+
+  /* Resources: single column */
+  .resources { grid-template-columns: 1fr; gap: 10px; }
+  .res { padding: 14px; }
+  .rbod { font-size: 13px; }
+  .rlink { font-size: 13px; }
+
+  /* Support cats: 2-up */
+  .support-cats { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+  .scat { padding: 10px 8px; }
+  .scat-lbl { font-size: 11px; }
+  .scat-dsc { font-size: 11px; }
+
+  /* Because list */
+  .because-list { gap: 8px; margin-top: 14px; }
+  .because { padding: 10px 12px; gap: 8px; }
+  .because-tag { width: 55px; font-size: 10px; }
+  .because-txt { font-size: 13px; }
+
+  /* Contact grid: single column */
+  .contact-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 16px; }
+  .cbox { padding: 14px; }
+  .cbox-icon { font-size: 28px; margin-bottom: 8px; }
+  .cbox-lbl { font-size: 11px; }
+  .cbox-val { font-size: 14px; }
+
+  /* Cover */
+  .cover-badge { font-size: 10px; margin-top: 14px; padding: 4px 10px; }
+  .cover-meta { gap: 10px; margin-top: 16px; }
+  .cmeta-item { font-size: 11px; }
+
+  /* Insight box */
+  .insight { font-size: 14px; padding: 14px 16px; margin-top: 14px; }
+
+  /* Banner */
+  .banner { font-size: 13px; padding: 10px 14px; }
+
+  /* Practice row: single column */
+  .practice-row { grid-template-columns: 1fr; gap: 12px; margin-top: 14px; }
+  .psay { font-size: 12px; padding: 6px 9px; }
+  .pnote { font-size: 12px; }
+
+  /* Utility: flex-stack targets inline flex layouts */
+  .mobile-stack {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+  /* Utility: force single-column inline grids */
+  .mobile-single-col {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Nav & hint */
+  #nav { bottom: 14px; right: 14px; gap: 8px; }
+  #hint { display: none; }
+  .nb { width: 38px; height: 38px; font-size: 18px; }
+}
 </style>
 </head>
 <body>
@@ -861,7 +1031,7 @@ h2 {
     <h2>The Contagion Effect</h2>
     <div class="sub" style="margin-top:6px">One person can change the emotional temperature of an entire touchline.</div>
 
-    <div style="display:flex;gap:14px;margin-top:20px;align-items:stretch">
+    <div class="mobile-stack" style="display:flex;gap:14px;margin-top:20px;align-items:stretch">
       <!-- Visual: expanding circles -->
       <div style="display:flex;align-items:flex-end;gap:10px;padding:20px 24px;background:var(--card2);border-radius:11px;border:1px solid var(--border);flex:1.2">
         <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
@@ -983,7 +1153,7 @@ h2 {
     <h2>The Reflection &amp; Recovery Framework</h2>
     <div class="sub" style="margin-top:6px;margin-bottom:0">Managing the moment is crisis management. Reflection is what changes culture.</div>
 
-    <div style="display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:18px">
+    <div class="mobile-single-col" style="display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:18px">
       <!-- Left: 5-question framework -->
       <div>
         <div style="font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--acc);margin-bottom:10px">The 24-hour review — ask these 5 questions</div>
@@ -1112,7 +1282,7 @@ h2 {
   <div class="inner">
     <div class="lbl">Mental Health Support</div>
     <h2>Hub of Hope</h2>
-    <div style="display:flex;gap:20px;margin-top:18px;align-items:flex-start">
+    <div class="mobile-stack" style="display:flex;gap:20px;margin-top:18px;align-items:flex-start">
       <div style="flex:1">
         <div style="font-size:17px;color:var(--muted);line-height:1.6;margin-bottom:18px">
           FMHA is proud to partner with <strong style="color:white">Hub of Hope</strong> — the UK's leading mental health support database, created by the <strong style="color:white">Chasing the Stigma</strong> charity.
@@ -1267,8 +1437,10 @@ h2 {
     if (['ArrowLeft','ArrowUp'].includes(e.key))        { e.preventDefault(); nav(-1); }
   });
 
-  // Click anywhere on deck (not on nav)
-  document.getElementById('deck').addEventListener('click', () => nav(1));
+  // Click anywhere on deck (not on nav) — desktop only; on touch devices use nav buttons
+  if (!('ontouchstart' in window)) {
+    document.getElementById('deck').addEventListener('click', () => nav(1));
+  }
 
   show(0);
 </script>
