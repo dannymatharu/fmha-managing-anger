@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FMHA Academy Slide Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --green:#2b1216;
+      --green2:#4a191d;
+      --cream:#f4ecd9;
+      --cream2:#fff8e8;
+      --mint:#ff5657;
+      --gold:#cda66d;
+      --line:rgba(244,236,217,.24);
+      --soft:rgba(244,236,217,.08);
+      --shadow:rgba(0,0,0,.32);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;overflow:hidden;background:var(--green);color:var(--cream);font-family:'DM Sans',system-ui,sans-serif}
+    body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 18% 20%, rgba(255,86,87,.18), transparent 28%),radial-gradient(circle at 82% 74%, rgba(205,166,109,.14), transparent 30%),linear-gradient(135deg,#18090b 0%,#2b1216 48%,#4a191d 100%);pointer-events:none}
+    .deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+    .slide{position:absolute;inset:0;display:none;width:100%;height:100%;padding:5.6vh 6vw 5.8vh;overflow:hidden}
+    .slide.active{display:flex}
+    .slide:after{content:"";position:absolute;right:-13vw;bottom:-23vh;width:48vw;height:48vw;border:1px solid rgba(205,166,109,.2);border-radius:50%;box-shadow:0 0 0 7vw rgba(244,236,217,.025);z-index:0}
+    .brand{position:absolute;top:3.5vh;left:4.2vw;display:flex;gap:.72rem;align-items:center;z-index:5;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cream2);font-weight:800}
+    .brand .mark{display:grid;place-items:center;width:2.25rem;height:2.25rem;border-radius:999px;background:var(--cream);color:var(--green);font-family:'Cormorant Garamond',serif;font-size:1.18rem;font-weight:700;line-height:1}
+    .brand span:last-child{border:1px solid var(--line);padding:.54rem .78rem;border-radius:999px;background:rgba(43,18,22,.62);backdrop-filter:blur(10px)}
+    .num{position:absolute;bottom:3.3vh;right:4vw;z-index:5;color:rgba(244,236,217,.55);font-size:.82rem;letter-spacing:.12em}
+    .content{position:relative;z-index:2;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding-top:2vh}
+    h1,h2{font-family:'Cormorant Garamond',serif;letter-spacing:-.045em;margin:0;color:var(--cream2);line-height:.91}
+    h1{font-size:clamp(4rem,8.25vw,8.8rem);max-width:1080px}
+    h2{font-size:clamp(3.3rem,6.4vw,7rem);max-width:1030px}
+    p{font-size:clamp(1.05rem,1.48vw,1.55rem);line-height:1.38;color:rgba(244,236,217,.84);margin:0;max-width:760px}
+    .eyebrow{font-size:.86rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:1.2rem}
+    .lead{font-size:clamp(1.2rem,1.88vw,2rem);line-height:1.27;color:rgba(244,236,217,.92);max-width:900px;margin-top:1.35rem}
+    .kicker{color:var(--mint);font-weight:800}
+    .cover{align-items:center;justify-content:flex-start}
+    .cover .content{justify-content:flex-start;text-align:left;padding-left:2vw}
+    .cover h1{max-width:1120px}
+    .cover .lead{max-width:880px}
+    .cover .seal{position:absolute;right:7vw;top:18vh;width:180px;height:180px;border:1px solid rgba(205,166,109,.5);border-radius:50%;display:grid;place-items:center;color:var(--cream);font-family:'Cormorant Garamond',serif;font-size:1.8rem;line-height:.95;text-align:center;transform:rotate(-8deg);background:rgba(43,18,22,.54)}
+    .two-col .content{display:grid;grid-template-columns:1.03fr .72fr;gap:5vw;align-items:center;justify-content:center}
+    .split .content{display:grid;grid-template-columns:.78fr 1fr;gap:5vw;align-items:center}
+    .stack{display:flex;flex-direction:column;gap:1.15rem;max-width:760px}
+    .quote{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,4.7rem);line-height:1;letter-spacing:-.035em;color:var(--cream2)}
+    .panel{border:1px solid var(--line);border-radius:34px;background:rgba(244,236,217,.07);box-shadow:0 28px 80px var(--shadow);padding:2.2rem;backdrop-filter:blur(12px)}
+    .panel.big{padding:2.6rem;min-height:54vh;display:flex;flex-direction:column;justify-content:center}
+    .panel-title{font-weight:800;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;font-size:.86rem;margin-bottom:1.4rem}
+    .pill-list{display:grid;gap:.86rem}
+    .pill{border:1px solid rgba(244,236,217,.18);border-radius:999px;padding:.9rem 1rem;background:rgba(43,18,22,.45);font-size:clamp(1rem,1.22vw,1.26rem);font-weight:700;color:var(--cream2)}
+    .large-stat{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,9vw,9.8rem);line-height:.8;color:var(--mint);letter-spacing:-.06em;margin-bottom:.7rem}
+    .muted{color:rgba(244,236,217,.68)}
+    .three{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:2rem;width:100%;max-width:1060px}
+    .mini{border-left:2px solid var(--gold);padding:1rem 1rem 1.15rem;background:rgba(244,236,217,.055);border-radius:0 22px 22px 0;min-height:150px}
+    .mini strong{display:block;color:var(--cream2);font-size:clamp(1.05rem,1.32vw,1.35rem);margin-bottom:.5rem}
+    .mini span{color:rgba(244,236,217,.72);font-size:clamp(.92rem,1.06vw,1.05rem);line-height:1.32;display:block}
+    .center .content{flex-direction:column;text-align:center;gap:1.25rem}
+    .center p{margin-inline:auto}
+    .ribbon{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(255,86,87,.45);border-radius:999px;padding:.62rem .9rem;background:rgba(255,86,87,.12);font-weight:800;color:var(--mint);font-size:.92rem;letter-spacing:.08em;text-transform:uppercase}
+    .dashline{width:min(640px,66vw);height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:1.4rem auto .4rem}
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem;width:100%;max-width:1050px}
+    .price{border:1px solid var(--line);border-radius:30px;background:rgba(244,236,217,.065);padding:1.55rem;min-height:250px;display:flex;flex-direction:column;justify-content:space-between}
+    .price small{color:var(--gold);letter-spacing:.12em;text-transform:uppercase;font-weight:800}
+    .price b{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,4.2vw,4.6rem);line-height:.95;color:var(--cream2);letter-spacing:-.04em}
+    .price span{color:rgba(244,236,217,.72);line-height:1.32;font-size:1rem}
+    .cta{display:flex;gap:1rem;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:2rem}
+    a.button{appearance:none;text-decoration:none;border-radius:999px;padding:1rem 1.35rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;font-size:.86rem;transition:.2s ease;display:inline-flex;align-items:center;justify-content:center;min-width:180px}
+    a.primary{background:var(--cream);color:var(--green)}
+    a.secondary{border:1px solid rgba(244,236,217,.36);color:var(--cream);background:rgba(244,236,217,.06)}
+    a.button:hover{transform:translateY(-2px)}
+    .controls{position:fixed;left:50%;bottom:2.6vh;transform:translateX(-50%);z-index:20;display:flex;gap:.7rem;align-items:center;background:rgba(18,8,10,.72);border:1px solid rgba(244,236,217,.16);border-radius:999px;padding:.55rem;backdrop-filter:blur(16px)}
+    .controls button{border:0;border-radius:999px;background:rgba(244,236,217,.12);color:var(--cream);padding:.62rem .88rem;font-weight:800;cursor:pointer}
+    .controls button:hover{background:rgba(244,236,217,.2)}
+    .progress{position:fixed;left:0;bottom:0;height:4px;background:var(--mint);z-index:30;width:0;transition:width .25s ease}
+    .hide{display:none!important}
+    .contact{font-size:clamp(1.1rem,1.5vw,1.6rem);line-height:1.5;color:rgba(244,236,217,.88)}
+    .contact strong{color:var(--cream2)}
+    @media (max-width:900px){
+      .slide{padding:8vh 6vw 7vh}.two-col .content,.split .content{grid-template-columns:1fr;gap:2rem}.panel.big{min-height:auto}.three,.pricing{grid-template-columns:1fr}.cover .seal{display:none}h1{font-size:4.2rem}h2{font-size:3.4rem}.controls{display:none}
+    }
+    @media print{
+      html,body{height:auto;overflow:visible;background:#2b1216}.deck{height:auto;overflow:visible}.slide{display:flex!important;position:relative;page-break-after:always;width:100vw;height:56.25vw;max-height:100vh;min-height:0}.controls,.progress{display:none!important}a{color:inherit;text-decoration:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="deck" id="deck">
+    <section class="slide cover active">
+      <div class="brand"><div class="mark">F</div><span>FMHA Academy</span></div><div class="num">01 / 13</div>
+      <div class="content">
+        <div>
+          <div class="eyebrow">Neurodiversity · Mental Health · Safeguarding</div>
+          <h1>Stop working in silos.</h1>
+          <p class="lead">Build inclusive, legally aware grassroots football clubs with ongoing training, resources, expert CPD and a properly moderated support network.</p>
+        </div>
+      </div>
+      <div class="seal">System<br>not<br>course</div>
+    </section>
+
+    <section class="slide two-col">
+      <div class="brand"><div class="mark">F</div><span>FMHA Academy</span></div><div class="num">02 / 13</div>
+      <div class="content">
+        <div>
+          <div class="eyebrow">The problem</div>
+          <h2>Grassroots football is carrying far more complexity than it was built for.</h2>
+          <p class="lead">Neurodiversity. Anxiety. Emotional regulation. Safeguarding pressure. Parent conflict. Volunteer burnout. It’s all landing at the club gate.</p>
+        </div>
+        <div class="panel big">
+          <div class="large-stat">5</div>
+          <p>Football is roughly five years behind where it needs to be on proper inclusion, neurodiversity awareness and mental health support.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide split">
+      <div class="brand"><div class="mark">F</div><span>FMHA Academy</span></div><div class="num">03 / 13</div>
+      <div class="content">
+        <div class="panel big">
+          <div class="panel-title">The old model</div>
+          <div class="pill-list">
+            <div class="pill">Click through a module</div>
+            <div class="pill">Answer a few questions</div>
+            <div class="pill">Download a certificate</div>
+            <div class="pill">Go back to the club alone</div>
+          </div>
+        </div>
+        <div>
+          <div class="eyebrow">One-off training doesn’t hold</div>
+          <h2>Tick-box e-learning doesn’t cut it.</h2>
+          <p class="lead">Coaches and welfare officers don’t need more isolated courses. They need practical support that stays with them when the difficult situation turns up next Saturday.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide center">
+      <div class="brand"><div class="mark">F</div><span>FMHA Academy</span></div><div class="num">04 / 13</div>
+      <div class="content">
+        <div class="ribbon">Safe support matters</div>
+        <h2>Facebook groups are not the answer.</h2>
+        <p class="lead">There’s no quality control. No moderation standard. No protection from hostile advice. One loud “Dave” can stop a good volunteer asking for help again.</p>
+        <div class="dashline"></div>
+        <p class="muted">Grassroots football has been trying to solve sensitive welfare issues in the least safe room on the internet.</p>
+      </div>
+    </section>
+
+    <section class="slide two-col">
+      <div class="brand"><div class="mark">F</div><span>FMHA Academy</span></div><div class="num">05 / 13</div>
+      <div class="content">
+        <div>
+          <div class="eyebrow">The risk</div>
+          <h2>You’re carrying legal risk you may not know about.</h2>
+          <p class="lead">The Equality Act 2010 doesn’t wait for perfect confidence. Clubs need to understand reasonable adjustments, anticipatory duty and how to evidence what they’ve done.</p>
+        </div>
+        <div class="panel big">
+          <div class="quote">“If you’re not documenting reasonable adjustments, you’re exposed.”</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide center">
+      <div class="brand"><div class="mark">F</div><span>FMHA Academy</span></div><div class="num">06 / 13</div>
+      <div class="content">
+        <div class="eyebrow">The answer</div>
+        <h2>The FMHA Academy is a complete ongoing support system.</h2>
+        <p class="lead">Built specifically for grassroots football — not corporate wellbeing, not school training with a football badge stuck on it.</p>
+      </div>
+    </section>
+
+    <section class="slide center">
+      <div class="brand"><div class="mark">F</div><span>FMHA Academy</span></div><div class="num">07 / 13</div>
+      <div class="content">
+        <div>
+          <div class="eyebrow">What clubs get</div>
+          <h2>Training, tools, people and proof.</h2>
+          <div class="three">
+            <div class="mini"><strong>Core live training</strong><span>Neurodiversity, mental health first aid, anger and emotional regulation — with CPD certificates.</span></div>
+            <div class="mini"><strong>Monthly expert CPD</strong><span>Safeguarding, player welfare, legal compliance, coaching, mental health and parent engagement.</span></div>
+            <div class="mini"><strong>Football-specific resources</strong><span>Matchday checklists, conversation templates, sensory guides and practical coach tools.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide two-col">
+      <div class="brand"><div class="mark">F</div><span>FMHA Academy</span></div><div class="num">08 / 13</div>
+      <div class="content">
+        <div>
+          <div class="eyebrow">Included free</div>
+          <h2>The Parent / Carer / Guardian Academy changes the club dynamic.</h2>
+          <p class="lead">When families are educated, expectation gaps shrink. Trust improves. Friction reduces. Volunteers stop carrying every conversation alone.</p>
+        </div>
+        <div class="panel big">
+          <div class="panel-title">The shift</div>
+          <div class="quote">Families become partners, not problems.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide split">
+      <div class="brand"><div class="mark">F</div><span>FMHA Academy</span></div><div class="num">09 / 13</div>
+      <div class="content">
+        <div class="panel big">
+          <div class="large-stat">8–12</div>
+          <p>The critical age range where pressure, comparison, confidence and dropout start to show.</p>
+        </div>
+        <div>
+          <div class="eyebrow">MindStrong FC</div>
+          <h2>Train the mind like you train the first touch.</h2>
+          <p class="lead">Age-appropriate mental fitness tools delivered by coaches and parents: handling mistakes, managing pressure, building confidence and developing resilience through football.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide two-col">
+      <div class="brand"><div class="mark">F</div><span>FMHA Academy</span></div><div class="num">10 / 13</div>
+      <div class="content">
+        <div>
+          <div class="eyebrow">Player Log App</div>
+          <h2>Documentation isn’t bureaucracy.</h2>
+          <p class="lead">It’s protection, professionalism and proof of care. Coaches can log observable behaviours and track reasonable adjustments without pretending to diagnose anybody.</p>
+        </div>
+        <div class="panel big">
+          <div class="pill-list">
+            <div class="pill">Timestamped support record</div>
+            <div class="pill">Clear adjustment guidance</div>
+            <div class="pill">Consistency across coaches</div>
+            <div class="pill">Defensible evidence if challenged</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide center">
+      <div class="brand"><div class="mark">F</div><span>FMHA Academy</span></div><div class="num">11 / 13</div>
+      <div class="content">
+        <div>
+          <div class="eyebrow">Built for the whole club</div>
+          <h2>One shared system beats scattered good intentions.</h2>
+          <div class="three">
+            <div class="mini"><strong>Coaches</strong><span>Know what to do on the pitch, not just in theory.</span></div>
+            <div class="mini"><strong>Welfare leads</strong><span>Stop operating as the lone emergency service for the club.</span></div>
+            <div class="mini"><strong>Committees</strong><span>Show visible commitment to inclusion, safeguarding and mental health.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide center">
+      <div class="brand"><div class="mark">F</div><span>FMHA Academy</span></div><div class="num">12 / 13</div>
+      <div class="content">
+        <div>
+          <div class="eyebrow">Launch pricing</div>
+          <h2>Support one person, one club, or a whole county.</h2>
+          <div class="pricing">
+            <div class="price"><small>Individual</small><b>£24</b><span>per month. Unlimited access and training seats for one coach, welfare officer or volunteer.</span></div>
+            <div class="price"><small>Club</small><b>£69</b><span>per month. Unlimited access, training and PCG Academy for the whole club.</span></div>
+            <div class="price"><small>County FA</small><b>£995+</b><span>per month. Coverage for every club and every person across the county.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide center">
+      <div class="brand"><div class="mark">F</div><span>FMHA Academy</span></div><div class="num">13 / 13</div>
+      <div class="content">
+        <div>
+          <div class="eyebrow">Next step</div>
+          <h2>Give your club a system.<br>Not another forgotten course.</h2>
+          <p class="lead">Join the FMHA Academy, check the pricing, or book a conversation about rolling this out across your club, league or County FA.</p>
+          <div class="cta">
+            <a class="button primary" href="https://fmha.academy/" target="_blank" rel="noopener">Join the Academy</a>
+            <a class="button secondary" href="https://fmha.academy/" target="_blank" rel="noopener">See Pricing</a>
+          </div>
+          <p class="contact" style="margin-top:1.6rem"><strong>support@withinu.net</strong> · <strong>03330 500 399</strong></p>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="controls" id="controls">
+    <button onclick="prevSlide()">‹ Prev</button>
+    <button onclick="nextSlide()">Next ›</button>
+    <button onclick="window.print()">Print / PDF</button>
+  </div>
+  <div class="progress" id="progress"></div>
+  <script>
+    const slides=[...document.querySelectorAll('.slide')];
+    const progress=document.getElementById('progress');
+    let current=0;
+    function show(i){
+      current=(i+slides.length)%slides.length;
+      slides.forEach((s,idx)=>s.classList.toggle('active',idx===current));
+      progress.style.width=((current+1)/slides.length*100)+'%';
+      location.hash='slide-'+(current+1);
+    }
+    function nextSlide(){show(current+1)}
+    function prevSlide(){show(current-1)}
+    document.addEventListener('keydown',e=>{
+      if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();nextSlide()}
+      if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prevSlide()}
+      if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1);
+    });
+    const match=location.hash.match(/slide-(\d+)/); if(match) show(parseInt(match[1],10)-1); else show(0);
+  </script>
+</body>
+</html>
