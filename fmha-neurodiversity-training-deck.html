@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FMHA Grassroots Neurodiversity Training Deck</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Fraunces:opsz,wght@9..144,600;9..144,800&display=swap');
+:root{
+  --navy:#192335;
+  --navy2:#101927;
+  --mint:#10B982;
+  --mint2:#7BE7C8;
+  --cream:#F6EEDD;
+  --paper:#FFF8EA;
+  --gold:#C49A43;
+  --white:#ffffff;
+  --muted:#C9D5D0;
+  --ink:#17202D;
+  --danger:#FF6B5D;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--navy2);font-family:'DM Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--cream);overflow:hidden}
+.deck{height:100vh;width:100vw;position:relative;overflow:hidden;background:radial-gradient(circle at top right,rgba(16,185,130,.18),transparent 28%),linear-gradient(135deg,var(--navy),var(--navy2))}
+.slide{position:absolute;inset:0;display:none;padding:56px 70px 58px;overflow:hidden;background:radial-gradient(circle at 12% 90%,rgba(196,154,67,.13),transparent 24%),radial-gradient(circle at 88% 14%,rgba(16,185,130,.16),transparent 32%),linear-gradient(135deg,var(--navy),var(--navy2));}
+.slide.active{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:.2;transform:scale(.994)}to{opacity:1;transform:scale(1)}}
+.brand{position:absolute;top:30px;left:42px;display:flex;gap:10px;align-items:center;z-index:4}
+.logo-mark{height:34px;width:34px;border-radius:50%;background:linear-gradient(135deg,var(--mint),var(--gold));box-shadow:0 0 0 5px rgba(246,238,221,.06);position:relative;overflow:hidden}
+.logo-mark:before{content:'';position:absolute;inset:24%;border:2px solid var(--navy);border-radius:50%;opacity:.75}.logo-mark:after{content:'';position:absolute;left:50%;top:8%;width:6%;height:84%;background:var(--navy);opacity:.6;transform:translateX(-50%) rotate(26deg);transform-origin:center}
+.brand-pill{font-size:12px;letter-spacing:.16em;text-transform:uppercase;border:1px solid rgba(246,238,221,.26);border-radius:999px;padding:9px 12px;background:rgba(246,238,221,.06);backdrop-filter:blur(8px);color:var(--cream);font-weight:700}.brand-pill b{color:var(--mint)}
+.slide-no{position:absolute;right:42px;top:33px;color:rgba(246,238,221,.55);font-size:13px;letter-spacing:.14em;text-transform:uppercase;z-index:4}.slide-no span{color:var(--mint)}
+.kicker{color:var(--mint2);font-size:15px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;margin-bottom:18px}.title{font-family:'Fraunces',Georgia,serif;font-size:74px;line-height:.95;letter-spacing:-.055em;margin:0;max-width:960px}.title.small{font-size:63px;max-width:920px}.title.xs{font-size:52px;line-height:1.02;letter-spacing:-.045em}.lead{font-size:25px;line-height:1.35;color:rgba(246,238,221,.88);max-width:730px;margin-top:24px}.lead strong{color:var(--white)}
+.two-col{display:grid;grid-template-columns:1.1fr .9fr;gap:46px;align-items:center;height:100%;padding-top:14px}.content{position:relative;z-index:2}.visual{position:relative;min-height:520px;z-index:1}.big-stat{font-family:'Fraunces',Georgia,serif;font-size:126px;line-height:.8;letter-spacing:-.07em;color:var(--mint);text-shadow:0 18px 50px rgba(0,0,0,.24)}
+.caption{font-size:18px;color:rgba(246,238,221,.74);line-height:1.42;max-width:620px}.line{height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:28px 0;opacity:.75}.quote{font-family:'Fraunces',Georgia,serif;font-size:44px;line-height:1.08;letter-spacing:-.035em;color:var(--paper);max-width:900px}.quote-mark{font-family:'Fraunces',Georgia,serif;font-size:154px;color:rgba(16,185,130,.22);line-height:.6;margin-bottom:-10px}
+.bubbles{position:absolute;inset:20px}.bubble{position:absolute;border:1px solid rgba(246,238,221,.18);background:rgba(246,238,221,.07);box-shadow:0 24px 70px rgba(0,0,0,.22);backdrop-filter:blur(10px);border-radius:999px;padding:18px 24px;font-weight:800;color:var(--paper);white-space:nowrap}.bubble.mint{background:rgba(16,185,130,.18);border-color:rgba(123,231,200,.36)}.bubble.gold{background:rgba(196,154,67,.18);border-color:rgba(196,154,67,.42)}
+.pitch{position:absolute;right:24px;top:24px;width:430px;height:520px;border:2px solid rgba(246,238,221,.24);border-radius:30px;background:linear-gradient(160deg,rgba(16,185,130,.13),rgba(246,238,221,.03));box-shadow:inset 0 0 0 1px rgba(255,255,255,.05),0 28px 90px rgba(0,0,0,.2);overflow:hidden}.pitch:before{content:'';position:absolute;inset:38px;border:2px solid rgba(246,238,221,.2);border-radius:22px}.pitch:after{content:'';position:absolute;left:0;right:0;top:50%;height:2px;transform:translateY(-50%);background:rgba(246,238,221,.18)}.circle{position:absolute;width:116px;height:116px;border-radius:50%;border:2px solid rgba(246,238,221,.23);left:50%;top:50%;transform:translate(-50%,-50%)}.dot{position:absolute;width:24px;height:24px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 8px rgba(16,185,130,.16)}.dot.alt{background:var(--gold);box-shadow:0 0 0 8px rgba(196,154,67,.16)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px;max-width:980px}.card{border:1px solid rgba(246,238,221,.16);background:rgba(246,238,221,.06);border-radius:28px;padding:24px;min-height:150px;box-shadow:0 22px 70px rgba(0,0,0,.16)}.card .icon{font-size:30px;margin-bottom:20px}.card h3{margin:0 0 10px;font-size:19px;color:var(--mint2)}.card p{margin:0;font-size:17px;line-height:1.38;color:rgba(246,238,221,.78)}
+.role-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:42px}.role{height:180px;border-radius:30px;background:rgba(246,238,221,.07);border:1px solid rgba(246,238,221,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px}.role .emoji{font-size:42px;margin-bottom:16px}.role b{font-size:17px}.module-wrap{display:grid;grid-template-columns:1fr;gap:14px;margin-top:30px;max-width:940px}.module{display:grid;grid-template-columns:180px 1fr;align-items:center;border:1px solid rgba(246,238,221,.16);border-radius:24px;background:rgba(246,238,221,.065);overflow:hidden}.module .label{height:100%;display:flex;align-items:center;justify-content:center;background:rgba(16,185,130,.16);color:var(--mint2);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:900}.module .text{padding:18px 24px;font-size:23px;font-weight:800;color:var(--paper)}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:34px;max-width:860px}.check{border-radius:22px;border:1px solid rgba(246,238,221,.16);background:rgba(246,238,221,.06);padding:20px 22px;font-size:20px;font-weight:800;color:var(--paper)}.check span{color:var(--mint);margin-right:10px}.takeaways{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}.take{border-radius:26px;padding:24px;border:1px solid rgba(246,238,221,.18);background:rgba(246,238,221,.07);min-height:134px}.take b{display:block;color:var(--mint2);font-size:20px;margin-bottom:10px}.take p{font-size:17px;line-height:1.35;margin:0;color:rgba(246,238,221,.78)}
+.cta-box{border-radius:42px;border:1px solid rgba(246,238,221,.2);background:linear-gradient(135deg,rgba(246,238,221,.11),rgba(16,185,130,.08));padding:44px;box-shadow:0 30px 90px rgba(0,0,0,.24);max-width:770px;margin-top:36px}.btns{display:flex;gap:16px;flex-wrap:wrap;margin-top:26px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:16px 22px;border-radius:999px;text-decoration:none;font-weight:900;letter-spacing:.02em;font-size:15px;text-transform:uppercase}.btn.primary{background:var(--mint);color:var(--navy)}.btn.secondary{border:1px solid rgba(246,238,221,.28);color:var(--cream);background:rgba(246,238,221,.07)}
+.problem-word{font-family:'Fraunces',Georgia,serif;font-size:92px;line-height:.85;color:rgba(246,238,221,.09);position:absolute;right:40px;bottom:24px;letter-spacing:-.06em;max-width:590px;text-align:right}.tagline{position:absolute;bottom:36px;left:70px;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:rgba(246,238,221,.52);font-weight:800}.progress{position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(246,238,221,.08);z-index:6}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--mint),var(--gold));transition:width .25s ease}.controls{position:fixed;right:24px;bottom:24px;z-index:20;display:flex;gap:10px}.controls button{border:1px solid rgba(246,238,221,.25);background:rgba(246,238,221,.08);color:var(--cream);border-radius:50%;height:44px;width:44px;font-size:20px;cursor:pointer;backdrop-filter:blur(8px)}.controls button:hover{background:rgba(16,185,130,.22)}
+.full-center{height:100%;display:flex;flex-direction:column;justify-content:center}.narrow{max-width:820px}.cover .title{font-size:82px;max-width:1100px}.cover .lead{max-width:760px}.cover .visual .pitch{right:0;top:10px;transform:rotate(-2deg)}.cover .logo-lockup{display:flex;align-items:center;gap:16px;margin-bottom:32px}.cover .logo-lockup .logo-mark{height:58px;width:58px}.cover .logo-lockup .name{font-size:15px;text-transform:uppercase;letter-spacing:.18em;font-weight:900;color:var(--cream)}.cover .logo-lockup .name span{display:block;color:var(--mint);margin-top:4px}.cta-slide .two-col{align-items:flex-start;transform:translateY(-42px)}.cta-slide .content.full-center{justify-content:flex-start;padding-top:18px;padding-bottom:120px}.cta-slide .kicker{margin-bottom:10px}.cta-slide .title.small{font-size:56px;line-height:.94;max-width:760px}.cta-slide .lead{font-size:22px;line-height:1.34;max-width:680px;margin-top:14px}.cta-slide .btns{margin-top:18px;padding-bottom:8px}.cta-slide .btn{padding:15px 20px}.ghost-ball{position:absolute;width:370px;height:370px;border-radius:50%;border:2px solid rgba(246,238,221,.09);right:-90px;bottom:-90px}.ghost-ball:before,.ghost-ball:after{content:'';position:absolute;inset:70px;border:2px solid rgba(246,238,221,.07);border-radius:50%}.ghost-ball:after{inset:135px;background:rgba(16,185,130,.08)}
+@media (max-width:900px){.slide{padding:54px 28px 70px}.brand{left:26px}.slide-no{right:26px}.two-col{grid-template-columns:1fr;gap:20px}.visual{min-height:290px}.pitch{width:310px;height:260px;right:0}.title,.cover .title{font-size:48px}.title.small{font-size:44px}.title.xs{font-size:38px}.lead{font-size:20px}.cards,.takeaways{grid-template-columns:1fr}.role-grid{grid-template-columns:repeat(2,1fr)}.role{height:128px}.module{grid-template-columns:1fr}.module .label{padding:12px}.checks{grid-template-columns:1fr}.controls{display:none}.problem-word{display:none}.cta-slide .two-col{transform:none}.cta-slide .content.full-center{padding-top:36px;padding-bottom:48px}.cta-slide .title.small{font-size:42px}.cta-slide .lead{font-size:19px}}
+@media print{html,body{height:auto;overflow:visible;background:white}.deck{height:auto;background:white;overflow:visible}.slide{display:block!important;position:relative;width:100vw;height:56.25vw;page-break-after:always;break-after:page}.controls,.progress{display:none}.slide-no{display:none}.btn{border:1px solid var(--mint)}}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+  <section class="slide active cover">
+    <div class="two-col">
+      <div class="content full-center">
+        <div class="logo-lockup"><div class="logo-mark"></div><div class="name">The Football Mental Health Alliance<span>Help Beyond The Pitch</span></div></div>
+        <div class="kicker">Grassroots Football Training</div>
+        <h1 class="title">Understanding Neurodiversity in Grassroots Football</h1>
+        <p class="lead">A practical, football-specific training deck for clubs that want to support neurodivergent players properly — not accidentally.</p>
+      </div>
+      <div class="visual">
+        <div class="pitch"><div class="circle"></div><div class="dot" style="left:82px;top:88px"></div><div class="dot alt" style="right:90px;top:160px"></div><div class="dot" style="left:155px;bottom:105px"></div><div class="dot alt" style="right:62px;bottom:66px"></div></div>
+      </div>
+    </div>
+    <div class="ghost-ball"></div>
+  </section>
+
+  <section class="slide">
+    <div class="brand"><div class="logo-mark"></div><div class="brand-pill"><b>FMHA</b> Vault</div></div><div class="slide-no"><span>Slide</span> one</div>
+    <div class="full-center narrow">
+      <div class="kicker">The starting point</div>
+      <h2 class="title small">Neurodivergent players are already in your club.</h2>
+      <p class="lead">The question isn’t whether grassroots football has neurodiverse players. It does. The real question is whether the adults around them know what they’re seeing — and what to do next.</p>
+    </div>
+    <div class="problem-word">already<br/>there</div>
+  </section>
+
+  <section class="slide">
+    <div class="brand"><div class="logo-mark"></div><div class="brand-pill"><b>FMHA</b> Vault</div></div><div class="slide-no"><span>Slide</span> two</div>
+    <div class="two-col">
+      <div class="content">
+        <div class="kicker">The common mistake</div>
+        <h2 class="title small">Behaviour gets judged before it gets understood.</h2>
+        <p class="lead">What looks “disruptive” may be overload, anxiety, rejection sensitivity, sensory pressure, communication difficulty, a change in routine, or a player trying to regulate themselves.</p>
+      </div>
+      <div class="visual">
+        <div class="bubbles">
+          <div class="bubble" style="left:40px;top:30px">Disruptive?</div>
+          <div class="bubble mint" style="right:20px;top:116px">Overloaded?</div>
+          <div class="bubble gold" style="left:18px;top:218px">Anxious?</div>
+          <div class="bubble" style="right:40px;top:312px">Misunderstood?</div>
+          <div class="bubble mint" style="left:80px;bottom:60px">Regulating?</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="brand"><div class="logo-mark"></div><div class="brand-pill"><b>FMHA</b> Vault</div></div><div class="slide-no"><span>Slide</span> three</div>
+    <div class="full-center">
+      <div class="kicker">What the training changes</div>
+      <h2 class="title xs">It turns confusion into practical adjustments.</h2>
+      <div class="cards">
+        <div class="card"><div class="icon">🧠</div><h3>Understand needs</h3><p>Recognise neurodiverse presentations and the pressures that can sit underneath behaviour.</p></div>
+        <div class="card"><div class="icon">📣</div><h3>Adapt communication</h3><p>Use clearer instructions, better feedback, and fewer accidental triggers.</p></div>
+        <div class="card"><div class="icon">⚽</div><h3>Manage football moments</h3><p>Handle training, match-day pressure, conflict and distress with more confidence.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="brand"><div class="logo-mark"></div><div class="brand-pill"><b>FMHA</b> Vault</div></div><div class="slide-no"><span>Slide</span> four</div>
+    <div class="full-center">
+      <div class="kicker">Built for the whole club</div>
+      <h2 class="title xs">Not just coaches. Everyone around the player.</h2>
+      <div class="role-grid">
+        <div class="role"><div class="emoji">🧢</div><b>Coaches</b></div>
+        <div class="role"><div class="emoji">🟨</div><b>Referees</b></div>
+        <div class="role"><div class="emoji">🤝</div><b>Volunteers</b></div>
+        <div class="role"><div class="emoji">🏠</div><b>Parents & carers</b></div>
+        <div class="role"><div class="emoji">👟</div><b>Players</b></div>
+      </div>
+      <p class="caption" style="margin-top:28px">Grassroots football works best when the adults around the player stop working in silos.</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="brand"><div class="logo-mark"></div><div class="brand-pill"><b>FMHA</b> Vault</div></div><div class="slide-no"><span>Slide</span> five</div>
+    <div class="full-center">
+      <div class="kicker">Course shape</div>
+      <h2 class="title xs">A clear route from awareness to action.</h2>
+      <div class="module-wrap">
+        <div class="module"><div class="label">Module</div><div class="text">Introduction to neurodiversity</div></div>
+        <div class="module"><div class="label">Module</div><div class="text">Understanding behaviour in football</div></div>
+        <div class="module"><div class="label">Module</div><div class="text">Strategies for coaches</div></div>
+        <div class="module"><div class="label">Module</div><div class="text">Role of referees and officials</div></div>
+        <div class="module"><div class="label">Module</div><div class="text">Supporting families and players</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="brand"><div class="logo-mark"></div><div class="brand-pill"><b>FMHA</b> Vault</div></div><div class="slide-no"><span>Slide</span> six</div>
+    <div class="two-col">
+      <div class="content">
+        <div class="kicker">Coach impact</div>
+        <h2 class="title small">Better support starts with better preparation.</h2>
+        <p class="lead">Small changes can stop big problems forming: simpler drill design, calmer feedback, clearer expectations, and match-day details shared before pressure hits.</p>
+      </div>
+      <div class="visual">
+        <div class="checks">
+          <div class="check"><span>✓</span>Adjust drills</div>
+          <div class="check"><span>✓</span>Reduce overload</div>
+          <div class="check"><span>✓</span>Prepare players</div>
+          <div class="check"><span>✓</span>De-escalate well</div>
+          <div class="check"><span>✓</span>Communicate clearly</div>
+          <div class="check"><span>✓</span>Keep players involved</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="brand"><div class="logo-mark"></div><div class="brand-pill"><b>FMHA</b> Vault</div></div><div class="slide-no"><span>Slide</span> seven</div>
+    <div class="full-center narrow">
+      <div class="kicker">Officials matter</div>
+      <h2 class="title small">A referee can calm a game — or accidentally inflame it.</h2>
+      <p class="lead">The training gives officials a better read on neurodiverse behaviours, distress, overstimulation and the value of simple pre-match factfinding.</p>
+      <div class="line"></div>
+      <p class="caption">The aim isn’t to ignore the laws of the game. It’s to understand the player in front of you while keeping football fair, safe and playable.</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="brand"><div class="logo-mark"></div><div class="brand-pill"><b>FMHA</b> Vault</div></div><div class="slide-no"><span>Slide</span> eight</div>
+    <div class="two-col">
+      <div class="content">
+        <div class="kicker">Duty of care</div>
+        <h2 class="title small">Inclusion needs a record, not just good intentions.</h2>
+        <p class="lead">Clubs are expected to make reasonable adjustments when neurodivergent participants could be placed at a substantial disadvantage. Training helps people understand what that means in normal football situations.</p>
+      </div>
+      <div class="visual">
+        <div class="cta-box" style="margin-top:90px">
+          <div class="quote-mark">“</div>
+          <div class="quote" style="font-size:34px">Good intentions are not a system.</div>
+          <p class="caption" style="margin-top:18px">Awareness, consistency and documentation protect players — and protect clubs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="brand"><div class="logo-mark"></div><div class="brand-pill"><b>FMHA</b> Vault</div></div><div class="slide-no"><span>Slide</span> nine</div>
+    <div class="full-center">
+      <div class="kicker">What clubs take away</div>
+      <h2 class="title xs">The session is only the start.</h2>
+      <div class="takeaways">
+        <div class="take"><b>Digital certificate</b><p>A clear record that delegates have completed the training.</p></div>
+        <div class="take"><b>Course presentation</b><p>A copy of the training material to revisit and share internally.</p></div>
+        <div class="take"><b>Club support plan</b><p>A practical framework for making neurodiversity support club-wide.</p></div>
+        <div class="take"><b>Branded graphics</b><p>Website and social assets that show your club’s stance publicly.</p></div>
+        <div class="take"><b>Clubhouse poster</b><p>A visible reminder that neurodiverse players and families are welcome.</p></div>
+        <div class="take"><b>Press release</b><p>A ready-made way to announce the training to your community.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="brand"><div class="logo-mark"></div><div class="brand-pill"><b>FMHA</b> Vault</div></div><div class="slide-no"><span>Slide</span> ten</div>
+    <div class="full-center narrow">
+      <div class="quote-mark">“</div>
+      <div class="quote">It was really thorough and incredibly useful.</div>
+      <p class="lead" style="max-width:720px">Delegate feedback repeatedly points to the same thing: this training changes how people interpret behaviour on and around the pitch.</p>
+    </div>
+    <div class="problem-word">useful</div>
+  </section>
+
+  <section class="slide">
+    <div class="brand"><div class="logo-mark"></div><div class="brand-pill"><b>FMHA</b> Vault</div></div><div class="slide-no"><span>Slide</span> eleven</div>
+    <div class="two-col">
+      <div class="content">
+        <div class="kicker">Before the training</div>
+        <h2 class="title small">Find out the likely scale inside your own club.</h2>
+        <p class="lead">The Club Neurodiversity Calculator helps clubs estimate how many neurodivergent players may already be in their setting — so the conversation starts with context, not theory.</p>
+        <div class="btns"><a class="btn secondary" href="https://vault.thefmha.com/football-club-neurodiversity-calculator/" target="_blank">Use the calculator</a></div>
+      </div>
+      <div class="visual">
+        <div class="big-stat">ND</div>
+        <p class="caption" style="font-size:24px;margin-top:18px">Scale first. Skills next. Better environments after that.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide cta-slide">
+    <div class="two-col">
+      <div class="content full-center">
+        <div class="logo-lockup" style="display:flex;align-items:center;gap:16px;margin-bottom:30px"><div class="logo-mark" style="height:58px;width:58px"></div><div class="name" style="font-size:15px;text-transform:uppercase;letter-spacing:.18em;font-weight:900;color:var(--cream)">The FMHA Vault</div></div>
+        <div class="kicker">Next step</div>
+        <h2 class="title small">Train the adults. Change the experience for the player.</h2>
+        <p class="lead">Book the Understanding Neurodiversity in Grassroots Football training and give your club a practical way to support neurodivergent players and families.</p>
+        <div class="btns">
+          <a class="btn primary" href="https://vault.thefmha.com/understanding-neurodiversity-in-grassroots-football/" target="_blank">Book the training</a>
+          <a class="btn secondary" href="https://vault.thefmha.com/football-club-neurodiversity-calculator/" target="_blank">Use the calculator</a>
+        </div>
+      </div>
+      <div class="visual">
+        <div class="pitch"><div class="circle"></div><div class="dot" style="left:74px;top:82px"></div><div class="dot" style="right:74px;top:82px"></div><div class="dot alt" style="left:50%;top:50%;transform:translate(-50%,-50%)"></div><div class="dot" style="left:74px;bottom:82px"></div><div class="dot" style="right:74px;bottom:82px"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="progress"><div class="bar" id="bar"></div></div>
+</div>
+<div class="controls">
+  <button id="prev" aria-label="Previous slide">‹</button>
+  <button id="next" aria-label="Next slide">›</button>
+</div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const bar=document.getElementById('bar');
+let i=Math.max(0, Math.min(slides.length-1, (parseInt(location.hash.replace('#',''),10)||1)-1));
+function show(n){
+  i=(n+slides.length)%slides.length;
+  slides.forEach((s,idx)=>s.classList.toggle('active',idx===i));
+  bar.style.width=((i+1)/slides.length*100)+'%';
+}
+document.getElementById('next').onclick=()=>show(i+1);
+document.getElementById('prev').onclick=()=>show(i-1);
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(i+1)}
+  if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();show(i-1)}
+  if(e.key.toLowerCase()==='p'){window.print()}
+});
+show(i);
+</script>
+</body>
+</html>
