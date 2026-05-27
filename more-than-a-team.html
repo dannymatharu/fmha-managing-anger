@@ -843,6 +843,29 @@
     }
 
     @media (max-width: 980px) {
+      .nav-inner {
+        min-height: 68px;
+        flex-wrap: wrap;
+        gap: 0 12px;
+        padding: 10px 0;
+      }
+
+      .brand {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      .brand-copy {
+        min-width: 0;
+      }
+
+      .brand-copy strong,
+      .brand-copy span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
       .nav-links,
       .nav-actions {
         display: none;
@@ -850,24 +873,60 @@
 
       .mobile-toggle {
         display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 10px 14px;
+        font-weight: 800;
+        font-size: 0.86rem;
       }
 
       .nav.open .nav-links,
       .nav.open .nav-actions {
-        display: flex;
-        width: min(var(--max), calc(100% - 40px));
-        margin: 0 auto;
-        padding: 0 0 18px;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
       }
 
       .nav.open .nav-links {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 14px;
+        order: 3;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 14px 0 0;
+        margin-top: 10px;
+        border-top: 1px solid var(--line);
+      }
+
+      .nav.open .nav-links a {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 11px 13px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: rgba(247, 241, 227, 0.055);
+        color: rgba(247, 241, 227, 0.86);
+        font-weight: 700;
+      }
+
+      .nav.open .nav-links a:hover,
+      .nav.open .nav-links a:focus-visible {
+        background: rgba(247, 241, 227, 0.1);
+        color: var(--cream);
       }
 
       .nav.open .nav-actions {
-        justify-content: flex-start;
+        order: 4;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 12px 0 8px;
+      }
+
+      .nav.open .nav-actions .btn {
+        width: 100%;
+        min-height: 46px;
       }
 
       .hero-grid,
@@ -1264,12 +1323,16 @@ If you’re looking for a team where your child can enjoy the game and feel supp
     toggle?.addEventListener('click', () => {
       const isOpen = nav.classList.toggle('open');
       toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.textContent = isOpen ? 'Close' : 'Menu';
     });
 
     document.querySelectorAll('.nav a').forEach(link => {
       link.addEventListener('click', () => {
         nav.classList.remove('open');
-        toggle?.setAttribute('aria-expanded', 'false');
+        if (toggle) {
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.textContent = 'Menu';
+        }
       });
     });
 
