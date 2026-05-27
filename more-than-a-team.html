@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>More Than A Team | Pre-Season Recruitment Toolkit for Grassroots Clubs</title>
+  <meta name="description" content="Help your club recruit players, reassure parents and show the support behind your environment with FMHA's More Than A Team campaign toolkit." />
+  <meta name="theme-color" content="#192335" />
+  <meta property="og:title" content="More Than A Team | Pre-Season Recruitment Toolkit" />
+  <meta property="og:description" content="Don't just tell families you're recruiting. Show them what they're joining." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #192335;
+      --navy-2: #1E2D45;
+      --navy-3: #111A29;
+      --cream: #F7F1E3;
+      --muted-cream: #D8CFB8;
+      --mint: #10B982;
+      --mint-light: #34D39A;
+      --gold: #D6B25E;
+      --white: #FFFFFF;
+      --ink: #0F172A;
+      --line: rgba(247, 241, 227, 0.16);
+      --line-strong: rgba(247, 241, 227, 0.28);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--cream);
+      background:
+        radial-gradient(circle at top left, rgba(16, 185, 130, 0.18), transparent 34rem),
+        radial-gradient(circle at 78% 8%, rgba(214, 178, 94, 0.14), transparent 28rem),
+        linear-gradient(135deg, var(--navy-3), var(--navy) 42%, #162134 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(247, 241, 227, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(247, 241, 227, 0.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.65), transparent 72%);
+      z-index: -1;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted-cream);
+      font-size: 1.05rem;
+      line-height: 1.72;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(17, 26, 41, 0.78);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: fit-content;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: var(--navy);
+      background: linear-gradient(135deg, var(--mint-light), var(--gold));
+      font-family: "DM Mono", monospace;
+      font-weight: 700;
+      letter-spacing: -0.06em;
+      box-shadow: 0 12px 36px rgba(16, 185, 130, 0.22);
+    }
+
+    .brand-copy strong {
+      display: block;
+      color: var(--cream);
+      font-size: 0.98rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-copy span {
+      display: block;
+      color: rgba(247, 241, 227, 0.62);
+      font-family: "DM Mono", monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 0.91rem;
+      color: rgba(247, 241, 227, 0.76);
+    }
+
+    .nav-links a {
+      transition: color 0.18s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--cream);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobile-toggle {
+      display: none;
+      border: 1px solid var(--line-strong);
+      background: rgba(247, 241, 227, 0.06);
+      color: var(--cream);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 13px 18px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 800;
+      font-size: 0.94rem;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      color: var(--navy-3);
+      background: linear-gradient(135deg, var(--mint-light), var(--gold));
+      box-shadow: 0 14px 42px rgba(16, 185, 130, 0.22);
+    }
+
+    .btn-secondary {
+      color: var(--cream);
+      background: rgba(247, 241, 227, 0.08);
+      border-color: var(--line-strong);
+    }
+
+    .btn-secondary:hover,
+    .btn-secondary:focus-visible {
+      background: rgba(247, 241, 227, 0.12);
+      border-color: rgba(247, 241, 227, 0.45);
+    }
+
+    .btn-small {
+      min-height: 40px;
+      padding: 10px 14px;
+      font-size: 0.84rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      width: fit-content;
+      margin-bottom: 18px;
+      padding: 8px 12px;
+      border: 1px solid rgba(214, 178, 94, 0.34);
+      border-radius: 999px;
+      color: rgba(247, 241, 227, 0.82);
+      background: rgba(214, 178, 94, 0.07);
+      font-family: "DM Mono", monospace;
+      font-size: 0.72rem;
+      line-height: 1;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--mint-light);
+      box-shadow: 0 0 18px rgba(52, 211, 154, 0.75);
+    }
+
+    .hero {
+      padding: 86px 0 58px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr);
+      gap: 42px;
+      align-items: center;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      color: var(--cream);
+      letter-spacing: -0.05em;
+    }
+
+    h1 {
+      max-width: 820px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(3.3rem, 8vw, 7.7rem);
+      line-height: 0.86;
+      font-weight: 700;
+    }
+
+    .hero h1 span {
+      color: transparent;
+      background: linear-gradient(120deg, var(--cream), var(--gold) 52%, var(--mint-light));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .hero-lead {
+      max-width: 710px;
+      margin-top: 28px;
+      color: rgba(247, 241, 227, 0.82);
+      font-size: clamp(1.08rem, 1.5vw, 1.3rem);
+      line-height: 1.72;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .hero-footnote {
+      margin-top: 18px;
+      max-width: 650px;
+      color: rgba(247, 241, 227, 0.58);
+      font-size: 0.95rem;
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      padding: 26px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(180deg, rgba(247, 241, 227, 0.12), rgba(247, 241, 227, 0.045)),
+        rgba(30, 45, 69, 0.72);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: radial-gradient(circle at 0 0, rgba(52, 211, 154, 0.22), transparent 35%), radial-gradient(circle at 100% 0, rgba(214, 178, 94, 0.18), transparent 30%);
+      pointer-events: none;
+    }
+
+    .hero-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .post-label {
+      font-family: "DM Mono", monospace;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(247, 241, 227, 0.58);
+      margin-bottom: 12px;
+    }
+
+    .mock-post {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(15, 23, 42, 0.46);
+      border: 1px solid rgba(247, 241, 227, 0.14);
+    }
+
+    .mock-post + .mock-post {
+      margin-top: 14px;
+    }
+
+    .mock-post.bad {
+      opacity: 0.72;
+    }
+
+    .mock-post.good {
+      border-color: rgba(52, 211, 154, 0.44);
+      background: rgba(16, 185, 130, 0.09);
+    }
+
+    .mock-post h3 {
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .mock-post p {
+      font-size: 0.98rem;
+      line-height: 1.58;
+      color: rgba(247, 241, 227, 0.78);
+    }
+
+    .card-caption {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: rgba(247, 241, 227, 0.68);
+      font-size: 0.94rem;
+      line-height: 1.5;
+    }
+
+    .card-caption span {
+      color: var(--mint-light);
+      font-family: "DM Mono", monospace;
+      font-weight: 700;
+    }
+
+    section {
+      padding: 70px 0;
+    }
+
+    .section-heading {
+      max-width: 820px;
+      margin-bottom: 30px;
+    }
+
+    .section-heading h2 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(2.5rem, 5.2vw, 5.3rem);
+      line-height: 0.92;
+      font-weight: 700;
+    }
+
+    .section-heading p {
+      margin-top: 18px;
+      font-size: 1.12rem;
+      color: rgba(247, 241, 227, 0.76);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      background: rgba(30, 45, 69, 0.58);
+      box-shadow: 0 18px 55px rgba(0, 0, 0, 0.16);
+    }
+
+    .panel.light {
+      background: rgba(247, 241, 227, 0.08);
+    }
+
+    .panel h3 {
+      font-size: 1.35rem;
+      letter-spacing: -0.035em;
+      margin-bottom: 14px;
+    }
+
+    .panel ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 9px;
+    }
+
+    .panel li {
+      color: rgba(247, 241, 227, 0.76);
+      line-height: 1.52;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .panel li::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex: 0 0 auto;
+      margin-top: 9px;
+    }
+
+    .quote-band {
+      margin-top: 22px;
+      border-radius: var(--radius-lg);
+      padding: 34px;
+      border: 1px solid rgba(214, 178, 94, 0.36);
+      background:
+        radial-gradient(circle at 10% 0, rgba(214, 178, 94, 0.16), transparent 32rem),
+        rgba(214, 178, 94, 0.07);
+    }
+
+    .quote-band strong {
+      display: block;
+      max-width: 820px;
+      color: var(--cream);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(2rem, 4.2vw, 4.3rem);
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .feature-card {
+      min-height: 224px;
+      padding: 24px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: rgba(247, 241, 227, 0.07);
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(52, 211, 154, 0.34);
+      background: rgba(247, 241, 227, 0.09);
+    }
+
+    .feature-card .num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      border-radius: 50%;
+      color: var(--navy);
+      background: var(--mint-light);
+      font-family: "DM Mono", monospace;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .feature-card h3 {
+      font-size: 1.28rem;
+      margin-bottom: 10px;
+      letter-spacing: -0.035em;
+    }
+
+    .feature-card p {
+      font-size: 0.98rem;
+      line-height: 1.62;
+    }
+
+    .templates-wrap {
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: rgba(17, 26, 41, 0.58);
+      box-shadow: var(--shadow);
+    }
+
+    .template-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(247, 241, 227, 0.045);
+    }
+
+    .tab-btn {
+      border: 1px solid rgba(247, 241, 227, 0.16);
+      background: rgba(247, 241, 227, 0.06);
+      color: rgba(247, 241, 227, 0.7);
+      border-radius: 999px;
+      padding: 10px 13px;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .tab-btn[aria-selected="true"] {
+      background: var(--cream);
+      color: var(--navy-3);
+      border-color: var(--cream);
+    }
+
+    .template-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 0;
+    }
+
+    .template-copy {
+      padding: 30px;
+    }
+
+    .template-copy h3 {
+      font-size: clamp(1.65rem, 3vw, 2.65rem);
+      line-height: 1;
+      margin-bottom: 18px;
+      letter-spacing: -0.05em;
+    }
+
+    .template-copy pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0;
+      color: rgba(247, 241, 227, 0.84);
+      font-family: "DM Sans", sans-serif;
+      font-size: 1.03rem;
+      line-height: 1.72;
+    }
+
+    .template-aside {
+      padding: 28px;
+      border-left: 1px solid var(--line);
+      background: rgba(247, 241, 227, 0.055);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .template-aside p {
+      font-size: 0.96rem;
+      line-height: 1.62;
+    }
+
+    .aside-label {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--gold);
+      font-family: "DM Mono", monospace;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+    }
+
+    .split-cta {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.52fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .big-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-lg);
+      padding: 34px;
+      background: rgba(247, 241, 227, 0.07);
+    }
+
+    .big-card::after {
+      content: "";
+      position: absolute;
+      width: 230px;
+      height: 230px;
+      right: -70px;
+      top: -80px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(52, 211, 154, 0.18), transparent 68%);
+      pointer-events: none;
+    }
+
+    .big-card h2 {
+      position: relative;
+      max-width: 820px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(2.35rem, 4.8vw, 4.9rem);
+      line-height: 0.92;
+      font-weight: 700;
+      z-index: 1;
+    }
+
+    .big-card p {
+      position: relative;
+      max-width: 720px;
+      margin-top: 18px;
+      z-index: 1;
+    }
+
+    .big-card .hero-actions {
+      position: relative;
+      z-index: 1;
+    }
+
+    .proof-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .proof-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(17, 26, 41, 0.44);
+      border: 1px solid rgba(247, 241, 227, 0.10);
+      color: rgba(247, 241, 227, 0.77);
+      line-height: 1.5;
+    }
+
+    .proof-item span {
+      color: var(--mint-light);
+      font-family: "DM Mono", monospace;
+      font-weight: 700;
+    }
+
+    .mini-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(214, 178, 94, 0.32);
+      background: rgba(214, 178, 94, 0.08);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 26px;
+    }
+
+    .mini-card h3 {
+      font-size: 1.55rem;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .mini-card p {
+      font-size: 0.98rem;
+      line-height: 1.62;
+    }
+
+    .launch-strip {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(52, 211, 154, 0.32);
+      background:
+        linear-gradient(135deg, rgba(16, 185, 130, 0.14), rgba(214, 178, 94, 0.08)),
+        rgba(247, 241, 227, 0.06);
+      padding: 28px;
+    }
+
+    .launch-strip h2 {
+      font-size: clamp(1.9rem, 3.4vw, 3.4rem);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      line-height: 0.96;
+      font-weight: 700;
+    }
+
+    .launch-strip p {
+      margin-top: 10px;
+      max-width: 790px;
+    }
+
+    .resource-links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .resource-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      background: rgba(30, 45, 69, 0.55);
+    }
+
+    .resource-card h3 {
+      font-size: 1.65rem;
+      line-height: 1;
+      letter-spacing: -0.045em;
+      margin-bottom: 14px;
+    }
+
+    .resource-card p {
+      margin-bottom: 22px;
+      font-size: 0.99rem;
+    }
+
+    .contact-panel {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line-strong);
+      padding: 36px;
+      background:
+        radial-gradient(circle at 80% 0, rgba(214, 178, 94, 0.17), transparent 28rem),
+        rgba(247, 241, 227, 0.08);
+      text-align: center;
+    }
+
+    .contact-panel h2 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(2.5rem, 5vw, 5.2rem);
+      line-height: 0.9;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .contact-panel p {
+      max-width: 760px;
+      margin: 0 auto 26px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .badge-note {
+      max-width: 820px;
+      margin: 28px auto 0;
+      color: rgba(247, 241, 227, 0.55);
+      font-size: 0.91rem;
+      line-height: 1.6;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(52, 211, 154, 0.38);
+      background: rgba(17, 26, 41, 0.92);
+      color: var(--cream);
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.3);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 300;
+      font-weight: 800;
+      font-size: 0.92rem;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .footer {
+      padding: 34px 0 54px;
+      color: rgba(247, 241, 227, 0.5);
+      font-size: 0.9rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+    }
+
+    @media (max-width: 980px) {
+      .nav-links,
+      .nav-actions {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: inline-flex;
+      }
+
+      .nav.open .nav-links,
+      .nav.open .nav-actions {
+        display: flex;
+        width: min(var(--max), calc(100% - 40px));
+        margin: 0 auto;
+        padding: 0 0 18px;
+      }
+
+      .nav.open .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+
+      .nav.open .nav-actions {
+        justify-content: flex-start;
+      }
+
+      .hero-grid,
+      .two-col,
+      .split-cta,
+      .resource-links,
+      .template-stage {
+        grid-template-columns: 1fr;
+      }
+
+      .template-aside {
+        border-left: none;
+        border-top: 1px solid var(--line);
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .launch-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        width: min(100% - 28px, var(--max));
+      }
+
+      .brand-copy span {
+        display: none;
+      }
+
+      .hero {
+        padding: 58px 0 36px;
+      }
+
+      section {
+        padding: 46px 0;
+      }
+
+      .hero-card,
+      .panel,
+      .big-card,
+      .mini-card,
+      .contact-panel,
+      .quote-band,
+      .resource-card {
+        padding: 22px;
+        border-radius: 22px;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .template-copy,
+      .template-aside {
+        padding: 22px;
+      }
+
+      .template-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: thin;
+      }
+
+      .tab-btn {
+        flex: 0 0 auto;
+      }
+
+      .hero-actions,
+      .contact-links {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" id="siteNav" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="More Than A Team home">
+        <span class="brand-mark">FM</span>
+        <span class="brand-copy">
+          <strong>More Than A Team</strong>
+          <span>FMHA campaign toolkit</span>
+        </span>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#problem">The Problem</a>
+        <a href="#toolkit">Toolkit</a>
+        <a href="#templates">Templates</a>
+        <a href="#proof">Proof of Play</a>
+        <a href="#partners">Partners</a>
+      </div>
+
+      <div class="nav-actions">
+        <a class="btn btn-secondary btn-small" href="https://proofofplay.uk/all-sport/" target="_blank" rel="noopener">Use Proof of Play</a>
+        <button class="btn btn-primary btn-small" type="button" data-download-pack>Download Starter Pack</button>
+      </div>
+
+      <button class="mobile-toggle" type="button" aria-controls="navLinks" aria-expanded="false" data-menu-toggle>Menu</button>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Pre-season recruitment and retention</div>
+          <h1>Don’t just tell families you’re recruiting. <span>Show them what they’re joining.</span></h1>
+          <p class="hero-lead">Most grassroots recruitment posts talk about players, trials and spaces. More Than A Team helps clubs show parents the environment behind the sport: confidence, belonging, mental health awareness, neurodiversity understanding and whole-player support.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" type="button" data-download-pack>Download the Starter Pack</button>
+            <a class="btn btn-secondary" href="#templates">Copy Recruitment Posts</a>
+            <a class="btn btn-secondary" href="https://proofofplay.uk/all-sport/" target="_blank" rel="noopener">Use Proof of Play</a>
+          </div>
+          <p class="hero-footnote">Built for clubs, leagues, County FAs, Active Partnerships and NGBs who want recruitment to say more than “players wanted”.</p>
+        </div>
+
+        <aside class="hero-card" aria-label="Recruitment post comparison">
+          <div class="post-label">The same club. A stronger signal.</div>
+          <div class="mock-post bad">
+            <h3>Standard recruitment post</h3>
+            <p>Players wanted. Must have experience. Trials soon. DM for details.</p>
+          </div>
+          <div class="mock-post good">
+            <h3>Better recruitment post</h3>
+            <p>We’re welcoming new players into an environment built around confidence, belonging, enjoyment and support beyond the pitch.</p>
+          </div>
+          <div class="card-caption"><span>01</span> Recruitment is not just an announcement. It is a trust signal.</div>
+        </aside>
+      </div>
+    </header>
+
+    <section id="problem">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">The gap</div>
+          <h2>Most recruitment posts tell families what the club wants.</h2>
+          <p>Parents are often reading those posts from a very different place. They are not only asking whether there is a space. They are asking whether the environment is right for their child.</p>
+        </div>
+
+        <div class="two-col">
+          <div class="panel">
+            <h3>What clubs usually say</h3>
+            <ul>
+              <li>We need players.</li>
+              <li>Must have experience.</li>
+              <li>Trials start soon.</li>
+              <li>Message the coach.</li>
+              <li>Spaces available in selected age groups.</li>
+            </ul>
+          </div>
+          <div class="panel light">
+            <h3>What parents need to know</h3>
+            <ul>
+              <li>Will my child feel safe and understood here?</li>
+              <li>How does the club respond when children struggle?</li>
+              <li>Will anxiety be mistaken for attitude?</li>
+              <li>Will neurodivergent players be supported calmly?</li>
+              <li>Will this environment build confidence or slowly damage it?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="quote-band">
+          <strong>Parents don’t just choose a team. They choose an environment.</strong>
+        </div>
+      </div>
+    </section>
+
+    <section id="toolkit">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">What clubs receive</div>
+          <h2>Everything a club needs to post better, speak better and reassure better.</h2>
+          <p>The first version gives clubs ready-to-use recruitment language they can use immediately. The full campaign can grow into graphics, WhatsApp copy, coach scripts and partner packs.</p>
+        </div>
+
+        <div class="grid-3">
+          <article class="feature-card">
+            <span class="num">01</span>
+            <h3>Recruitment Templates</h3>
+            <p>Copy-and-paste posts for younger children, teenagers, girls’ teams, inclusive teams, whole clubs and volunteers.</p>
+          </article>
+          <article class="feature-card">
+            <span class="num">02</span>
+            <h3>Parent-Facing Language</h3>
+            <p>Wording that speaks to parents choosing the people, tone and environment around their child.</p>
+          </article>
+          <article class="feature-card">
+            <span class="num">03</span>
+            <h3>Safe Support Wording</h3>
+            <p>Language that helps clubs talk about awareness, signposting and support without making clinical claims.</p>
+          </article>
+          <article class="feature-card">
+            <span class="num">04</span>
+            <h3>Training Pathway</h3>
+            <p>A clear next step into FMHA grassroots neurodiversity training and wider Vault resources.</p>
+          </article>
+          <article class="feature-card">
+            <span class="num">05</span>
+            <h3>Proof of Play Link</h3>
+            <p>A natural bridge from better communication into evidence, funding readiness and social value reporting.</p>
+          </article>
+          <article class="feature-card">
+            <span class="num">06</span>
+            <h3>Partner Rollout</h3>
+            <p>Ready for County FAs, leagues, Active Partnerships and NGBs to share during registration and recruitment windows.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="templates">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Copy and paste</div>
+          <h2>The difference is in the wording.</h2>
+          <p>Choose a template, copy it, then add the club name, age group, training night and contact details.</p>
+        </div>
+
+        <div class="templates-wrap">
+          <div class="template-tabs" role="tablist" aria-label="Recruitment post templates">
+            <button class="tab-btn" type="button" role="tab" aria-selected="true" data-template="younger">Younger age groups</button>
+            <button class="tab-btn" type="button" role="tab" aria-selected="false" data-template="teenage">Teenage teams</button>
+            <button class="tab-btn" type="button" role="tab" aria-selected="false" data-template="girls">Girls’ teams</button>
+            <button class="tab-btn" type="button" role="tab" aria-selected="false" data-template="inclusive">Inclusive teams</button>
+            <button class="tab-btn" type="button" role="tab" aria-selected="false" data-template="club">Whole club</button>
+          </div>
+
+          <div class="template-stage">
+            <div class="template-copy">
+              <h3 id="templateTitle">Younger age groups</h3>
+              <pre id="templateText">At this age, sport should build confidence, not pressure.
+
+We’re welcoming new players and families for the upcoming season. Our focus is enjoyment, development, friendship and creating an environment where children feel safe to try, make mistakes and grow.
+
+Our club has access to FMHA resources that help us better understand young players’ wellbeing, confidence, anxiety and neurodiversity.
+
+If you’re looking for a team where your child can enjoy the game and feel supported, we’d love to hear from you.</pre>
+            </div>
+            <aside class="template-aside">
+              <div>
+                <span class="aside-label">How to use this</span>
+                <p>Keep the tone warm, then add the basics: club name, age group, training location, session time and contact details. Avoid overpromising. Show the intent and point people towards a conversation.</p>
+              </div>
+              <button class="btn btn-primary" type="button" data-copy-template>Copy Template</button>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proof">
+      <div class="container split-cta">
+        <div class="big-card">
+          <div class="eyebrow">Proof of Play integration</div>
+          <h2>If your club creates value, evidence it.</h2>
+          <p>More Than A Team helps clubs communicate the support behind their environment. Proof of Play helps clubs evidence the wider value they already create through participation, volunteering, community connection, wellbeing and inclusion.</p>
+          <div class="proof-list" aria-label="Proof of Play benefits">
+            <div class="proof-item"><span>01</span> Show what the club stands for.</div>
+            <div class="proof-item"><span>02</span> Evidence who the club supports.</div>
+            <div class="proof-item"><span>03</span> Turn club activity into funder-ready value.</div>
+            <div class="proof-item"><span>04</span> Give councils, funders and partners a stronger story.</div>
+          </div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://proofofplay.uk/all-sport/" target="_blank" rel="noopener">Use Proof of Play</a>
+            <a class="btn btn-secondary" href="https://proofofplay.uk/football/" target="_blank" rel="noopener">Football Version</a>
+          </div>
+        </div>
+
+        <aside class="mini-card">
+          <div>
+            <span class="aside-label">Campaign logic</span>
+            <h3>Give clubs the words. Then show them the system behind the words.</h3>
+            <p>The post gets attention. The training, resources and evidence pathway make the claim stronger.</p>
+          </div>
+          <a class="btn btn-secondary" href="#resources">See FMHA Resources</a>
+        </aside>
+      </div>
+    </section>
+
+    <section id="resources">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">The system behind the words</div>
+          <h2>Better recruitment language is the start. The environment behind it matters more.</h2>
+          <p>Clubs can speak more confidently when they have access to training, resources and signposting around mental health, neurodiversity, anxiety, confidence, emotional regulation and inclusion.</p>
+        </div>
+
+        <div class="resource-links">
+          <article class="resource-card">
+            <h3>Grassroots Neurodiversity Training</h3>
+            <p>Training built around grassroots sport environments, coach confidence, communication, behaviour, adjustment and understanding.</p>
+            <a class="btn btn-primary" href="https://vault.thefmha.com/understanding-neurodiversity-in-grassroots-football/" target="_blank" rel="noopener">Explore Training</a>
+          </article>
+          <article class="resource-card">
+            <h3>The Vault</h3>
+            <p>A growing suite of mental health, neurodiversity, confidence, wellbeing and signposting resources for grassroots football and wider sport.</p>
+            <a class="btn btn-secondary" href="https://vault.thefmha.com/" target="_blank" rel="noopener">Visit The Vault</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="partners">
+      <div class="container">
+        <div class="launch-strip">
+          <div>
+            <h2>Built for clubs. Easy for partners to distribute.</h2>
+            <p>County FAs, Active Partnerships, leagues and NGBs can share More Than A Team during one of the most important communication windows of the year: registration, recruitment and pre-season planning.</p>
+          </div>
+          <a class="btn btn-primary" href="mailto:support@withinu.net?subject=More%20Than%20A%20Team%20partner%20rollout">Talk to FMHA</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container contact-panel">
+        <div class="eyebrow">Launch the message</div>
+        <h2>Before clubs ask families to join, help them show what families are joining.</h2>
+        <p>Use the starter pack, copy the posts, share the campaign with clubs and connect it to the training and evidence that make the message stronger.</p>
+        <div class="contact-links">
+          <button class="btn btn-primary" type="button" data-download-pack>Download Starter Pack</button>
+          <a class="btn btn-secondary" href="mailto:support@withinu.net">support@withinu.net</a>
+          <a class="btn btn-secondary" href="tel:03330500399">03330 500 399</a>
+        </div>
+        <p class="badge-note">Campaign note: More Than A Team is a communication and support-resource campaign. It is not an accreditation, clinical service, safeguarding substitute or quality mark. Clubs should speak honestly about resources, training, signposting and the supportive environment they are working to build.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>More Than A Team by The Football Mental Health Alliance</div>
+      <div>Sport matters. The child matters more.</div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied to clipboard</div>
+
+  <script>
+    const nav = document.getElementById('siteNav');
+    const toggle = document.querySelector('[data-menu-toggle]');
+    const toast = document.getElementById('toast');
+    const templateTitle = document.getElementById('templateTitle');
+    const templateText = document.getElementById('templateText');
+    const tabButtons = document.querySelectorAll('[data-template]');
+
+    const templates = {
+      younger: {
+        title: 'Younger age groups',
+        text: `At this age, sport should build confidence, not pressure.\n\nWe’re welcoming new players and families for the upcoming season. Our focus is enjoyment, development, friendship and creating an environment where children feel safe to try, make mistakes and grow.\n\nOur club has access to FMHA resources that help us better understand young players’ wellbeing, confidence, anxiety and neurodiversity.\n\nIf you’re looking for a team where your child can enjoy the game and feel supported, we’d love to hear from you.`
+      },
+      teenage: {
+        title: 'Teenage teams',
+        text: `Teenagers do not always leave sport because they stop loving it.\n\nSometimes confidence drops. Sometimes pressure builds. Sometimes the environment no longer feels right. Sometimes nobody notices until they have already gone.\n\nAs we prepare for the new season, we want to build a team culture where players feel seen, supported and able to keep enjoying the game.\n\nWe’re recruiting players, but we’re also building the right environment around them.`
+      },
+      girls: {
+        title: 'Girls’ teams',
+        text: `Girls’ sport is growing. The support around players needs to grow with it.\n\nWe’re welcoming new players for the upcoming season and we want families to know what kind of environment we are building: one that values confidence, belonging, emotional wellbeing and understanding players as people, not just performers.\n\nThrough FMHA resources, our club can access guidance around mental health, neurodiversity, anxiety, confidence, inclusion and signposting.\n\nIf this sounds like the right environment for your child, we’d love to hear from you.`
+      },
+      inclusive: {
+        title: 'Inclusive teams',
+        text: `We believe sport should feel safe, welcoming and enjoyable for young people with different strengths, needs and ways of communicating.\n\nWe’re welcoming new players and families for the upcoming season. Our focus is confidence, belonging, patience, encouragement and helping every player feel part of the group.\n\nWe are not clinical professionals, but we do want to understand players better, work with parents and carers, and signpost where appropriate.\n\nIf your child would benefit from a supportive sporting environment, please get in touch.`
+      },
+      club: {
+        title: 'Whole club post',
+        text: `We are recruiting for the new season.\n\nBut recruitment should be about more than numbers.\n\nWe want families to know what kind of club they are joining. A club where young people can build confidence, feel understood, enjoy sport, make mistakes, learn, belong and be supported as people.\n\nOur club has access to resources from The Football Mental Health Alliance covering mental health, neurodiversity, emotional wellbeing and signposting.\n\nSport matters. The child matters more.`
+      }
+    };
+
+    const packText = `More Than A Team Starter Pack\n\nDon’t just tell families you’re recruiting. Show them what they’re joining.\n\n1. Younger age groups\n\n${templates.younger.text}\n\n2. Teenage teams\n\n${templates.teenage.text}\n\n3. Girls’ teams\n\n${templates.girls.text}\n\n4. Inclusive teams\n\n${templates.inclusive.text}\n\n5. Whole club post\n\n${templates.club.text}\n\nParent questions before joining a club\n\n1. How does the club support players who are anxious, overwhelmed or low in confidence?\n2. What happens if a child struggles with behaviour, communication or emotional regulation?\n3. Do coaches understand neurodiversity and practical adjustments?\n4. How does the club communicate with parents when a player needs extra support?\n5. What resources, training or signposting does the club have access to?\n\nCampaign note\n\nMore Than A Team is a communication and support-resource campaign. It is not an accreditation, clinical service, safeguarding substitute or quality mark.`;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      window.clearTimeout(showToast.timeout);
+      showToast.timeout = window.setTimeout(() => toast.classList.remove('show'), 1900);
+    }
+
+    toggle?.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    document.querySelectorAll('.nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        toggle?.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const key = button.dataset.template;
+        const chosen = templates[key];
+        if (!chosen) return;
+
+        tabButtons.forEach(btn => btn.setAttribute('aria-selected', 'false'));
+        button.setAttribute('aria-selected', 'true');
+        templateTitle.textContent = chosen.title;
+        templateText.textContent = chosen.text;
+      });
+    });
+
+    document.querySelector('[data-copy-template]')?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(templateText.textContent.trim());
+        showToast('Template copied');
+      } catch (error) {
+        showToast('Select and copy the text');
+      }
+    });
+
+    document.querySelectorAll('[data-download-pack]').forEach(button => {
+      button.addEventListener('click', () => {
+        const blob = new Blob([packText], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'more-than-a-team-starter-pack.txt';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        showToast('Starter pack downloaded');
+      });
+    });
+  </script>
+</body>
+</html>
