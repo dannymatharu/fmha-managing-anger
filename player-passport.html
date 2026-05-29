@@ -586,6 +586,60 @@
       display: block;
     }
 
+    /* ── Parent experience ───────────────────────────────── */
+    .parent-exp {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 72px;
+      align-items: start;
+    }
+    .parent-exp-copy h2 { margin-top: 14px; }
+    .parent-exp-copy p { margin-top: 16px; font-size: 1.05rem; }
+    .parent-exp-flow {
+      display: grid;
+      gap: 0;
+      padding-top: 6px;
+    }
+    .pef-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .pef-num {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(52,211,154,0.34);
+      background: rgba(16,185,130,0.10);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--mint-light);
+      flex-shrink: 0;
+    }
+    .pef-step > div > strong {
+      display: block;
+      font-size: 0.96rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--cream);
+      margin-bottom: 6px;
+      padding-top: 10px;
+    }
+    .pef-step > div > p {
+      font-size: 0.86rem;
+      line-height: 1.5;
+      padding-bottom: 4px;
+    }
+    .pef-connector {
+      width: 1px;
+      height: 28px;
+      background: linear-gradient(to bottom, rgba(52,211,154,0.34), rgba(52,211,154,0.08));
+      margin-left: 21px;
+    }
+
     /* ── Who it's for ────────────────────────────────────── */
     .who-intro {
       max-width: 660px;
@@ -972,8 +1026,9 @@
 
     /* ── Responsive ──────────────────────────────────────── */
     @media (max-width: 1020px) {
-      .hero-grid, .snapshot-section, .form-wrap {
+      .hero-grid, .snapshot-section, .form-wrap, .parent-exp {
         grid-template-columns: 1fr;
+        gap: 40px;
       }
       .snapshot-card, .sp-preview { max-width: 520px; }
       .academy-strip { grid-template-columns: 1fr; gap: 32px; }
@@ -1195,6 +1250,53 @@
             <div class="sc-restricted" role="note" aria-label="Sensitive information held by welfare only">
               <span class="lock-icon" aria-hidden="true">🔒</span>
               Full profile detail — welfare-only
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── What parents experience ──────────────────────────── -->
+    <section aria-labelledby="parent-experience-heading">
+      <div class="wrap">
+        <div class="parent-exp">
+          <div class="parent-exp-copy">
+            <p class="eyebrow">What parents actually experience</p>
+            <h2 id="parent-experience-heading">A conversation, not a questionnaire.</h2>
+            <p>They get a link from you. No app to download, no account to create. The form takes most parents about ten minutes, and it asks things like how their child communicates best, what they find difficult, and what tends to help when they're struggling. It's written to feel like a conversation, not a medical questionnaire.</p>
+            <p style="margin-top: 14px;">Nothing they share goes anywhere without you reviewing it first. Parents know that. And because the form comes from their own club — not a stranger — most are glad someone finally asked.</p>
+          </div>
+          <div class="parent-exp-flow" aria-label="Parent journey overview">
+            <div class="pef-step">
+              <div class="pef-num" aria-hidden="true">1</div>
+              <div>
+                <strong>Welfare officer sends the link</strong>
+                <p>One message. Works by text, email, or WhatsApp. Parents click and go — no login required.</p>
+              </div>
+            </div>
+            <div class="pef-connector" aria-hidden="true"></div>
+            <div class="pef-step">
+              <div class="pef-num" aria-hidden="true">2</div>
+              <div>
+                <strong>Parent fills in the form</strong>
+                <p>Guided questions about their child. Tone is warm and practical. Takes about ten minutes.</p>
+              </div>
+            </div>
+            <div class="pef-connector" aria-hidden="true"></div>
+            <div class="pef-step">
+              <div class="pef-num" aria-hidden="true">3</div>
+              <div>
+                <strong>Welfare reviews before anyone sees it</strong>
+                <p>Nothing reaches coaches automatically. You decide what's coach-visible. Sensitive detail stays with you.</p>
+              </div>
+            </div>
+            <div class="pef-connector" aria-hidden="true"></div>
+            <div class="pef-step">
+              <div class="pef-num" aria-hidden="true">4</div>
+              <div>
+                <strong>Coaches get the snapshot</strong>
+                <p>Practical, specific, ready before training. No backstory. Just what they need.</p>
+              </div>
             </div>
           </div>
         </div>
