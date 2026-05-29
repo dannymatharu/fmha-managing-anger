@@ -1,0 +1,1571 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Player Passport — FMHA</title>
+  <meta name="description" content="A digital Player Passport for every player in your club. Parent input, welfare review, coach-ready support snapshot. From £9/month." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Tokens ───────────────────────────────────────────── */
+    :root {
+      --navy:        #192335;
+      --navy-2:      #1E2D45;
+      --navy-3:      #111A29;
+      --cream:       #F7F1E3;
+      --muted-cream: #D8CFB8;
+      --dim-cream:   rgba(247,241,227,0.62);
+      --faint-cream: rgba(247,241,227,0.16);
+      --strong-cream:rgba(247,241,227,0.28);
+      --mint:        #10B982;
+      --mint-light:  #34D39A;
+      --gold:        #D6B25E;
+      --gold-soft:   rgba(214,178,94,0.10);
+      --danger:      #E26464;
+      --font-display:"Cormorant Garamond", Georgia, serif;
+      --font-body:   "DM Sans", system-ui, sans-serif;
+      --font-mono:   "DM Mono", monospace;
+      --ease-out:    cubic-bezier(0.2,0.7,0.2,1);
+    }
+
+    /* ── Reset ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--cream);
+      background:
+        radial-gradient(circle at top left,  rgba(16,185,130,0.18), transparent 34rem),
+        radial-gradient(circle at 78% 8%,    rgba(214,178,94,0.14), transparent 28rem),
+        linear-gradient(135deg, var(--navy-3), var(--navy) 42%, #162134 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(247,241,227,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(247,241,227,0.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 72%);
+    }
+    a { color: inherit; text-decoration: none; }
+    p { color: var(--muted-cream); line-height: 1.62; }
+    ul { list-style: none; padding: 0; }
+
+    /* ── Layout ──────────────────────────────────────────── */
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(1160px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* ── Nav ─────────────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      background: rgba(17,26,41,0.72);
+      border-bottom: 1px solid var(--faint-cream);
+    }
+    .nav-inner {
+      width: min(1160px, calc(100% - 48px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 0;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--mint-light), var(--gold));
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: -0.06em;
+      color: var(--navy-3);
+      flex-shrink: 0;
+    }
+    .brand-text strong {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--cream);
+    }
+    .brand-text small {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim-cream);
+      margin-top: 2px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 0.875rem;
+      color: var(--dim-cream);
+    }
+    .nav-links a:hover { color: var(--cream); }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--mint-light), var(--gold));
+      color: var(--navy-3) !important;
+      font-weight: 800;
+      font-size: 0.83rem;
+      transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
+      box-shadow: 0 8px 24px rgba(16,185,130,0.22);
+    }
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 36px rgba(16,185,130,0.32);
+    }
+
+    /* ── Hero ────────────────────────────────────────────── */
+    .hero {
+      padding: 88px 0 100px;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mint-light);
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(3.2rem, 7.5vw, 7.2rem);
+      line-height: 0.92;
+      letter-spacing: -0.05em;
+      color: var(--cream);
+      max-width: 820px;
+    }
+    h1 .grad {
+      background: linear-gradient(120deg, var(--cream) 0%, var(--gold) 52%, var(--mint-light) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-lede {
+      max-width: 600px;
+      font-size: clamp(1.05rem, 2vw, 1.28rem);
+      line-height: 1.58;
+      color: var(--muted-cream);
+      margin-top: 28px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 36px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 52px;
+      padding: 0 26px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--mint-light), var(--gold));
+      color: var(--navy-3);
+      font-weight: 800;
+      font-size: 0.92rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
+      box-shadow: 0 14px 42px rgba(16,185,130,0.22);
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 52px rgba(16,185,130,0.32);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 52px;
+      padding: 0 26px;
+      border-radius: 999px;
+      background: rgba(247,241,227,0.07);
+      border: 1px solid var(--strong-cream);
+      color: var(--cream);
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: background 0.18s var(--ease-out);
+      text-decoration: none;
+    }
+    .btn-secondary:hover { background: rgba(247,241,227,0.12); }
+
+    .trust-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 30px;
+    }
+    .trust-pills span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--faint-cream);
+      border-radius: 999px;
+      background: rgba(247,241,227,0.06);
+      color: var(--dim-cream);
+      padding: 7px 13px;
+      font-size: 0.82rem;
+    }
+    .trust-pills span::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--mint-light);
+      flex-shrink: 0;
+    }
+
+    /* hero snapshot card */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+      gap: 60px;
+      align-items: center;
+    }
+    .snapshot-card {
+      position: relative;
+      border: 1px solid rgba(247,241,227,0.18);
+      border-radius: 24px;
+      padding: 20px;
+      background: linear-gradient(145deg, rgba(30,45,69,0.96), rgba(17,26,41,0.96));
+      box-shadow: 0 38px 100px rgba(0,0,0,0.42);
+    }
+    .snapshot-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(52,211,154,0.5), rgba(214,178,94,0.28), transparent 65%);
+      z-index: -1;
+    }
+    .sc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .sc-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim-cream);
+    }
+    .dot-live {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--mint-light);
+      box-shadow: 0 0 12px rgba(52,211,154,0.9);
+    }
+    .sc-pill {
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      border: 1px solid rgba(52,211,154,0.34);
+      color: var(--mint-light);
+      background: rgba(16,185,130,0.10);
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .sc-player {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--faint-cream);
+    }
+    .sc-initials {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: var(--cream);
+      color: var(--navy-3);
+      font-weight: 900;
+      font-size: 1rem;
+      letter-spacing: -0.06em;
+      flex-shrink: 0;
+    }
+    .sc-name {
+      font-size: 1.22rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--cream);
+    }
+    .sc-meta {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dim-cream);
+      margin-top: 4px;
+    }
+    .sc-block {
+      border: 1px solid rgba(247,241,227,0.10);
+      background: rgba(17,26,41,0.42);
+      border-radius: 14px;
+      padding: 13px 15px;
+      margin-bottom: 10px;
+    }
+    .sc-block:last-child { margin-bottom: 0; }
+    .sc-block-label {
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim-cream);
+      margin-bottom: 7px;
+    }
+    .sc-block p {
+      font-size: 0.86rem;
+      line-height: 1.5;
+      color: var(--muted-cream);
+    }
+    .sc-restricted {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.78rem;
+      color: var(--danger);
+      padding: 8px 12px;
+      border: 1px solid rgba(226,100,100,0.24);
+      border-radius: 10px;
+      background: rgba(226,100,100,0.06);
+      margin-top: 10px;
+    }
+    .lock-icon { font-style: normal; font-size: 12px; }
+
+    /* ── Section base ────────────────────────────────────── */
+    section { padding: 96px 0; }
+    h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      line-height: 0.94;
+      letter-spacing: -0.05em;
+      color: var(--cream);
+    }
+    h3 {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 1.08rem;
+      letter-spacing: -0.02em;
+      color: var(--cream);
+      margin-bottom: 10px;
+    }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mint-light);
+      margin-bottom: 16px;
+    }
+
+    /* ── Problem ─────────────────────────────────────────── */
+    .problem-intro {
+      max-width: 740px;
+      margin-bottom: 52px;
+    }
+    .problem-intro h2 { margin-top: 14px; }
+    .problem-intro p { margin-top: 20px; font-size: 1.08rem; }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .problem-card {
+      border: 1px solid var(--faint-cream);
+      border-radius: 20px;
+      padding: 26px;
+      background: rgba(30,45,69,0.62);
+    }
+    .problem-num {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+      display: block;
+    }
+    .problem-card p { font-size: 0.92rem; margin-top: 6px; }
+
+    /* ── How it works ────────────────────────────────────── */
+    .how-intro {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 56px;
+    }
+    .how-intro h2 { margin-top: 14px; }
+    .how-intro p { margin-top: 18px; font-size: 1.05rem; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 16px;
+      position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: calc(12.5% + 26px);
+      right: calc(12.5% + 26px);
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--faint-cream) 20%, var(--faint-cream) 80%, transparent);
+      pointer-events: none;
+    }
+    .step-card {
+      border: 1px solid var(--faint-cream);
+      border-radius: 20px;
+      padding: 28px 22px;
+      background: rgba(30,45,69,0.62);
+      text-align: center;
+    }
+    .step-num {
+      display: inline-grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      background: rgba(247,241,227,0.07);
+      border: 1px solid var(--faint-cream);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      margin-bottom: 20px;
+    }
+    .step-card h3 { margin-bottom: 10px; text-align: left; }
+    .step-card p { font-size: 0.88rem; text-align: left; }
+
+    /* ── What coaches see ────────────────────────────────── */
+    .snapshot-section {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 60px;
+      align-items: center;
+    }
+    .snapshot-copy h2 { margin-top: 14px; }
+    .snapshot-copy p { margin-top: 18px; font-size: 1.05rem; }
+    .snapshot-items {
+      display: grid;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .snapshot-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 1px solid var(--faint-cream);
+      border-radius: 14px;
+      background: rgba(247,241,227,0.04);
+      font-size: 0.88rem;
+      color: var(--muted-cream);
+    }
+    .snapshot-item::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--mint-light);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .snapshot-preview {
+      border: 1px solid rgba(247,241,227,0.18);
+      border-radius: 24px;
+      padding: 22px;
+      background: linear-gradient(145deg, rgba(30,45,69,0.96), rgba(17,26,41,0.96));
+      box-shadow: 0 28px 80px rgba(0,0,0,0.36);
+    }
+    .sp-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .sp-title {
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .sp-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim-cream);
+      margin-top: 4px;
+    }
+    .sp-block {
+      border: 1px solid rgba(247,241,227,0.10);
+      background: rgba(17,26,41,0.5);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .sp-block-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+      margin-bottom: 7px;
+    }
+    .sp-block p { font-size: 0.83rem; color: var(--muted-cream); }
+    .sp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .sp-grid-item {
+      border: 1px solid rgba(247,241,227,0.10);
+      background: rgba(17,26,41,0.5);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+    .sp-grid-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim-cream);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .sp-grid-item strong {
+      font-size: 0.82rem;
+      line-height: 1.35;
+      display: block;
+    }
+
+    /* ── Who it's for ────────────────────────────────────── */
+    .who-intro {
+      max-width: 660px;
+      margin-bottom: 48px;
+    }
+    .who-intro h2 { margin-top: 14px; }
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 18px;
+    }
+    .who-card {
+      border: 1px solid var(--faint-cream);
+      border-radius: 20px;
+      padding: 28px;
+      background: rgba(30,45,69,0.62);
+    }
+    .who-tag {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+    .who-tag.welfare {
+      border: 1px solid rgba(52,211,154,0.34);
+      color: var(--mint-light);
+      background: rgba(16,185,130,0.10);
+    }
+    .who-tag.parent {
+      border: 1px solid rgba(214,178,94,0.34);
+      color: var(--gold);
+      background: var(--gold-soft);
+    }
+    .who-tag.coach {
+      border: 1px solid rgba(247,241,227,0.28);
+      color: var(--dim-cream);
+      background: rgba(247,241,227,0.06);
+    }
+    .who-card p { font-size: 0.9rem; margin-top: 8px; }
+
+    /* ── Distinction strip ───────────────────────────────── */
+    .distinction {
+      border: 1px solid var(--faint-cream);
+      border-radius: 28px;
+      padding: clamp(32px, 5vw, 60px);
+      background: linear-gradient(135deg, rgba(247,241,227,0.08), rgba(247,241,227,0.03)), rgba(30,45,69,0.72);
+    }
+    .distinction h2 { margin-top: 14px; max-width: 820px; }
+    .distinction > p { margin-top: 20px; font-size: 1.06rem; max-width: 720px; }
+    .vs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 36px;
+    }
+    .vs-card {
+      border: 1px solid var(--faint-cream);
+      border-radius: 18px;
+      padding: 24px;
+      background: rgba(17,26,41,0.5);
+    }
+    .vs-card.highlight {
+      border-color: rgba(52,211,154,0.36);
+      background: rgba(16,185,130,0.06);
+    }
+    .vs-card h3 { color: var(--dim-cream); font-size: 0.88rem; text-transform: uppercase; font-family: var(--font-mono); letter-spacing: 0.1em; font-weight: 600; margin-bottom: 14px; }
+    .vs-card.highlight h3 { color: var(--mint-light); }
+    .vs-card ul { display: grid; gap: 9px; }
+    .vs-card li {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: 0.88rem;
+      color: var(--muted-cream);
+    }
+    .vs-card li::before {
+      content: '—';
+      color: var(--dim-cream);
+      flex-shrink: 0;
+    }
+    .vs-card.highlight li::before {
+      content: '✓';
+      color: var(--mint-light);
+    }
+
+    /* ── Objections ──────────────────────────────────────── */
+    .objections-intro {
+      max-width: 700px;
+      margin-bottom: 48px;
+    }
+    .objections-intro h2 { margin-top: 14px; }
+    .obj-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 18px;
+    }
+    .obj-card {
+      border: 1px solid var(--faint-cream);
+      border-radius: 20px;
+      padding: 28px;
+      background: rgba(30,45,69,0.62);
+    }
+    .obj-q {
+      font-weight: 800;
+      font-size: 0.96rem;
+      letter-spacing: -0.02em;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+    .obj-card p { font-size: 0.9rem; }
+
+    /* ── Pricing ─────────────────────────────────────────── */
+    .pricing-intro {
+      text-align: center;
+      max-width: 620px;
+      margin: 0 auto 52px;
+    }
+    .pricing-intro h2 { margin-top: 14px; }
+    .pricing-intro p { margin-top: 16px; font-size: 1.05rem; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 20px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .price-card {
+      border: 1px solid var(--faint-cream);
+      border-radius: 24px;
+      padding: 32px;
+      background: rgba(30,45,69,0.72);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .price-card.featured {
+      border-color: rgba(52,211,154,0.38);
+      background: rgba(16,185,130,0.05);
+      box-shadow: 0 0 0 1px rgba(52,211,154,0.08), 0 28px 80px rgba(0,0,0,0.24);
+    }
+    .price-plan {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mint-light);
+      margin-bottom: 12px;
+    }
+    .price-amount {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .price-amount strong {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 7vw, 6rem);
+      line-height: 0.88;
+      letter-spacing: -0.06em;
+      color: var(--cream);
+    }
+    .price-amount span {
+      font-size: 0.92rem;
+      color: var(--dim-cream);
+      margin-bottom: 8px;
+    }
+    .price-note {
+      font-size: 1.06rem;
+      font-weight: 800;
+      color: var(--cream);
+      margin-top: 10px;
+    }
+    .price-annual {
+      font-size: 0.82rem;
+      color: var(--dim-cream);
+      margin-top: 5px;
+    }
+    .price-features {
+      display: grid;
+      gap: 12px;
+    }
+    .price-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--muted-cream);
+    }
+    .price-features li::before {
+      content: '✓';
+      color: var(--mint-light);
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    /* ── Academy upsell ──────────────────────────────────── */
+    .academy-strip {
+      border: 1px solid var(--faint-cream);
+      border-radius: 28px;
+      padding: clamp(32px, 5vw, 58px);
+      background: linear-gradient(135deg, rgba(247,241,227,0.08), rgba(247,241,227,0.03)), rgba(30,45,69,0.72);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 48px;
+      align-items: center;
+    }
+    .academy-strip h2 { margin-top: 12px; font-size: clamp(2rem, 3.5vw, 3.2rem); }
+    .academy-strip > div > p { margin-top: 18px; font-size: 1.02rem; max-width: 600px; }
+    .academy-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 24px;
+    }
+    .academy-tags span {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--faint-cream);
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-size: 0.8rem;
+      color: var(--dim-cream);
+      background: rgba(247,241,227,0.05);
+    }
+    .academy-cta {
+      flex-shrink: 0;
+      text-align: center;
+    }
+    .academy-cta .btn-primary {
+      white-space: nowrap;
+    }
+    .academy-note {
+      font-size: 0.78rem;
+      color: var(--dim-cream);
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* ── Contact form ────────────────────────────────────── */
+    .form-section {
+      padding: 96px 0 112px;
+    }
+    .form-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.85fr);
+      gap: 72px;
+      align-items: start;
+    }
+    .form-copy h2 { margin-top: 14px; }
+    .form-copy p { margin-top: 18px; font-size: 1.06rem; max-width: 480px; }
+    .form-reassurances {
+      margin-top: 36px;
+      display: grid;
+      gap: 14px;
+    }
+    .form-reassurance {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.88rem;
+      color: var(--muted-cream);
+    }
+    .form-reassurance-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: rgba(52,211,154,0.12);
+      border: 1px solid rgba(52,211,154,0.24);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      color: var(--mint-light);
+      font-size: 13px;
+    }
+    .form-card {
+      border: 1px solid rgba(247,241,227,0.18);
+      border-radius: 24px;
+      padding: 36px;
+      background: linear-gradient(145deg, rgba(30,45,69,0.96), rgba(17,26,41,0.92));
+      box-shadow: 0 28px 80px rgba(0,0,0,0.36);
+    }
+    .form-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+    }
+    .form-card > p {
+      font-size: 0.88rem;
+      margin-bottom: 28px;
+    }
+    .field-group {
+      display: grid;
+      gap: 16px;
+    }
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+    .field label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted-cream);
+      letter-spacing: -0.01em;
+    }
+    .field input, .field select {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 16px;
+      border-radius: 14px;
+      border: 1px solid var(--faint-cream);
+      background: rgba(17,26,41,0.55);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
+      -webkit-appearance: none;
+    }
+    .field input:focus, .field select:focus {
+      border-color: rgba(52,211,154,0.6);
+      box-shadow: 0 0 0 3px rgba(52,211,154,0.12);
+    }
+    .field input::placeholder { color: rgba(247,241,227,0.3); }
+    .field select option { background: var(--navy-3); }
+    .form-submit {
+      width: 100%;
+      margin-top: 24px;
+    }
+    .form-small {
+      font-size: 0.76rem;
+      color: var(--dim-cream);
+      text-align: center;
+      margin-top: 14px;
+    }
+
+    /* success state */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 40px 0;
+    }
+    .form-success-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 999px;
+      background: rgba(16,185,130,0.14);
+      border: 1px solid rgba(52,211,154,0.34);
+      display: grid;
+      place-items: center;
+      margin: 0 auto 20px;
+      font-size: 24px;
+    }
+    .form-success h3 { font-size: 1.4rem; margin-bottom: 10px; }
+    .form-success p { font-size: 0.92rem; }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--faint-cream);
+      padding: 32px 0;
+    }
+    .footer-inner {
+      width: min(1160px, calc(100% - 48px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-note {
+      font-size: 0.78rem;
+      color: var(--dim-cream);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      font-size: 0.78rem;
+      color: var(--dim-cream);
+    }
+    .footer-links a:hover { color: var(--cream); }
+
+    /* ── Responsive ──────────────────────────────────────── */
+    @media (max-width: 1020px) {
+      .hero-grid, .snapshot-section, .form-wrap {
+        grid-template-columns: 1fr;
+      }
+      .snapshot-card, .sp-preview { max-width: 520px; }
+      .academy-strip { grid-template-columns: 1fr; gap: 32px; }
+      .steps::before { display: none; }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 720px) {
+      .wrap { width: calc(100% - 36px); }
+      .nav-inner { width: calc(100% - 36px); }
+      .footer-inner { width: calc(100% - 36px); }
+      .hero { padding: 60px 0 72px; }
+      section { padding: 72px 0; }
+      h1 { font-size: clamp(3rem, 14vw, 4.8rem); }
+      h2 { font-size: clamp(2.2rem, 10vw, 3.6rem); }
+      .nav-links { display: none; }
+      .problem-grid, .who-grid, .obj-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .vs-grid { grid-template-columns: 1fr; }
+      .sp-grid { grid-template-columns: 1fr; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+      .hero-actions { flex-direction: column; }
+      .form-card { padding: 26px 22px; }
+      .form-section { padding: 72px 0 88px; }
+    }
+    @media (max-width: 460px) {
+      .pricing-grid { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ─────────────────────────────────────────────── -->
+  <nav class="nav" role="navigation" aria-label="Main">
+    <div class="nav-inner">
+      <a href="#" class="brand" aria-label="Player Passport by FMHA">
+        <span class="brand-mark">PP</span>
+        <span class="brand-text">
+          <strong>Player Passport</strong>
+          <small>The Football Mental Health Alliance</small>
+        </span>
+      </a>
+      <div class="nav-links" role="list">
+        <a href="#how-it-works" role="listitem">How it works</a>
+        <a href="#pricing" role="listitem">Pricing</a>
+        <a href="#get-started" role="listitem">FMHA Academy</a>
+        <a href="#contact" class="nav-cta" role="listitem">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          Get started
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ── Hero ────────────────────────────────────────────── -->
+    <div class="wrap">
+      <div class="hero">
+        <div class="hero-grid">
+          <div>
+            <p class="hero-eyebrow">Player Passport · now digital</p>
+            <h1>Finally, a Player Passport your coaches will actually <span class="grad">use.</span></h1>
+            <p class="hero-lede">Parents share what their child needs. Welfare reviews it before coaches see anything. Every coach gets a clear, practical support snapshot — before training, before the hard moment arrives.</p>
+            <div class="hero-actions">
+              <a href="#contact" class="btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                Get Player Passport for your club
+              </a>
+              <a href="#how-it-works" class="btn-secondary">See how it works</a>
+            </div>
+            <div class="trust-pills">
+              <span>For every player, not just those with a diagnosis</span>
+              <span>Parent input, welfare controlled</span>
+              <span>From £9/month</span>
+            </div>
+          </div>
+
+          <aside class="snapshot-card" aria-label="Example coach snapshot for a player">
+            <div class="sc-header">
+              <div class="sc-label">
+                <span class="dot-live" aria-hidden="true"></span>
+                Coach snapshot
+              </div>
+              <span class="sc-pill">Welfare approved</span>
+            </div>
+            <div class="sc-player">
+              <div class="sc-initials" aria-hidden="true">JM</div>
+              <div>
+                <div class="sc-name">Jamie M.</div>
+                <div class="sc-meta">U13 Lions · CM · Version 3 · Review Sept</div>
+              </div>
+            </div>
+            <div class="sc-block">
+              <div class="sc-block-label">Communicate like this</div>
+              <p>One instruction at a time. Give him time before expecting a response — don't repeat immediately. Quiet one-to-one works better than calling out across the pitch.</p>
+            </div>
+            <div class="sc-block">
+              <div class="sc-block-label">Watch for these signs</div>
+              <p>Stops tracking the ball. Argues small decisions. Shoulder posture changes. That's when to create space, not push through.</p>
+            </div>
+            <div class="sc-block">
+              <div class="sc-block-label">What helps</div>
+              <p>Predictable warm-up routine. Praise effort before correction. Clear role — hates last-minute position changes.</p>
+            </div>
+            <div class="sc-restricted" role="note" aria-label="Welfare-only information not shown here">
+              <span class="lock-icon" aria-hidden="true">🔒</span>
+              Welfare-only detail — not visible here
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Problem ──────────────────────────────────────────── -->
+    <section aria-labelledby="problem-heading">
+      <div class="wrap">
+        <div class="problem-intro">
+          <p class="eyebrow">The problem every club already has</p>
+          <h2 id="problem-heading">Parents know things. Coaches need things. Nobody has a clean route between them.</h2>
+          <p>Most clubs run on memory, WhatsApp messages, and whoever happened to speak to a parent at the last match. That's not a system. And it's not fair on the players.</p>
+        </div>
+        <div class="problem-grid">
+          <article class="problem-card">
+            <span class="problem-num">01</span>
+            <h3>The information is scattered</h3>
+            <p>One coach knows the player freezes under pressure. Someone else got a message from a parent two seasons ago. The welfare officer has a note somewhere. None of it reaches the coach standing on the touchline tonight.</p>
+          </article>
+          <article class="problem-card">
+            <span class="problem-num">02</span>
+            <h3>It relies on the right people being there</h3>
+            <p>When coaches change, the knowledge disappears. New volunteers don't know the history. Parents assume someone has passed it on. Usually nobody has.</p>
+          </article>
+          <article class="problem-card">
+            <span class="problem-num">03</span>
+            <h3>Forms get filled in and never looked at again</h3>
+            <p>Clubs ask for this information at registration. It goes into a folder or a spreadsheet and sits there. Nothing creates the practical guidance a coach can actually use on a Sunday morning.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── How it works ─────────────────────────────────────── -->
+    <section id="how-it-works" aria-labelledby="how-heading">
+      <div class="wrap">
+        <div class="how-intro">
+          <p class="eyebrow">How Player Passport works</p>
+          <h2 id="how-heading">Four steps. No training required.</h2>
+          <p>Simple enough for a volunteer welfare officer to run. Practical enough that coaches actually thank you for it.</p>
+        </div>
+        <div class="steps" role="list">
+          <article class="step-card" role="listitem">
+            <div class="step-num" aria-hidden="true">01</div>
+            <h3>Send the parent intake link</h3>
+            <p>Parents get a guided form that asks the things coaches actually need to know. Communication preferences, sensory sensitivities, what helps, what doesn't. Warm, not clinical. Takes about ten minutes.</p>
+          </article>
+          <article class="step-card" role="listitem">
+            <div class="step-num" aria-hidden="true">02</div>
+            <h3>Welfare reviews before anyone else sees it</h3>
+            <p>Parent responses don't go straight to coaches. The welfare or safeguarding lead reviews everything first and approves what belongs in the coach-facing snapshot. Sensitive detail stays welfare-controlled.</p>
+          </article>
+          <article class="step-card" role="listitem">
+            <div class="step-num" aria-hidden="true">03</div>
+            <h3>Coaches get a practical snapshot</h3>
+            <p>Not a long form. Not a diagnosis. Just the support guidance a coach can read in two minutes before training — how to communicate with this player, what to watch for, what helps, what to avoid.</p>
+          </article>
+          <article class="step-card" role="listitem">
+            <div class="step-num" aria-hidden="true">04</div>
+            <h3>Update it through the season</h3>
+            <p>Players change. Situations change. Parents can flag updates, welfare reviews them, and the passport is versioned — so the snapshot coaches see is always the current one, not last year's.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── What coaches see ─────────────────────────────────── -->
+    <section aria-labelledby="snapshot-heading">
+      <div class="wrap">
+        <div class="snapshot-section">
+          <div class="snapshot-copy">
+            <p class="eyebrow">Coach-safe means coach-useful</p>
+            <h2 id="snapshot-heading">What coaches see — and what they don't.</h2>
+            <p>The snapshot gives coaches exactly what they need in the moment. Nothing more, nothing less. Sensitive medical detail, diagnosis information, and full family context stay behind the welfare review wall.</p>
+            <div class="snapshot-items">
+              <div class="snapshot-item">How to communicate with this player — including what language to avoid</div>
+              <div class="snapshot-item">Early warning signs if the player is struggling</div>
+              <div class="snapshot-item">What helps, and what to avoid — specific to this player</div>
+              <div class="snapshot-item">Match-day preferences and routine notes</div>
+              <div class="snapshot-item">What to do if the player becomes overwhelmed</div>
+              <div class="snapshot-item">Who to contact — and when</div>
+            </div>
+          </div>
+          <div class="snapshot-preview" aria-label="Example of the full coach snapshot view">
+            <div class="sp-head">
+              <div>
+                <div class="sp-title">Coach snapshot — Priya S.</div>
+                <div class="sp-sub">U15 United · GK, CB · v2 · Reviewed 12 Apr</div>
+              </div>
+              <span class="sc-pill">Current</span>
+            </div>
+            <div class="sp-block">
+              <div class="sp-block-title">Communicate like this</div>
+              <p>Short, direct sentences. Always address her by name first. Avoid rhetorical questions — she takes them literally. Allow 15–20 seconds before expecting a response.</p>
+            </div>
+            <div class="sp-block">
+              <div class="sp-block-title">What helps</div>
+              <p>Consistent warm-up structure. Tell her about substitutions or role changes early — not at the last moment. Praise privately, not in front of the group.</p>
+            </div>
+            <div class="sp-grid">
+              <div class="sp-grid-item">
+                <span class="sp-grid-label">Key trigger</span>
+                <strong>Unexpected routine changes. Loud, overlapping instructions.</strong>
+              </div>
+              <div class="sp-grid-item">
+                <span class="sp-grid-label">If overwhelmed</span>
+                <strong>Create space quietly. Don't crowd. Recovery takes 10–15 min.</strong>
+              </div>
+            </div>
+            <div class="sc-restricted" role="note" aria-label="Sensitive information held by welfare only">
+              <span class="lock-icon" aria-hidden="true">🔒</span>
+              Full profile detail — welfare-only
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Who it's for ──────────────────────────────────────── -->
+    <section aria-labelledby="who-heading">
+      <div class="wrap">
+        <div class="who-intro">
+          <p class="eyebrow">Three people, one system</p>
+          <h2 id="who-heading">Designed around how grassroots clubs actually work.</h2>
+        </div>
+        <div class="who-grid">
+          <article class="who-card">
+            <span class="who-tag welfare">Welfare officer</span>
+            <h3>You're the gatekeeper</h3>
+            <p>You control what coaches see. Parent submissions sit in your review queue first. You approve what's coach-visible, flag what stays restricted, and manage the review schedule through the season. No more chasing coaches or parents separately.</p>
+          </article>
+          <article class="who-card">
+            <span class="who-tag parent">Parent / carer</span>
+            <h3>Your knowledge reaches the right people</h3>
+            <p>You know things about your child that coaches don't. Player Passport gives you a proper route to share it — with confidence that it won't be forwarded to a WhatsApp group, that sensitive detail stays controlled, and that it'll actually be read.</p>
+          </article>
+          <article class="who-card">
+            <span class="who-tag coach">Coach</span>
+            <h3>You get the brief, not the backstory</h3>
+            <p>You don't need the full history. You need to know how to communicate with the player in front of you, what to watch for, and what to do if something goes wrong. The snapshot gives you that. Nothing else gets in the way.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Distinction ───────────────────────────────────────── -->
+    <section aria-labelledby="distinction-heading">
+      <div class="wrap">
+        <div class="distinction">
+          <p class="eyebrow">Not another club admin tool</p>
+          <h2 id="distinction-heading">Your club probably already has fixtures, fees, and registers sorted. Player Passport does something different.</h2>
+          <p>None of the existing tools tell a coach how to support the player in front of them. That's the gap. Player Passport exists entirely in that gap.</p>
+          <div class="vs-grid">
+            <div class="vs-card">
+              <h3>Most club platforms ask</h3>
+              <ul>
+                <li>Who's registered?</li>
+                <li>Who's paid?</li>
+                <li>Who's available Saturday?</li>
+                <li>What's the fixture?</li>
+                <li>Who's the emergency contact?</li>
+              </ul>
+            </div>
+            <div class="vs-card highlight">
+              <h3>Player Passport asks</h3>
+              <ul>
+                <li>How does this player communicate best?</li>
+                <li>What does this player find overwhelming?</li>
+                <li>What helps them feel settled?</li>
+                <li>What should a coach never say?</li>
+                <li>What happens when things go wrong — and what should the coach do first?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Objections ────────────────────────────────────────── -->
+    <section aria-labelledby="objections-heading">
+      <div class="wrap">
+        <div class="objections-intro">
+          <p class="eyebrow">Questions committees ask</p>
+          <h2 id="objections-heading">Answered before the meeting starts.</h2>
+        </div>
+        <div class="obj-grid">
+          <article class="obj-card">
+            <p class="obj-q">Is this only for players with a diagnosis?</p>
+            <p>No. Any player who might benefit from coaches understanding them better can have a Player Passport. A diagnosis is never required. The question is always: what does this player need from the adults around them?</p>
+          </article>
+          <article class="obj-card">
+            <p class="obj-q">Do coaches see everything parents write?</p>
+            <p>No, and this matters. Everything goes through the welfare lead first. Sensitive detail — medical information, diagnosis, anything the family wants kept controlled — stays restricted. Coaches see the support guidance, not the full confidential record.</p>
+          </article>
+          <article class="obj-card">
+            <p class="obj-q">We already collect this on our registration forms.</p>
+            <p>Most clubs collect it. Almost none of it reaches coaches in a usable form. Player Passport is not another data collection exercise. It turns what parents share into the practical guidance coaches actually need.</p>
+          </article>
+          <article class="obj-card">
+            <p class="obj-q">Will our volunteers actually use it?</p>
+            <p>The welfare lead sends a link. Parents fill in a form. Coaches get a snapshot. Nobody needs training to use it. It's designed for a club run by volunteers with not enough time — because that's every grassroots club.</p>
+          </article>
+          <article class="obj-card">
+            <p class="obj-q">Is the pricing really that simple?</p>
+            <p>Yes. £9/month for clubs up to 250 players. £19/month above that. Or pay annually and save. That's it. No per-user fees. No hidden tier unlocks. Priced so a welfare officer can take it to committee and get a yes in one meeting.</p>
+          </article>
+          <article class="obj-card">
+            <p class="obj-q">Does this replace our safeguarding systems?</p>
+            <p>No. Player Passport is for player support information. Safeguarding concerns still follow your club's normal procedure. These are two different things, and we keep them that way.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Pricing ───────────────────────────────────────────── -->
+    <section id="pricing" aria-labelledby="pricing-heading">
+      <div class="wrap">
+        <div class="pricing-intro">
+          <p class="eyebrow">Grassroots-first pricing</p>
+          <h2 id="pricing-heading">Easy to approve. Hard to argue with.</h2>
+          <p>Priced so welfare officers don't have to fight for it. One flat fee, all players, no hidden costs.</p>
+        </div>
+        <div class="pricing-grid">
+          <article class="price-card featured" aria-label="Club plan, £9 per month">
+            <div>
+              <p class="price-plan">Club</p>
+              <div class="price-amount">
+                <strong>£9</strong>
+                <span>/ month</span>
+              </div>
+              <p class="price-note">Up to 250 registered players</p>
+              <p class="price-annual">or £99/year — save two months</p>
+            </div>
+            <ul class="price-features">
+              <li>Player Passports for your full squad</li>
+              <li>Parent intake links — send in minutes</li>
+              <li>Welfare review queue</li>
+              <li>Coach-safe snapshots</li>
+              <li>Seasonal review reminders</li>
+              <li>Version history</li>
+            </ul>
+            <a href="#contact" class="btn-primary form-submit">Get started — Club</a>
+          </article>
+
+          <article class="price-card" aria-label="Club Plus plan, £19 per month">
+            <div>
+              <p class="price-plan">Club Plus</p>
+              <div class="price-amount">
+                <strong>£19</strong>
+                <span>/ month</span>
+              </div>
+              <p class="price-note">251 or more registered players</p>
+              <p class="price-annual">or £199/year — save two months</p>
+            </div>
+            <ul class="price-features">
+              <li>Everything in Club</li>
+              <li>Built for larger clubs and multi-team setups</li>
+              <li>Cleaner handover across age groups</li>
+              <li>More consistent support across squads</li>
+              <li>Same simple welfare control model</li>
+            </ul>
+            <a href="#contact" class="btn-primary form-submit">Get started — Club Plus</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Academy upsell ───────────────────────────────────── -->
+    <section id="get-started" aria-labelledby="academy-heading">
+      <div class="wrap">
+        <div class="academy-strip">
+          <div>
+            <p class="eyebrow">Included with FMHA Academy</p>
+            <h2 id="academy-heading">Player Passport is part of something bigger.</h2>
+            <p>FMHA Academy gives clubs ongoing mental health and neurodiversity training, expert CPD, ready-to-use resources, and a peer community. Player Passport comes included — the practical tool that makes the training stick.</p>
+            <div class="academy-tags">
+              <span>Mental health training</span>
+              <span>Neurodiversity CPD</span>
+              <span>Expert sessions</span>
+              <span>Peer community</span>
+              <span>Parent/Carer support</span>
+              <span>MindStrong FC</span>
+              <span>Player Passport included</span>
+            </div>
+          </div>
+          <div class="academy-cta">
+            <a href="https://fmha.academy/" class="btn-primary" target="_blank" rel="noopener">
+              Explore FMHA Academy
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+            <p class="academy-note">Player Passport included as standard</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Contact form ──────────────────────────────────────── -->
+    <section id="contact" class="form-section" aria-labelledby="contact-heading">
+      <div class="wrap">
+        <div class="form-wrap">
+          <div class="form-copy">
+            <p class="eyebrow">Get Player Passport for your club</p>
+            <h2 id="contact-heading">Takes two minutes. We'll do the rest.</h2>
+            <p>Fill in your details and we'll come back to you with everything you need to get started — including how to run your first parent intake campaign.</p>
+            <div class="form-reassurances" aria-label="What happens when you submit">
+              <div class="form-reassurance">
+                <div class="form-reassurance-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <span>We'll reply within one working day — usually the same afternoon.</span>
+              </div>
+              <div class="form-reassurance">
+                <div class="form-reassurance-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <span>No sales call unless you want one. No pressure to commit.</span>
+              </div>
+              <div class="form-reassurance">
+                <div class="form-reassurance-icon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+                <span>Your details are not shared with anyone and not used for marketing lists.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-card">
+            <h3>Get in touch about Player Passport</h3>
+            <p>Tell us about your club and we'll be in touch.</p>
+
+            <!-- Netlify form — works automatically on Netlify hosting -->
+            <form
+              name="player-passport-enquiry"
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              id="enquiry-form"
+              novalidate
+            >
+              <input type="hidden" name="form-name" value="player-passport-enquiry" />
+              <p style="display:none;">
+                <label>Don't fill this in: <input name="bot-field" /></label>
+              </p>
+
+              <div class="field-group">
+                <div class="field">
+                  <label for="name">Your name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="e.g. Sarah Jones"
+                    autocomplete="name"
+                    required
+                  />
+                </div>
+                <div class="field">
+                  <label for="club">Club name</label>
+                  <input
+                    type="text"
+                    id="club"
+                    name="club"
+                    placeholder="e.g. Riverside FC"
+                    required
+                  />
+                </div>
+                <div class="field">
+                  <label for="role">Your role at the club</label>
+                  <select id="role" name="role" required>
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="welfare-officer">Welfare officer</option>
+                    <option value="club-secretary">Club secretary</option>
+                    <option value="committee-member">Committee member</option>
+                    <option value="chairman">Chairman / chairperson</option>
+                    <option value="head-coach">Head coach</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="email">Email address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="you@yourclub.co.uk"
+                    autocomplete="email"
+                    required
+                  />
+                </div>
+                <div class="field">
+                  <label for="phone">Phone number</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="07700 000000"
+                    autocomplete="tel"
+                  />
+                </div>
+              </div>
+
+              <button type="submit" class="btn-primary form-submit">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                Send enquiry
+              </button>
+              <p class="form-small">We'll reply within one working day.</p>
+            </form>
+
+            <div class="form-success" id="form-success" role="alert" aria-live="polite">
+              <div class="form-success-icon" aria-hidden="true">✓</div>
+              <h3>We've got your enquiry.</h3>
+              <p>We'll be in touch within one working day — usually the same afternoon. Thanks for getting in touch.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="brand" style="gap: 10px;">
+        <span class="brand-mark" style="width:32px;height:32px;font-size:11px;">PP</span>
+        <span>
+          <span style="font-size:0.82rem;font-weight:700;color:var(--cream);display:block;">Player Passport</span>
+          <span style="font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim-cream);">The Football Mental Health Alliance · withinu</span>
+        </span>
+      </div>
+      <div class="footer-links">
+        <a href="https://fmha.academy/" target="_blank" rel="noopener">FMHA Academy</a>
+        <a href="mailto:danny@withinu.net">danny@withinu.net</a>
+      </div>
+      <p class="footer-note">© 2026 The Football Mental Health Alliance CIC. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Handle Netlify form submission with JS for better UX
+    const form = document.getElementById('enquiry-form');
+    const success = document.getElementById('form-success');
+
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const btn = form.querySelector('button[type="submit"]');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> Sending…';
+        btn.disabled = true;
+
+        const data = new FormData(form);
+
+        try {
+          await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(data).toString()
+          });
+          form.style.display = 'none';
+          success.style.display = 'block';
+        } catch (err) {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+          alert('Something went wrong — please email danny@withinu.net directly.');
+        }
+      });
+    }
+
+    // Smooth anchor scroll offset for sticky nav
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener('click', function(e) {
+        const id = this.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if (!target) return;
+        e.preventDefault();
+        const navH = document.querySelector('.nav').offsetHeight;
+        const top = target.getBoundingClientRect().top + window.scrollY - navH - 20;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</body>
+</html>
