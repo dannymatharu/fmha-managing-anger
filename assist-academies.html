@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assist for Professional Football Academies | Recognise. Respond. Record.</title>
+  <meta name="description" content="Assist helps professional football academies recognise neurodivergent player support needs, respond with reasonable adjustments, and record what was tried, reviewed and escalated." />
+  <meta name="theme-color" content="#ff5757" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --assist-red: #ff5757;
+      --assist-red-dark: #e04444;
+      --safeguarding-red: #f87171;
+      --ink: #070b16;
+      --navy: #101827;
+      --navy-2: #172033;
+      --navy-3: #1f2937;
+      --text: #edf2f7;
+      --muted: #a7b0c2;
+      --paper: #f8fafc;
+      --paper-2: #fff7ed;
+      --line: rgba(255,255,255,.13);
+      --line-soft: rgba(255,255,255,.08);
+      --card: rgba(255,255,255,.065);
+      --card-strong: rgba(255,255,255,.11);
+      --shadow: 0 28px 90px rgba(0,0,0,.42);
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--ink);
+    }
+
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 4% 4%, rgba(255,87,87,.31), transparent 34rem),
+        radial-gradient(circle at 88% 9%, rgba(248,113,113,.17), transparent 36rem),
+        linear-gradient(180deg, #070b16 0%, #101827 38%, #070b16 100%);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: linear-gradient(to bottom, black 0%, transparent 88%);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: .12;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.34'/%3E%3C/svg%3E");
+    }
+
+    a { color: inherit; text-decoration: none; }
+    p, h1, h2, h3 { margin-top: 0; }
+    p { color: var(--muted); }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(7,11,22,.78);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .nav {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: -.04em;
+      font-size: 1.3rem;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background:
+        linear-gradient(135deg, var(--assist-red), #ff7a7a),
+        var(--assist-red);
+      box-shadow: 0 15px 35px rgba(255,87,87,.28);
+      font-family: "DM Mono", monospace;
+      font-weight: 500;
+    }
+
+    .brand small {
+      display: block;
+      font-family: "DM Mono", monospace;
+      font-size: .66rem;
+      color: var(--muted);
+      letter-spacing: .02em;
+      margin-top: -3px;
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: .92rem;
+      font-weight: 700;
+    }
+
+    .nav-links a:hover { color: #fff; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      padding: 13px 20px;
+      font-weight: 900;
+      letter-spacing: -.015em;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--assist-red), #ff7878);
+      box-shadow: 0 20px 48px rgba(255,87,87,.32);
+    }
+
+    .btn-primary:hover { box-shadow: 0 24px 62px rgba(255,87,87,.42); }
+
+    .btn-secondary {
+      color: #fff;
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,.32);
+      background: rgba(255,255,255,.1);
+    }
+
+    section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 86px 24px;
+    }
+
+    .hero {
+      padding-top: 76px;
+      padding-bottom: 58px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(340px, .68fr);
+      gap: 54px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,87,87,.32);
+      border-radius: 999px;
+      background: rgba(255,87,87,.11);
+      color: #ffd6d6;
+      font-family: "DM Mono", monospace;
+      font-size: .74rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--assist-red);
+      box-shadow: 0 0 0 6px rgba(255,87,87,.15);
+    }
+
+    .hero h1 {
+      font-size: clamp(3.15rem, 7.2vw, 6.75rem);
+      line-height: .88;
+      letter-spacing: -.085em;
+      max-width: 940px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 .red {
+      color: var(--assist-red);
+      text-shadow: 0 0 48px rgba(255,87,87,.32);
+    }
+
+    .identity-line {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      gap: 14px;
+      justify-content: start;
+      margin: 30px 0 24px;
+      font-size: clamp(1.4rem, 3vw, 2.6rem);
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -.055em;
+    }
+
+    .identity-line span {
+      padding: 15px 17px 17px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.045));
+      border-radius: 18px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+    }
+
+    .identity-line span:nth-child(2) {
+      color: var(--ink);
+      background: var(--assist-red);
+      border-color: var(--assist-red);
+      box-shadow: 0 18px 50px rgba(255,87,87,.32);
+    }
+
+    .hero-copy {
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      color: #d7deec;
+      max-width: 780px;
+      margin-bottom: 28px;
+    }
+
+    .hero-copy strong { color: #fff; }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 26px 0 24px;
+    }
+
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.045);
+      color: #c9d3e3;
+      font-size: .86rem;
+      font-weight: 800;
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: 612px;
+    }
+
+    .phone {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 390px);
+      margin-left: auto;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 42px;
+      padding: 18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,.04)),
+        #0a0f1d;
+      box-shadow: var(--shadow), 0 0 0 10px rgba(255,255,255,.025);
+      transform: rotate(2deg);
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 92px;
+      height: 24px;
+      border-radius: 999px;
+      background: #050813;
+      border: 1px solid rgba(255,255,255,.08);
+      z-index: 3;
+    }
+
+    .phone-screen {
+      overflow: hidden;
+      border-radius: 30px;
+      background: #f8fafc;
+      color: #101827;
+      min-height: 575px;
+      padding: 24px;
+    }
+
+    .screen-top {
+      padding-top: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .screen-logo {
+      font-weight: 900;
+      letter-spacing: -.055em;
+      font-size: 1.45rem;
+      color: #111827;
+    }
+
+    .screen-logo span { color: var(--assist-red); }
+
+    .screen-pill {
+      font-family: "DM Mono", monospace;
+      font-size: .64rem;
+      border: 1px solid rgba(17,24,39,.12);
+      color: #64748b;
+      padding: 6px 8px;
+      border-radius: 999px;
+    }
+
+    .screen-label {
+      font-family: "DM Mono", monospace;
+      font-size: .7rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 10px;
+    }
+
+    .screen-title {
+      font-size: 1.32rem;
+      line-height: 1.05;
+      letter-spacing: -.045em;
+      font-weight: 900;
+      margin-bottom: 18px;
+      color: #111827;
+    }
+
+    .log-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 16px;
+      background: #fff;
+      box-shadow: 0 15px 35px rgba(15,23,42,.08);
+      margin-bottom: 14px;
+    }
+
+    .log-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      font-size: .82rem;
+      color: #64748b;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 7px 9px;
+      border-radius: 999px;
+      background: rgba(255,87,87,.12);
+      color: var(--assist-red-dark);
+      font-weight: 900;
+      font-size: .76rem;
+      margin-bottom: 10px;
+    }
+
+    .observation {
+      font-size: .93rem;
+      line-height: 1.35;
+      color: #334155;
+      margin: 0;
+    }
+
+    .suggestion {
+      display: grid;
+      grid-template-columns: 25px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 12px 0;
+      border-bottom: 1px solid #edf2f7;
+      color: #334155;
+      font-size: .86rem;
+      line-height: 1.34;
+    }
+
+    .suggestion:last-child { border-bottom: 0; }
+
+    .check {
+      width: 25px;
+      height: 25px;
+      border-radius: 9px;
+      background: var(--assist-red);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: .82rem;
+      font-weight: 900;
+    }
+
+    .recorded {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 13px 14px;
+      border-radius: 16px;
+      background: #101827;
+      color: #fff;
+      font-size: .82rem;
+      font-weight: 900;
+    }
+
+    .recorded span {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #10b982;
+      box-shadow: 0 0 0 5px rgba(16,185,130,.18);
+    }
+
+    .floating-stat {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      bottom: 42px;
+      width: 245px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(16,24,39,.84);
+      backdrop-filter: blur(16px);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .floating-stat strong {
+      display: block;
+      font-size: 3.35rem;
+      line-height: .9;
+      letter-spacing: -.08em;
+      color: #fff;
+      margin-bottom: 9px;
+    }
+
+    .floating-stat strong span { color: var(--assist-red); }
+
+    .floating-stat p {
+      margin: 0;
+      font-size: .88rem;
+      color: #cbd5e1;
+      line-height: 1.38;
+    }
+
+    .section-head {
+      max-width: 850px;
+      margin-bottom: 38px;
+    }
+
+    .section-kicker {
+      font-family: "DM Mono", monospace;
+      color: #ffb7b7;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      font-size: .78rem;
+      margin-bottom: 12px;
+    }
+
+    .section-head h2,
+    .split h2,
+    .cost-title,
+    .final h2 {
+      font-size: clamp(2.25rem, 5.2vw, 4.8rem);
+      line-height: .94;
+      letter-spacing: -.07em;
+      margin-bottom: 18px;
+    }
+
+    .section-head p,
+    .split p {
+      font-size: 1.1rem;
+      color: #c5cfdf;
+      max-width: 720px;
+    }
+
+    .phil-section {
+      max-width: none;
+      padding: 62px 0 70px;
+    }
+
+    .phil-billboard {
+      width: min(1480px, calc(100% - 40px));
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 36px;
+      border: 1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(circle at 12% 20%, rgba(255,87,87,.36), transparent 28rem),
+        linear-gradient(135deg, rgba(255,87,87,.18), rgba(255,255,255,.055) 46%, rgba(255,87,87,.08)),
+        #111827;
+      padding: clamp(34px, 7vw, 84px);
+      box-shadow: var(--shadow);
+    }
+
+    .phil-billboard::after {
+      content: "PHIL KNOWS";
+      position: absolute;
+      right: -18px;
+      bottom: -32px;
+      font-size: clamp(4.4rem, 12vw, 14rem);
+      font-weight: 900;
+      letter-spacing: -.09em;
+      color: rgba(255,255,255,.045);
+      line-height: .8;
+      pointer-events: none;
+    }
+
+    .phil-billboard h2 {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      font-size: clamp(3rem, 8.8vw, 8.8rem);
+      line-height: .86;
+      letter-spacing: -.085em;
+      margin: 0 0 26px;
+    }
+
+    .phil-billboard h2 span { color: var(--assist-red); }
+
+    .phil-billboard p {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      color: #dbe5f2;
+      font-size: clamp(1.08rem, 1.8vw, 1.35rem);
+      margin-bottom: 0;
+    }
+
+    .phil-strip {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 36px;
+      max-width: 1030px;
+    }
+
+    .phil-mini {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      border-radius: 18px;
+      padding: 15px;
+      color: #cbd5e1;
+      font-size: .92rem;
+      font-weight: 800;
+    }
+
+    .cost-section {
+      padding-top: 74px;
+    }
+
+    .cost-panel {
+      display: grid;
+      grid-template-columns: .86fr 1.14fr;
+      gap: 28px;
+      align-items: stretch;
+      border: 1px solid rgba(255,87,87,.26);
+      border-radius: 38px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 92% 5%, rgba(255,87,87,.23), transparent 28rem),
+        rgba(255,255,255,.05);
+      box-shadow: var(--shadow);
+    }
+
+    .cost-number {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(30px, 5vw, 58px);
+      background:
+        linear-gradient(155deg, rgba(255,87,87,.95), rgba(224,68,68,.82)),
+        var(--assist-red);
+      color: #fff;
+    }
+
+    .cost-number small {
+      display: block;
+      font-family: "DM Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-size: .78rem;
+      margin-bottom: 12px;
+      color: rgba(255,255,255,.82);
+    }
+
+    .cost-number strong {
+      display: block;
+      font-size: clamp(3.2rem, 8vw, 7.4rem);
+      line-height: .86;
+      letter-spacing: -.09em;
+      color: #fff;
+      margin-bottom: 18px;
+    }
+
+    .cost-number p {
+      color: rgba(255,255,255,.88);
+      font-size: 1.05rem;
+      max-width: 450px;
+      margin: 0;
+    }
+
+    .cost-copy {
+      padding: clamp(30px, 5vw, 58px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .cost-copy .cost-title {
+      max-width: 720px;
+    }
+
+    .cost-copy p {
+      font-size: 1.08rem;
+      color: #cad5e5;
+    }
+
+    .pullquote {
+      margin-top: 24px;
+      border-left: 5px solid var(--assist-red);
+      padding: 6px 0 6px 18px;
+      color: #fff;
+      font-size: 1.18rem;
+      font-weight: 900;
+      line-height: 1.26;
+      max-width: 720px;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .scenario {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.11);
+      background: rgba(255,255,255,.055);
+      border-radius: 26px;
+      padding: 24px;
+      min-height: 280px;
+    }
+
+    .scenario::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      height: 4px;
+      background: var(--assist-red);
+      opacity: .9;
+    }
+
+    .scenario .num {
+      font-family: "DM Mono", monospace;
+      color: var(--assist-red);
+      font-weight: 500;
+      font-size: .8rem;
+      margin-bottom: 35px;
+    }
+
+    .scenario h3 {
+      font-size: 1.35rem;
+      line-height: 1.05;
+      letter-spacing: -.04em;
+      margin-bottom: 12px;
+    }
+
+    .scenario p {
+      margin-bottom: 0;
+      color: #c5cfdf;
+    }
+
+    .identity-block {
+      max-width: none;
+      padding: 0;
+      margin: 30px 0 0;
+    }
+
+    .identity-marquee {
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,.09);
+      border-bottom: 1px solid rgba(255,255,255,.09);
+      background: #ff5757;
+      color: #070b16;
+      transform: rotate(-1.2deg) scale(1.02);
+      box-shadow: 0 18px 60px rgba(255,87,87,.25);
+    }
+
+    .identity-track {
+      display: flex;
+      width: max-content;
+      animation: move 26s linear infinite;
+    }
+
+    .identity-track span {
+      display: block;
+      padding: 22px 22px 24px;
+      font-size: clamp(2.1rem, 5vw, 5.3rem);
+      line-height: .9;
+      letter-spacing: -.08em;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    @keyframes move {
+      to { transform: translateX(-50%); }
+    }
+
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .flow-card {
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.045));
+      border-radius: 30px;
+      padding: 28px;
+      min-height: 330px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flow-card::after {
+      content: attr(data-step);
+      position: absolute;
+      right: -18px;
+      bottom: -24px;
+      color: rgba(255,255,255,.045);
+      font-weight: 900;
+      font-size: 9rem;
+      line-height: .8;
+      letter-spacing: -.09em;
+    }
+
+    .flow-card h3 {
+      font-size: clamp(2rem, 3.2vw, 3.1rem);
+      line-height: .9;
+      letter-spacing: -.07em;
+      margin-bottom: 18px;
+    }
+
+    .flow-card h3 span { color: var(--assist-red); }
+
+    .flow-card p {
+      font-size: 1rem;
+      color: #c7d1df;
+      margin-bottom: 20px;
+    }
+
+    .flow-card ul,
+    .feature-list,
+    .source-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .flow-card li,
+    .feature-list li,
+    .source-list li {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 10px;
+      align-items: start;
+      color: #dbe5f2;
+      font-size: .95rem;
+      padding: 8px 0;
+      border-top: 1px solid rgba(255,255,255,.07);
+    }
+
+    .flow-card li::before,
+    .feature-list li::before,
+    .source-list li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--assist-red);
+      margin-top: .47em;
+      box-shadow: 0 0 0 5px rgba(255,87,87,.13);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(360px, 1.05fr);
+      gap: 42px;
+      align-items: start;
+    }
+
+    .sticky-copy {
+      position: sticky;
+      top: 96px;
+    }
+
+    .record-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .record-item {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      border-radius: 22px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .record-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 17px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,87,87,.14);
+      color: #ffb7b7;
+      font-family: "DM Mono", monospace;
+      font-weight: 500;
+      border: 1px solid rgba(255,87,87,.26);
+    }
+
+    .record-item h3 {
+      margin-bottom: 5px;
+      font-size: 1.16rem;
+      letter-spacing: -.03em;
+    }
+
+    .record-item p {
+      margin-bottom: 0;
+      color: #c4cfdf;
+      font-size: .98rem;
+    }
+
+    .ai-panel {
+      border-radius: 38px;
+      border: 1px solid rgba(255,255,255,.13);
+      background:
+        radial-gradient(circle at 12% 15%, rgba(255,87,87,.22), transparent 28rem),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035));
+      padding: clamp(28px, 5vw, 58px);
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 44px;
+      align-items: start;
+      box-shadow: var(--shadow);
+    }
+
+    .library-card {
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(0,0,0,.18);
+      border-radius: 28px;
+      padding: 24px;
+    }
+
+    .library-big {
+      font-size: clamp(4rem, 9vw, 8rem);
+      line-height: .85;
+      letter-spacing: -.08em;
+      color: #fff;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .library-big span { color: var(--assist-red); }
+
+    .source-chip-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .source-chip {
+      padding: 9px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.1);
+      font-size: .82rem;
+      font-weight: 900;
+      color: #dce6f5;
+    }
+
+    .legal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .legal-card {
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.055);
+      padding: 24px;
+    }
+
+    .legal-card h3 {
+      font-size: 1.22rem;
+      line-height: 1.1;
+      letter-spacing: -.035em;
+      margin-bottom: 10px;
+    }
+
+    .legal-card p { margin: 0; }
+
+    .legal-card.red {
+      border-color: rgba(255,87,87,.34);
+      background: rgba(255,87,87,.11);
+    }
+
+    .faq-wrap {
+      display: grid;
+      gap: 12px;
+      max-width: 920px;
+    }
+
+    details {
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 20px;
+      background: rgba(255,255,255,.055);
+      padding: 0;
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 20px 22px;
+      cursor: pointer;
+      font-weight: 900;
+      letter-spacing: -.02em;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: "+";
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(255,87,87,.14);
+      color: var(--assist-red);
+      flex: 0 0 auto;
+    }
+
+    details[open] summary::after { content: "-"; }
+
+    details p {
+      padding: 0 22px 22px;
+      margin: 0;
+      color: #c8d3e2;
+    }
+
+    .final {
+      max-width: none;
+      padding: 90px 24px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255,87,87,.32), transparent 40rem),
+        #080c17;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+
+    .final-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 34px;
+      align-items: end;
+    }
+
+    .final h2 {
+      max-width: 880px;
+      margin-bottom: 16px;
+    }
+
+    .final p {
+      max-width: 760px;
+      font-size: 1.12rem;
+      color: #d0dae8;
+      margin-bottom: 0;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: #070b16;
+      padding: 34px 24px 48px;
+      color: #8692a6;
+      font-size: .9rem;
+    }
+
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 30px;
+    }
+
+    .footer-inner a {
+      color: #cbd5e1;
+      text-decoration: underline;
+      text-decoration-color: rgba(255,255,255,.28);
+      text-underline-offset: 3px;
+    }
+
+    .sources {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 13px;
+    }
+
+    .sources a {
+      padding: 7px 9px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.045);
+      border-radius: 999px;
+      text-decoration: none;
+      color: #d3dce9;
+      font-size: .78rem;
+      font-weight: 800;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .identity-track { animation: none; }
+      .reveal { opacity: 1; transform: none; }
+      .btn { transition: none; }
+    }
+
+    @media (max-width: 1040px) {
+      .hero,
+      .cost-panel,
+      .split,
+      .ai-panel,
+      .final-inner,
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        min-height: auto;
+        display: grid;
+        place-items: center;
+      }
+
+      .phone {
+        margin: 0 auto;
+        transform: rotate(0deg);
+      }
+
+      .floating-stat {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        width: min(100%, 390px);
+        margin: -32px auto 0;
+      }
+
+      .sticky-copy { position: static; }
+
+      .scenario-grid,
+      .flow-grid,
+      .legal-grid,
+      .phil-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        padding: 13px 16px;
+      }
+
+      .nav-links a:not(.btn) { display: none; }
+
+      .brand { font-size: 1.12rem; }
+      .brand-mark { width: 38px; height: 38px; }
+
+      section,
+      .hero {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .hero {
+        padding-top: 50px;
+        gap: 34px;
+      }
+
+      .hero h1 {
+        font-size: clamp(3rem, 16vw, 5.2rem);
+      }
+
+      .identity-line {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        font-size: 1.9rem;
+      }
+
+      .identity-line span {
+        width: fit-content;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn { width: 100%; }
+
+      .phone-screen {
+        min-height: auto;
+        padding: 20px;
+      }
+
+      .phone {
+        border-radius: 34px;
+        padding: 12px;
+      }
+
+      .phil-billboard {
+        width: calc(100% - 28px);
+        border-radius: 26px;
+      }
+
+      .phil-strip,
+      .scenario-grid,
+      .flow-grid,
+      .legal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cost-number strong { font-size: 4rem; }
+      .record-item { grid-template-columns: 1fr; }
+      .identity-marquee { transform: rotate(-1.7deg) scale(1.03); }
+      .identity-track span { padding: 18px 16px 20px; }
+      .final { padding: 70px 18px; }
+      footer { padding: 30px 18px 42px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#top" class="brand" aria-label="Assist home">
+        <span class="brand-mark">A*</span>
+        <span>Assist<small>Recognise. Respond. Record.</small></span>
+      </a>
+      <div class="nav-links">
+        <a href="#problem">The problem</a>
+        <a href="#flow">How it works</a>
+        <a href="#evidence">Evidence</a>
+        <a class="btn btn-primary" href="https://calendar.app.google/mryhiF8wEkkc4y8b6">Schedule a call</a>
+      </div>
+    </nav>
+  </div>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy-wrap reveal">
+        <div class="eyebrow"><span class="dot"></span> Built for professional football academies</div>
+        <h1>Your coaches are making adjustments. <span class="red">None of it is written down.</span></h1>
+
+        <div class="identity-line" aria-label="Recognise. Respond. Record.">
+          <span>Recognise.</span>
+          <span>Respond.</span>
+          <span>Record.</span>
+        </div>
+
+        <p class="hero-copy">
+          Assist helps academy staff recognise observable player support needs, respond with practical reasonable adjustments, and record what was tried, reviewed and escalated. A significant number of players in your programme will be neurodivergent. Many will not arrive with a diagnosis. <strong>Your duty to make reasonable adjustments does not wait until they do.</strong>
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://calendar.app.google/mryhiF8wEkkc4y8b6">Schedule a call</a>
+          <a class="btn btn-secondary" href="#problem">See the academy risk</a>
+        </div>
+
+        <div class="trust-row" aria-label="Assist highlights">
+          <span class="trust-pill">No diagnosis required</span>
+          <span class="trust-pill">Under 2 minutes to log</span>
+          <span class="trust-pill">Timestamped records</span>
+          <span class="trust-pill">Academy welfare visibility</span>
+        </div>
+      </div>
+
+      <div class="hero-card reveal" aria-label="Assist app preview">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="screen-top">
+              <div class="screen-logo">Assi<span>*</span>t</div>
+              <div class="screen-pill">Coach log</div>
+            </div>
+            <div class="screen-label">Observable behaviour</div>
+            <div class="screen-title">Player moved away from warm-up group after whistle and covered ears.</div>
+
+            <div class="log-card">
+              <div class="log-row"><span>U13 session</span><span>Arrival / warm-up</span></div>
+              <div class="tag">Sensory overload</div>
+              <p class="observation">No diagnosis added. No label attached. Just what the coach observed.</p>
+            </div>
+
+            <div class="log-card">
+              <div class="screen-label">FMHA suggested adjustments</div>
+              <div class="suggestion"><span class="check">1</span><span>Warn the player before sharp sound cues or switch to a visual cue during warm-up.</span></div>
+              <div class="suggestion"><span class="check">2</span><span>Offer a quieter arrival point and a clear route back into the group.</span></div>
+              <div class="suggestion"><span class="check">3</span><span>Record outcome after the next session so the welfare lead can spot repeat patterns.</span></div>
+            </div>
+
+            <div class="recorded"><span></span> Observation, adjustment and outcome ready to record</div>
+          </div>
+        </div>
+        <div class="floating-stat">
+          <strong>1<span>in</span>7</strong>
+          <p>Estimated UK neurodivergence prevalence. In academy football, that is not marginal. It is already in the building.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="phil-section" id="problem">
+      <div class="phil-billboard reveal">
+        <h2><span>“Phil knows about it”</span> is not a system.</h2>
+        <p>
+          Every academy has a Phil. The coach who remembers the parent conversation. The welfare staff member who knows which player needs preparation before transitions. The age-group lead who has tried three adjustments but never put them anywhere central. Good people. Bad infrastructure.
+        </p>
+        <div class="phil-strip">
+          <div class="phil-mini">Coach memory</div>
+          <div class="phil-mini">WhatsApp fragments</div>
+          <div class="phil-mini">Parent screenshots</div>
+          <div class="phil-mini">No clean audit trail</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cost-section">
+      <div class="cost-panel reveal">
+        <div class="cost-number">
+          <small>Realistic academy exposure</small>
+          <strong>£20k - £30k</strong>
+          <p>One complaint investigation can burn serious staff time, legal support and management energy before it ever reaches a formal hearing.</p>
+        </div>
+        <div class="cost-copy">
+          <h2 class="cost-title">The issue is often not that nobody cared. The issue is that nobody can prove what happened.</h2>
+          <p>
+            Adjustments may have been made. Conversations may have taken place. Coaches may have tried sensible things. But when the record is scattered across inboxes, memory, notebooks and messages, the academy is left reconstructing care after the complaint has landed.
+          </p>
+          <div class="pullquote">Assist is built to stop reasonable adjustments living in people’s heads.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head reveal">
+        <div class="section-kicker">Academy scenarios</div>
+        <h2>This is where the gap shows up.</h2>
+        <p>These are not edge cases. They are ordinary academy moments that become expensive, stressful and reputationally awkward when nobody has a structured record.</p>
+      </div>
+
+      <div class="scenario-grid">
+        <article class="scenario reveal">
+          <div class="num">01</div>
+          <h3>The same parent has raised the same concern for months.</h3>
+          <p>The academy says staff have tried adjustments. The parent says nothing changed. Nobody can produce a clear timeline of observations, actions and outcomes.</p>
+        </article>
+
+        <article class="scenario reveal">
+          <div class="num">02</div>
+          <h3>A player is labelled difficult when they were overloaded.</h3>
+          <p>The behaviour was visible: withdrawal, shutdown, refusal, agitation. The record only says attitude issue. That is not player support. It is a liability trail.</p>
+        </article>
+
+        <article class="scenario reveal">
+          <div class="num">03</div>
+          <h3>The coach who knew the player leaves.</h3>
+          <p>The new coach inherits a squad, but not the adjustment history. Support resets to zero because the system was the previous coach’s memory.</p>
+        </article>
+
+        <article class="scenario reveal">
+          <div class="num">04</div>
+          <h3>An EPPP welfare conversation asks for evidence.</h3>
+          <p>The academy has values, policies and good people. What it needs in that moment is a clean record showing what was recognised, what was tried and what happened next.</p>
+        </article>
+
+        <article class="scenario reveal">
+          <div class="num">05</div>
+          <h3>A player masks well until the pressure spikes.</h3>
+          <p>High-performing players can hide distress until it surfaces as avoidance, anger or collapse. Assist helps staff record patterns before they become crisis points.</p>
+        </article>
+
+        <article class="scenario reveal">
+          <div class="num">06</div>
+          <h3>Everyone thought someone else had logged it.</h3>
+          <p>The coach told the age-group lead. The age-group lead told welfare. Welfare thought it was already in the file. That chain is not evidence.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="identity-block" aria-hidden="true">
+      <div class="identity-marquee">
+        <div class="identity-track">
+          <span>Recognise. Respond. Record.</span>
+          <span>Recognise. Respond. Record.</span>
+          <span>Recognise. Respond. Record.</span>
+          <span>Recognise. Respond. Record.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="flow">
+      <div class="section-head reveal">
+        <div class="section-kicker">How Assist works</div>
+        <h2>Three actions. One defensible record.</h2>
+        <p>Assist turns player support from informal intent into structured action. Coaches do not need to diagnose. They log what they see, choose what they try, and close the loop.</p>
+      </div>
+
+      <div class="flow-grid">
+        <article class="flow-card reveal" data-step="01">
+          <h3><span>Recognise.</span></h3>
+          <p>The coach logs the observable behaviour and the session context in under two minutes.</p>
+          <ul>
+            <li>Player selected from squad list</li>
+            <li>Behaviour category chosen</li>
+            <li>Training, match, arrival, warm-up or departure context added</li>
+            <li>Short observation note captured</li>
+          </ul>
+        </article>
+
+        <article class="flow-card reveal" data-step="02">
+          <h3><span>Respond.</span></h3>
+          <p>Assist suggests practical reasonable adjustments from the FMHA adjustment library.</p>
+          <ul>
+            <li>Suggestions are football-specific</li>
+            <li>No clinical language required</li>
+            <li>No diagnosis required</li>
+            <li>Safeguarding gate redirects concerns that need welfare action</li>
+          </ul>
+        </article>
+
+        <article class="flow-card reveal" data-step="03">
+          <h3><span>Record.</span></h3>
+          <p>The observation, adjustment and outcome are stored in the Player Support Record.</p>
+          <ul>
+            <li>Timestamped entry</li>
+            <li>Named staff action</li>
+            <li>Outcome review</li>
+            <li>Exportable PDF, CSV and audit trail for academy leads</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="evidence">
+      <div class="split">
+        <div class="sticky-copy reveal">
+          <div class="section-kicker">What gets recorded</div>
+          <h2>Not a note. A Player Support Record.</h2>
+          <p>
+            A reasonable adjustment is only defensible if the academy can show what need was recognised, what action was taken, whether it helped, and whether concerns were escalated. Assist builds that timeline as coaches work.
+          </p>
+          <a class="btn btn-primary" href="https://calendar.app.google/mryhiF8wEkkc4y8b6">Schedule a call</a>
+        </div>
+
+        <div class="record-stack">
+          <article class="record-item reveal">
+            <div class="record-icon">01</div>
+            <div><h3>Observable behaviour</h3><p>What staff saw, in football language. Not a diagnosis. Not a label. A clear description of the moment.</p></div>
+          </article>
+          <article class="record-item reveal">
+            <div class="record-icon">02</div>
+            <div><h3>Session context</h3><p>Training, matchday, arrival, transition, changing room, parent boundary, warm-up, drill or departure.</p></div>
+          </article>
+          <article class="record-item reveal">
+            <div class="record-icon">03</div>
+            <div><h3>Adjustment tried</h3><p>The practical support action selected by the coach, aligned to an approved adjustment category.</p></div>
+          </article>
+          <article class="record-item reveal">
+            <div class="record-icon">04</div>
+            <div><h3>Outcome and next step</h3><p>Helped, partly helped, did not help, not yet tried, or needs welfare lead review. This is where the loop closes.</p></div>
+          </article>
+          <article class="record-item reveal">
+            <div class="record-icon">05</div>
+            <div><h3>Academy visibility</h3><p>Welfare leads and academy admins can see patterns across squads, staff and age groups before the same issue repeats.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="ai-panel reveal">
+        <div>
+          <div class="section-kicker">The AI does not freestyle</div>
+          <h2>Assist is not throwing random advice at coaches.</h2>
+          <p>
+            Academy staff will rightly be cautious about AI-generated advice. Assist is designed around a curated FMHA adjustment library. The AI layer selects and adapts from approved adjustment content. It does not invent diagnoses, clinical explanations or unsupported interventions.
+          </p>
+          <div class="source-chip-grid">
+            <span class="source-chip">EHRC guidance</span>
+            <span class="source-chip">SEND Code of Practice</span>
+            <span class="source-chip">NICE NG87</span>
+            <span class="source-chip">NICE NG142</span>
+            <span class="source-chip">CPSU</span>
+            <span class="source-chip">Youth Sport Trust</span>
+            <span class="source-chip">FMHA practitioner review</span>
+          </div>
+        </div>
+        <div class="library-card">
+          <div class="library-big">79<span>.</span></div>
+          <h3>Curated adjustment entries</h3>
+          <p>Covering sensory overload, emotional regulation, processing and focus, social interaction, movement and coordination, transitions and routine, communication and expression, plus real football scenarios including changing rooms, parent-at-boundary situations and cold or wet kit sensory issues.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head reveal">
+        <div class="section-kicker">The legal frame</div>
+        <h2>Strong enough to matter. Honest enough to trust.</h2>
+        <p>Assist should never overclaim. It does not guarantee compliance. It creates structured evidence that can support an academy demonstrating proactive reasonable adjustments under the Equality Act 2010.</p>
+      </div>
+
+      <div class="legal-grid">
+        <article class="legal-card red reveal">
+          <h3>The duty is about reasonable adjustments.</h3>
+          <p>The Equality Act 2010 sets out the duty to make reasonable adjustments and treats failure to comply with that duty as discrimination.</p>
+        </article>
+        <article class="legal-card reveal">
+          <h3>The duty can be anticipatory.</h3>
+          <p>For service providers, the EHRC describes the duty as anticipatory. Organisations must think ahead about barriers and support needs.</p>
+        </article>
+        <article class="legal-card reveal">
+          <h3>Documentation is not compliance by itself.</h3>
+          <p>But without documentation, proving what was recognised, tried and reviewed becomes much harder when challenged.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head reveal">
+        <div class="section-kicker">What Assist is not</div>
+        <h2>Clear boundaries matter.</h2>
+        <p>Assist is built to help academies act earlier and record better. It is not trying to become a clinical, legal or safeguarding platform.</p>
+      </div>
+      <div class="legal-grid">
+        <article class="legal-card reveal"><h3>Not diagnostic</h3><p>Coaches log behaviours and adjustments. They do not diagnose autism, ADHD, dyspraxia or any other condition.</p></article>
+        <article class="legal-card reveal"><h3>Not legal advice</h3><p>Assist supports evidence-building. It does not certify that any specific adjustment is legally sufficient.</p></article>
+        <article class="legal-card reveal"><h3>Not a safeguarding system</h3><p>Assist includes a safeguarding gate and escalation logic, but safeguarding concerns should follow the academy’s established procedures.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head reveal">
+        <div class="section-kicker">Questions academies will ask</div>
+        <h2>Practical answers, not brochure fluff.</h2>
+      </div>
+
+      <div class="faq-wrap">
+        <details class="reveal">
+          <summary>Will coaches actually use it?</summary>
+          <p>That is the whole point. If it takes 40 minutes and feels like admin, it dies. Assist is designed for pitchside logging in under two minutes. The coach recognises the behaviour, selects the context, chooses an adjustment and records the outcome later.</p>
+        </details>
+        <details class="reveal">
+          <summary>Do players need a diagnosis before support is logged?</summary>
+          <p>No. Assist is behaviour-first. Coaches record what they observe and what they try. The academy should not wait for a formal diagnosis before considering practical reasonable adjustments.</p>
+        </details>
+        <details class="reveal">
+          <summary>What happens if it is actually safeguarding?</summary>
+          <p>The app includes a safeguarding gate. If the concern is not a coaching adjustment situation, the coach is redirected to safeguarding procedure and the relevant welfare route.</p>
+        </details>
+        <details class="reveal">
+          <summary>Can welfare leads see patterns?</summary>
+          <p>Yes. The academy version is designed for age groups, squads, coaches and welfare visibility. Repeated behaviours in the same category should not sit unnoticed in separate staff conversations.</p>
+        </details>
+        <details class="reveal">
+          <summary>Can records be exported?</summary>
+          <p>Yes. Admins can export structured records including a formatted reasonable-adjustments PDF, CSV data and audit history. That matters for complaints, internal review and welfare evidence.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="final-inner reveal">
+        <div>
+          <div class="section-kicker">Assist for professional football academies</div>
+          <h2>Stop relying on memory to evidence player support.</h2>
+          <p>
+            If your coaches are already making adjustments, Assist gives your academy the system to recognise them, respond consistently and record the evidence properly.
+          </p>
+        </div>
+        <a class="btn btn-primary" href="https://calendar.app.google/mryhiF8wEkkc4y8b6">Schedule a call</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <strong>Assist.</strong><br>
+        Recognise. Respond. Record.<br>
+        Built by The Football Mental Health Alliance / withinu for professional football academies.
+      </div>
+      <div>
+        <strong>Evidence notes</strong><br>
+        Neurodivergence prevalence is presented as an estimated UK figure. Legal references are included to support the page’s compliance framing. Assist does not provide legal advice and does not guarantee compliance.
+        <div class="sources">
+          <a href="https://www.local.gov.uk/lga-libdem-group/our-press-releases/neurodiversity" target="_blank" rel="noreferrer">LGA: around 1 in 7</a>
+          <a href="https://www.equalityhumanrights.com/equality/equality-act-2010/your-rights-under-equality-act-2010/terms-used-equality-act" target="_blank" rel="noreferrer">EHRC: anticipatory duty</a>
+          <a href="https://www.legislation.gov.uk/ukpga/2010/15/section/20" target="_blank" rel="noreferrer">Equality Act s20</a>
+          <a href="https://www.legislation.gov.uk/ukpga/2010/15/section/21" target="_blank" rel="noreferrer">Equality Act s21</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
