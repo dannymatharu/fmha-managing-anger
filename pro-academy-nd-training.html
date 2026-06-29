@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ND Training Pro Academy | Online Neurodiversity Training For Football Academies</title>
+  <meta name="description" content="Self-paced online neurodiversity training for professional football academy staff. Built for coaches, academy managers, heads of education, and player care leads." />
+  <meta name="theme-color" content="#ff5757" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #ff5757;
+      --red-dark: #df4040;
+      --ink: #070b16;
+      --navy: #101827;
+      --navy-2: #151f31;
+      --text: #f4f7fb;
+      --muted: #a8b2c4;
+      --soft: #d8e0ec;
+      --line: rgba(255,255,255,.13);
+      --card: rgba(255,255,255,.065);
+      --card-strong: rgba(255,255,255,.1);
+      --paper: #f8fafc;
+      --shadow: 0 28px 90px rgba(0,0,0,.42);
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--ink);
+    }
+
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 5% 3%, rgba(255,87,87,.32), transparent 34rem),
+        radial-gradient(circle at 92% 8%, rgba(255,151,151,.16), transparent 36rem),
+        linear-gradient(180deg, #070b16 0%, #101827 42%, #070b16 100%);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: linear-gradient(to bottom, black 0%, transparent 88%);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: .12;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.34'/%3E%3C/svg%3E");
+    }
+
+    a { color: inherit; text-decoration: none; }
+    p, h1, h2, h3 { margin-top: 0; }
+    p { color: var(--muted); }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(7,11,22,.8);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .nav {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 15px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: -.04em;
+      font-size: 1.22rem;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,87,87,.14);
+      border: 1px solid rgba(255,87,87,.3);
+      color: #fff;
+      box-shadow: 0 15px 35px rgba(255,87,87,.18);
+      font-family: "DM Mono", monospace;
+      font-weight: 500;
+      letter-spacing: -.04em;
+    }
+
+    .brand small {
+      display: block;
+      font-family: "DM Mono", monospace;
+      font-size: .64rem;
+      color: var(--muted);
+      letter-spacing: .02em;
+      margin-top: -3px;
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: .92rem;
+      font-weight: 800;
+    }
+
+    .nav-links a:hover { color: #fff; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      padding: 13px 20px;
+      font-weight: 900;
+      letter-spacing: -.015em;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--red), #ff7a7a);
+      box-shadow: 0 20px 48px rgba(255,87,87,.32);
+    }
+
+    .btn-primary:hover { box-shadow: 0 24px 62px rgba(255,87,87,.42); }
+
+    .btn-secondary {
+      color: #fff;
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+    }
+
+    section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 86px 24px;
+    }
+
+    .hero {
+      padding-top: 76px;
+      padding-bottom: 56px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.03fr) minmax(330px, .67fr);
+      gap: 54px;
+      align-items: center;
+    }
+
+    .hero > *,
+    .split > *,
+    .course-panel > *,
+    .proof-grid > *,
+    .footer-inner > * {
+      min-width: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,87,87,.32);
+      border-radius: 999px;
+      background: rgba(255,87,87,.11);
+      color: #ffd6d6;
+      font-family: "DM Mono", monospace;
+      font-size: .73rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--red);
+      box-shadow: 0 0 0 6px rgba(255,87,87,.15);
+    }
+
+    .hero h1 {
+      font-size: clamp(3.1rem, 7.4vw, 6.85rem);
+      line-height: .88;
+      letter-spacing: -.085em;
+      max-width: 940px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 .red {
+      color: var(--red);
+      text-shadow: 0 0 48px rgba(255,87,87,.32);
+    }
+
+    .hero h1 .line {
+      display: block;
+    }
+
+    .hero-copy {
+      font-size: clamp(1.05rem, 1.9vw, 1.33rem);
+      color: #d7deec;
+      max-width: 790px;
+      margin-bottom: 16px;
+    }
+
+    .hero-copy strong { color: #fff; }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 28px 0 24px;
+    }
+
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.045);
+      color: #c9d3e3;
+      font-size: .86rem;
+      font-weight: 800;
+    }
+
+    .course-device {
+      position: relative;
+      min-height: 610px;
+    }
+
+    .course-card {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 405px);
+      margin-left: auto;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 34px;
+      padding: 18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,.04)),
+        #0a0f1d;
+      box-shadow: var(--shadow), 0 0 0 10px rgba(255,255,255,.025);
+      transform: rotate(2deg);
+    }
+
+    .course-screen {
+      overflow: hidden;
+      border-radius: 24px;
+      background: var(--paper);
+      color: #101827;
+      min-height: 568px;
+      padding: 24px;
+    }
+
+    .screen-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 26px;
+      gap: 16px;
+    }
+
+    .screen-logo {
+      font-weight: 900;
+      letter-spacing: -.055em;
+      font-size: 1.45rem;
+      color: #101827;
+    }
+
+    .screen-pill {
+      font-family: "DM Mono", monospace;
+      font-size: .65rem;
+      border: 1px solid rgba(17,24,39,.12);
+      color: #64748b;
+      padding: 6px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .screen-label {
+      font-family: "DM Mono", monospace;
+      font-size: .7rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 10px;
+    }
+
+    .screen-title {
+      font-size: 1.44rem;
+      line-height: 1.03;
+      letter-spacing: -.045em;
+      font-weight: 900;
+      margin-bottom: 18px;
+      color: #111827;
+    }
+
+    .progress {
+      height: 10px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 64%;
+      background: linear-gradient(90deg, var(--red), #ff8a8a);
+    }
+
+    .module-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .module-row {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: start;
+      border: 1px solid #e2e8f0;
+      border-radius: 17px;
+      padding: 13px;
+      background: #fff;
+      box-shadow: 0 12px 28px rgba(15,23,42,.06);
+    }
+
+    .module-row strong {
+      display: block;
+      color: #111827;
+      font-size: .95rem;
+      line-height: 1.08;
+      letter-spacing: -.02em;
+      margin-bottom: 4px;
+    }
+
+    .module-row small {
+      color: #64748b;
+      line-height: 1.24;
+    }
+
+    .tick {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,87,87,.12);
+      color: var(--red-dark);
+      font-weight: 900;
+      font-size: .9rem;
+    }
+
+    .floating-stat {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      bottom: 38px;
+      width: 266px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(16,24,39,.84);
+      backdrop-filter: blur(16px);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .floating-stat strong {
+      display: block;
+      font-size: clamp(2.35rem, 4vw, 3.35rem);
+      line-height: .9;
+      letter-spacing: -.08em;
+      color: #fff;
+      margin-bottom: 9px;
+    }
+
+    .floating-stat strong span { color: var(--red); }
+
+    .floating-stat p {
+      margin: 0;
+      font-size: .88rem;
+      color: #cbd5e1;
+      line-height: 1.38;
+    }
+
+    .billboard {
+      max-width: none;
+      padding: 66px 0 74px;
+    }
+
+    .billboard-panel {
+      width: min(1480px, calc(100% - 40px));
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 36px;
+      border: 1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(circle at 12% 20%, rgba(255,87,87,.36), transparent 28rem),
+        linear-gradient(135deg, rgba(255,87,87,.18), rgba(255,255,255,.055) 46%, rgba(255,87,87,.08)),
+        #111827;
+      padding: clamp(34px, 7vw, 84px);
+      box-shadow: var(--shadow);
+    }
+
+    .billboard-panel::after {
+      content: "ALREADY HERE";
+      position: absolute;
+      right: -18px;
+      bottom: -32px;
+      font-size: clamp(4.4rem, 12vw, 14rem);
+      font-weight: 900;
+      letter-spacing: -.09em;
+      color: rgba(255,255,255,.045);
+      line-height: .8;
+      pointer-events: none;
+    }
+
+    .billboard h2 {
+      position: relative;
+      z-index: 1;
+      max-width: 1040px;
+      font-size: clamp(3rem, 8.5vw, 8.6rem);
+      line-height: .86;
+      letter-spacing: -.085em;
+      margin: 0 0 26px;
+    }
+
+    .billboard h2 span { color: var(--red); }
+
+    .billboard p {
+      position: relative;
+      z-index: 1;
+      max-width: 890px;
+      color: #dbe5f2;
+      font-size: clamp(1.08rem, 1.8vw, 1.35rem);
+      margin-bottom: 0;
+    }
+
+    .section-head {
+      max-width: 850px;
+      margin-bottom: 38px;
+    }
+
+    .section-kicker {
+      font-family: "DM Mono", monospace;
+      color: #ffb7b7;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      font-size: .78rem;
+      margin-bottom: 12px;
+    }
+
+    .section-head h2,
+    .split h2,
+    .final h2 {
+      font-size: clamp(2.25rem, 5.2vw, 4.8rem);
+      line-height: .94;
+      letter-spacing: -.07em;
+      margin-bottom: 18px;
+    }
+
+    .section-head p,
+    .split p {
+      font-size: 1.1rem;
+      color: #c5cfdf;
+      max-width: 760px;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .scenario {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.11);
+      background: rgba(255,255,255,.055);
+      border-radius: 24px;
+      padding: 24px;
+      min-height: 258px;
+    }
+
+    .scenario::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      height: 4px;
+      background: var(--red);
+    }
+
+    .scenario .num {
+      font-family: "DM Mono", monospace;
+      color: var(--red);
+      font-weight: 500;
+      font-size: .8rem;
+      margin-bottom: 35px;
+    }
+
+    .scenario h3 {
+      font-size: 1.32rem;
+      line-height: 1.06;
+      letter-spacing: -.04em;
+      margin-bottom: 12px;
+    }
+
+    .scenario p {
+      margin-bottom: 0;
+      color: #c5cfdf;
+    }
+
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .flow-card {
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.045));
+      border-radius: 28px;
+      padding: 28px;
+      min-height: 345px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flow-card::after {
+      content: attr(data-step);
+      position: absolute;
+      right: -18px;
+      bottom: -24px;
+      color: rgba(255,255,255,.045);
+      font-weight: 900;
+      font-size: 9rem;
+      line-height: .8;
+      letter-spacing: -.09em;
+    }
+
+    .flow-card h3 {
+      font-size: clamp(2rem, 3.1vw, 3rem);
+      line-height: .9;
+      letter-spacing: -.07em;
+      margin-bottom: 18px;
+    }
+
+    .flow-card h3 span { color: var(--red); }
+
+    .flow-card p {
+      font-size: 1rem;
+      color: #c7d1df;
+      margin-bottom: 20px;
+    }
+
+    .feature-list,
+    .source-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .feature-list li,
+    .source-list li {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 10px;
+      align-items: start;
+      color: #dbe5f2;
+      font-size: .95rem;
+      padding: 8px 0;
+      border-top: 1px solid rgba(255,255,255,.07);
+    }
+
+    .feature-list li::before,
+    .source-list li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--red);
+      margin-top: .47em;
+      box-shadow: 0 0 0 5px rgba(255,87,87,.13);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(360px, 1.05fr);
+      gap: 42px;
+      align-items: start;
+    }
+
+    .sticky-copy {
+      position: sticky;
+      top: 96px;
+    }
+
+    .track-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .track-item {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      border-radius: 22px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .track-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 17px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,87,87,.14);
+      color: #ffb7b7;
+      font-family: "DM Mono", monospace;
+      font-weight: 500;
+      border: 1px solid rgba(255,87,87,.26);
+    }
+
+    .track-item h3 {
+      margin-bottom: 5px;
+      font-size: 1.16rem;
+      letter-spacing: -.03em;
+    }
+
+    .track-item p {
+      margin-bottom: 0;
+      color: #c4cfdf;
+      font-size: .98rem;
+    }
+
+    .course-panel {
+      border-radius: 36px;
+      border: 1px solid rgba(255,255,255,.13);
+      background:
+        radial-gradient(circle at 12% 15%, rgba(255,87,87,.22), transparent 28rem),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035));
+      padding: clamp(28px, 5vw, 58px);
+      display: grid;
+      grid-template-columns: .92fr 1.08fr;
+      gap: 40px;
+      align-items: start;
+      box-shadow: var(--shadow);
+    }
+
+    .big-number {
+      font-size: clamp(4rem, 9vw, 8rem);
+      line-height: .85;
+      letter-spacing: -.08em;
+      color: #fff;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .big-number span { color: var(--red); }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .module-chip {
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(0,0,0,.18);
+      border-radius: 16px;
+      padding: 13px;
+      color: #dce6f5;
+      font-weight: 850;
+      font-size: .9rem;
+      line-height: 1.18;
+    }
+
+    /* Resource pack */
+    .resource-pack {
+      margin-top: 32px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+
+    .resource-pack-label {
+      font-family: "DM Mono", monospace;
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      color: #ffb7b7;
+      margin-bottom: 14px;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .resource-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 13px;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 13px;
+      background: rgba(0,0,0,.18);
+      color: #d4dff0;
+      font-size: .85rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .resource-chip::before {
+      content: "↓";
+      color: var(--red);
+      font-weight: 900;
+      flex-shrink: 0;
+      font-size: .9rem;
+    }
+
+    .version-strip {
+      max-width: none;
+      padding: 0;
+      margin: 24px 0 0;
+    }
+
+    .version-marquee {
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,.09);
+      border-bottom: 1px solid rgba(255,255,255,.09);
+      background: #ff5757;
+      color: #070b16;
+      transform: rotate(-1.2deg) scale(1.02);
+      box-shadow: 0 18px 60px rgba(255,87,87,.25);
+    }
+
+    .version-track {
+      display: flex;
+      width: max-content;
+      animation: move 28s linear infinite;
+    }
+
+    .version-track span {
+      display: block;
+      padding: 22px 22px 24px;
+      font-size: clamp(2.1rem, 5vw, 5.3rem);
+      line-height: .9;
+      letter-spacing: -.08em;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    @keyframes move {
+      to { transform: translateX(-50%); }
+    }
+
+    /* Version explainer */
+    .version-explainer {
+      max-width: var(--max);
+      margin: 40px auto 0;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .version-card {
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.045);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .version-card strong {
+      display: block;
+      font-size: 1rem;
+      letter-spacing: -.025em;
+      margin-bottom: 7px;
+      color: #fff;
+    }
+
+    .version-card p {
+      font-size: .88rem;
+      color: #b8c4d6;
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* Steps / How it works */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .step-card {
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.045);
+      border-radius: 22px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step-card::after {
+      content: attr(data-n);
+      position: absolute;
+      right: -10px;
+      bottom: -18px;
+      font-size: 6.5rem;
+      font-weight: 900;
+      line-height: .8;
+      letter-spacing: -.08em;
+      color: rgba(255,255,255,.04);
+      pointer-events: none;
+    }
+
+    .step-num {
+      font-family: "DM Mono", monospace;
+      color: var(--red);
+      font-weight: 500;
+      font-size: .78rem;
+      margin-bottom: 14px;
+    }
+
+    .step-card h3 {
+      font-size: 1.08rem;
+      letter-spacing: -.03em;
+      margin-bottom: 8px;
+      line-height: 1.15;
+      color: #fff;
+    }
+
+    .step-card p {
+      font-size: .88rem;
+      color: #b8c4d6;
+      margin-bottom: 0;
+      line-height: 1.45;
+    }
+
+    /* Pricing */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .pricing-card {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.055);
+      border-radius: 28px;
+      padding: 28px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pricing-card.featured {
+      border-color: rgba(255,87,87,.4);
+      background: rgba(255,87,87,.07);
+      box-shadow: 0 0 0 1px rgba(255,87,87,.22), 0 28px 60px rgba(255,87,87,.12);
+    }
+
+    .pricing-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: var(--red);
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 900;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      width: fit-content;
+    }
+
+    .pricing-name {
+      font-size: 1.15rem;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      margin-bottom: 5px;
+      color: #fff;
+    }
+
+    .pricing-who {
+      font-size: .88rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+
+    .price-tag {
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 900;
+      line-height: .85;
+      letter-spacing: -.07em;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .price-tag sup {
+      font-size: 1.5rem;
+      letter-spacing: -.03em;
+      vertical-align: super;
+    }
+
+    .price-sub {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-bottom: 26px;
+      font-family: "DM Mono", monospace;
+    }
+
+    .price-per {
+      font-size: .78rem;
+      color: #ffb7b7;
+      font-family: "DM Mono", monospace;
+      margin-bottom: 20px;
+      margin-top: -18px;
+    }
+
+    .pricing-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 28px;
+      flex: 1;
+    }
+
+    .pricing-features li {
+      display: grid;
+      grid-template-columns: 14px 1fr;
+      gap: 10px;
+      align-items: start;
+      color: #d8e3f2;
+      font-size: .88rem;
+      padding: 8px 0;
+      border-top: 1px solid rgba(255,255,255,.07);
+      line-height: 1.35;
+    }
+
+    .pricing-features li::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--red);
+      margin-top: .42em;
+      box-shadow: 0 0 0 4px rgba(255,87,87,.13);
+      flex-shrink: 0;
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .proof-number {
+      border-radius: 32px;
+      background:
+        linear-gradient(155deg, rgba(255,87,87,.95), rgba(224,68,68,.82)),
+        var(--red);
+      padding: clamp(30px, 5vw, 52px);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .proof-number small {
+      display: block;
+      font-family: "DM Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-size: .78rem;
+      margin-bottom: 12px;
+      color: rgba(255,255,255,.82);
+    }
+
+    .proof-number strong {
+      display: block;
+      font-size: clamp(3.2rem, 8vw, 7.4rem);
+      line-height: .86;
+      letter-spacing: -.09em;
+      color: #fff;
+      margin-bottom: 18px;
+    }
+
+    .proof-copy {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.055);
+      border-radius: 32px;
+      padding: clamp(30px, 5vw, 52px);
+    }
+
+    .proof-copy p {
+      color: #cbd6e5;
+      font-size: 1.06rem;
+    }
+
+    .pullquote {
+      margin-top: 24px;
+      border-left: 5px solid var(--red);
+      padding: 6px 0 6px 18px;
+      color: #fff;
+      font-size: 1.18rem;
+      font-weight: 900;
+      line-height: 1.26;
+      max-width: 720px;
+    }
+
+    .faq-wrap {
+      display: grid;
+      gap: 12px;
+      max-width: 920px;
+    }
+
+    details {
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 20px;
+      background: rgba(255,255,255,.055);
+      padding: 0;
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 20px 22px;
+      cursor: pointer;
+      font-weight: 900;
+      letter-spacing: -.02em;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: "+";
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(255,87,87,.14);
+      color: var(--red);
+      flex: 0 0 auto;
+    }
+
+    details[open] summary::after { content: "-"; }
+
+    details p {
+      padding: 0 22px 22px;
+      margin: 0;
+      color: #c8d3e2;
+    }
+
+    .final {
+      max-width: none;
+      padding: 90px 24px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255,87,87,.32), transparent 40rem),
+        #080c17;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+
+    .final-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+      align-items: flex-start;
+    }
+
+    .final .btn {
+      padding: 17px 34px;
+      font-size: 1.2rem;
+      min-width: 220px;
+    }
+
+    .final h2 {
+      max-width: 920px;
+      margin-bottom: 16px;
+    }
+
+    .final p {
+      max-width: 760px;
+      font-size: 1.12rem;
+      color: #d0dae8;
+      margin-bottom: 0;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: #070b16;
+      padding: 34px 24px 48px;
+      color: #8692a6;
+      font-size: .9rem;
+    }
+
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 30px;
+    }
+
+    .footer-inner a {
+      color: #cbd5e1;
+      text-decoration: underline;
+      text-decoration-color: rgba(255,255,255,.28);
+      text-underline-offset: 3px;
+    }
+
+    .sources {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 13px;
+    }
+
+    .sources a {
+      padding: 7px 9px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.045);
+      border-radius: 999px;
+      text-decoration: none;
+      color: #d3dce9;
+      font-size: .78rem;
+      font-weight: 800;
+    }
+
+    .fmha-bar {
+      background: rgba(255,255,255,.04);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      padding: 10px 24px;
+    }
+
+    .fmha-bar-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .78rem;
+      color: var(--muted);
+      font-family: "DM Mono", monospace;
+    }
+
+    .fmha-bar-inner strong { color: #d8e0ec; font-weight: 700; }
+    .fmha-divider { width: 1px; height: 12px; background: rgba(255,255,255,.18); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .version-track { animation: none; }
+      .reveal { opacity: 1; transform: none; }
+      .btn { transition: none; }
+    }
+
+    @media (max-width: 1040px) {
+      .hero,
+      .split,
+      .course-panel,
+      .proof-grid,
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .course-device {
+        min-height: auto;
+        display: grid;
+        place-items: center;
+      }
+
+      .course-card {
+        margin: 0 auto;
+        transform: rotate(0deg);
+      }
+
+      .floating-stat {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        width: min(100%, 390px);
+        margin: -28px auto 0;
+      }
+
+      .sticky-copy { position: static; }
+
+      .scenario-grid,
+      .flow-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 560px;
+      }
+
+      .version-explainer {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav { padding: 13px 16px; }
+      .nav-links a:not(.btn) { display: none; }
+      .nav-links .btn { display: none; }
+      .brand { font-size: 1.05rem; }
+      .brand small { display: none; }
+      .brand-mark { width: 38px; height: 38px; }
+
+      section,
+      .hero {
+        padding-left: 18px;
+        padding-right: 18px;
+        max-width: 100vw;
+        overflow: hidden;
+      }
+
+      .hero {
+        padding-top: 50px;
+        gap: 34px;
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero h1 {
+        font-size: 2.9rem;
+        line-height: .91;
+        letter-spacing: -.065em;
+      }
+
+      .hero > .reveal,
+      .hero-copy,
+      .hero-actions,
+      .trust-row,
+      .course-device {
+        width: min(100%, 340px);
+        max-width: 340px;
+      }
+
+      .hero-copy {
+        font-size: .96rem;
+      }
+
+      .trust-pill {
+        font-size: .8rem;
+        padding: 8px 10px;
+      }
+
+      .course-card {
+        width: min(100%, 330px);
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-actions .btn,
+      .final .btn { width: 100%; }
+      .course-screen { min-height: auto; padding: 20px; }
+      .course-card { border-radius: 28px; padding: 12px; }
+      .billboard-panel { width: calc(100% - 28px); border-radius: 26px; }
+      .scenario-grid,
+      .flow-grid,
+      .module-grid,
+      .steps-grid,
+      .resource-grid { grid-template-columns: 1fr; }
+      .track-item { grid-template-columns: 1fr; }
+      .version-marquee { transform: rotate(-1.7deg) scale(1.03); }
+      .version-track span { padding: 18px 16px 20px; }
+      .final { padding: 70px 18px; }
+      footer { padding: 30px 18px 42px; }
+      .version-explainer { padding: 0 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#top" class="brand" aria-label="ND Training Pro Academy home">
+        <span class="brand-mark">ND</span>
+        <span>ND Training Pro Academy<small>Built for professional football academies</small></span>
+      </a>
+      <div class="nav-links">
+        <a href="#problem">The problem</a>
+        <a href="#course">Course</a>
+        <a href="#who">Who it is for</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn btn-primary" href="https://calendar.app.google/mryhiF8wEkkc4y8b6">Book a call</a>
+      </div>
+    </nav>
+  </div>
+
+  <div class="fmha-bar">
+    <div class="fmha-bar-inner">
+      <strong>The Football Mental Health Alliance</strong>
+      <div class="fmha-divider"></div>
+      <span>Specialist neurodiversity training for professional football academies</span>
+      <div class="fmha-divider"></div>
+      <span>withinu / FMHA</span>
+    </div>
+  </div>
+
+  <main id="top">
+    <section class="hero">
+      <div class="reveal">
+        <div class="eyebrow"><span class="dot"></span> Online academy staff training</div>
+        <h1><span class="line">Your staff are</span><span class="line">already</span><span class="line">supporting</span><span class="line red">neurodivergent</span><span class="line red">players.</span></h1>
+        <p class="hero-copy"><strong>The question is whether they know what they are seeing.</strong> ND Training Pro Academy gives coaches, academy managers, heads of education, player care leads, and all academy staff a practical online route into neurodiversity, reasonable adjustments, and defensible support practice.</p>
+        <p class="hero-copy">Self-paced. Academy-specific. Built around the quiet player, the masked player, the misunderstood player, and the staff member who wants to help but has never been trained properly.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#pricing">See pricing</a>
+          <a class="btn btn-secondary" href="#course">See what is inside</a>
+        </div>
+        <div class="trust-row" aria-label="Course facts">
+          <span class="trust-pill">10 modules</span>
+          <span class="trust-pill">Around 3.5 hours</span>
+          <span class="trust-pill">Knowledge checks throughout</span>
+          <span class="trust-pill">Certificate on completion</span>
+          <span class="trust-pill">Resource pack included</span>
+        </div>
+      </div>
+
+      <div class="course-device reveal">
+        <div class="course-card" aria-label="Course interface preview">
+          <div class="course-screen">
+            <div class="screen-top">
+              <div class="screen-logo">ND Training</div>
+              <div class="screen-pill">64% complete</div>
+            </div>
+            <div class="screen-label">Current module</div>
+            <div class="screen-title">Spotting players who go under the radar</div>
+            <div class="progress"><span></span></div>
+            <div class="module-list">
+              <div class="module-row">
+                <div class="tick">✓</div>
+                <div><strong>Why this matters</strong><small>The scale of neurodiversity in academy cohorts.</small></div>
+              </div>
+              <div class="module-row">
+                <div class="tick">✓</div>
+                <div><strong>Understanding neurodiversity</strong><small>Spiky profiles, stigma, and developmental age.</small></div>
+              </div>
+              <div class="module-row">
+                <div class="tick">✓</div>
+                <div><strong>ADHD in the academy</strong><small>Attention, regulation, criticism, and coaching fit.</small></div>
+              </div>
+              <div class="module-row">
+                <div class="tick">05</div>
+                <div><strong>Your legal obligations</strong><small>Reasonable adjustments and documentation practice.</small></div>
+              </div>
+              <div class="module-row">
+                <div class="tick">09</div>
+                <div><strong>Documentation and process</strong><small>What was observed, what was tried, what changed.</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="floating-stat">
+          <strong>15<span>-</span>20%</strong>
+          <p>Widely used UK working estimate for neurodivergence across the population. In academy terms, that is not a niche issue.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="billboard" id="problem">
+      <div class="billboard-panel reveal">
+        <h2>Neurodiversity is <span>already in your academy.</span></h2>
+        <p>Some players arrive with paperwork. Many do not. The player most likely to be missed is not always the disruptive one. It is often the quiet, compliant, talented player whose struggles sit in education, communication, reviews, sensory load, emotional regulation, or feedback processing.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head reveal">
+        <div class="section-kicker">What makes this urgent</div>
+        <h2>Three pressures are arriving at the same time.</h2>
+        <p>This is not a soft awareness topic. It sits across player development, parent trust, legal exposure, and the academy's ability to understand the young people already in its care.</p>
+      </div>
+      <div class="scenario-grid">
+        <article class="scenario reveal">
+          <div class="num">01</div>
+          <h3>Players are being misread.</h3>
+          <p>Struggling to retain tactical information, shutting down after criticism, missing written tasks, or avoiding group demands can be read as attitude. Sometimes it is neurology.</p>
+        </article>
+        <article class="scenario reveal">
+          <div class="num">02</div>
+          <h3>Families know more now.</h3>
+          <p>Parents are more aware of ADHD, autism, dyslexia, masking, reasonable adjustments, and the duty of care owed by professional environments.</p>
+        </article>
+        <article class="scenario reveal">
+          <div class="num">03</div>
+          <h3>Documentation is weak.</h3>
+          <p>Academies often try sensible things. The problem is that observations, adjustments, handovers, and outcomes are rarely recorded in a way that survives scrutiny. Under the Equality Act, adjustments that are not documented are extremely difficult to rely on.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="course">
+      <div class="course-panel reveal">
+        <div>
+          <div class="section-kicker">The course</div>
+          <div class="big-number">10<span>x</span></div>
+          <p>Ten modules designed for the academy environment, with knowledge checks after every module, a final assessment, a certificate, and a resource pack for practical follow-through.</p>
+          <p>This is not a video course. It is a text-and-interaction based learning experience with a 75% pass mark on the final assessment. Staff can complete it at their own pace and return to any section they need.</p>
+        </div>
+        <div class="module-grid" aria-label="Course modules">
+          <div class="module-chip">01. Why this matters</div>
+          <div class="module-chip">02. Understanding neurodiversity</div>
+          <div class="module-chip">03. ADHD in the academy</div>
+          <div class="module-chip">04. Autism in the academy</div>
+          <div class="module-chip">05. Your legal obligations</div>
+          <div class="module-chip">06. Spotting hidden players</div>
+          <div class="module-chip">07. Practical strategies</div>
+          <div class="module-chip">08. Parents and carers</div>
+          <div class="module-chip">09. Documentation and process</div>
+          <div class="module-chip">10. Final assessment</div>
+        </div>
+      </div>
+
+      <div class="resource-pack reveal">
+        <div class="resource-pack-label">What is included in the resource pack</div>
+        <div class="resource-grid">
+          <div class="resource-chip">Player ND Profile template</div>
+          <div class="resource-chip">Observation log</div>
+          <div class="resource-chip">Adjustment record</div>
+          <div class="resource-chip">Conversation record</div>
+          <div class="resource-chip">Review cycle template</div>
+          <div class="resource-chip">Complaints filter card</div>
+          <div class="resource-chip">Parent induction paragraph</div>
+          <div class="resource-chip">Condition reference guides (ADHD, autism, dyslexia, dyspraxia + more)</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="version-strip" aria-label="Course versions">
+      <div class="version-marquee">
+        <div class="version-track">
+          <span>MALE</span><span>*</span><span>FEMALE</span><span>*</span><span>MIXED</span><span>*</span><span>MALE</span><span>*</span><span>FEMALE</span><span>*</span><span>MIXED</span><span>*</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="version-explainer">
+      <div class="version-card reveal">
+        <strong>Male version</strong>
+        <p>Case studies, gender-specific presentations, and academy context built around a male programme environment.</p>
+      </div>
+      <div class="version-card reveal">
+        <strong>Female version</strong>
+        <p>Reflects the women's game specifically — presentations of ADHD and autism in girls and women, and the context of the female academy pathway.</p>
+      </div>
+      <div class="version-card reveal">
+        <strong>Mixed version</strong>
+        <p>For academies running boys and girls programmes, or foundations and mixed delivery environments.</p>
+      </div>
+    </div>
+
+    <section>
+      <div class="section-head reveal">
+        <div class="section-kicker">How it works</div>
+        <h2>Purchase. Access. Complete. Certified.</h2>
+        <p>No scheduling, no cohort, no waiting. Staff can start the same day and work through it at their own pace.</p>
+      </div>
+      <div class="steps-grid">
+        <article class="step-card reveal" data-n="1">
+          <div class="step-num">Step 01</div>
+          <h3>Buy and get immediate access</h3>
+          <p>Purchase online. Each staff member gets their own login and starts the course straight away. Team Pack and Annual Licence buyers receive a registration link to forward to their staff.</p>
+        </article>
+        <article class="step-card reveal" data-n="2">
+          <div class="step-num">Step 02</div>
+          <h3>Work through 10 modules at your own pace</h3>
+          <p>Each module unlocks after the previous one is complete. Knowledge checks throughout make sure the content lands before moving on.</p>
+        </article>
+        <article class="step-card reveal" data-n="3">
+          <div class="step-num">Step 03</div>
+          <h3>Pass the final assessment</h3>
+          <p>Module 10 is a 20-question assessment with a 75% pass mark. Resits are available. It tests applied judgement, not just recall.</p>
+        </article>
+        <article class="step-card reveal" data-n="4">
+          <div class="step-num">Step 04</div>
+          <h3>Certificate and resource pack unlocked</h3>
+          <p>On completion, staff receive a certificate they can submit as CPD evidence. The full resource pack — templates, guides, observation logs — is available immediately.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="who">
+      <div class="split">
+        <div class="sticky-copy reveal">
+          <div class="section-kicker">Who it is for</div>
+          <h2>Built for the staff who see the player most.</h2>
+          <p>The course should not be hidden inside welfare. Academy staff do not need to diagnose players. They do need to observe better, respond earlier, communicate more carefully, and know when the pattern is bigger than behaviour.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#pricing">See pricing</a>
+          </div>
+        </div>
+        <div class="track-stack">
+          <article class="track-item reveal">
+            <div class="track-icon">CO</div>
+            <div>
+              <h3>Coaches and phase staff</h3>
+              <p>For the staff who see the player most often. The Tuesday night observation matters. So does the feedback conversation, the handover, and the adjustment that worked once but never got written down.</p>
+            </div>
+          </article>
+          <article class="track-item reveal">
+            <div class="track-icon">AM</div>
+            <div>
+              <h3>Academy Managers</h3>
+              <p>For leaders who need a consistent baseline across departments, clear evidence of staff development, and a better answer when a player pathway decision is challenged.</p>
+            </div>
+          </article>
+          <article class="track-item reveal">
+            <div class="track-icon">ED</div>
+            <div>
+              <h3>Heads of Education</h3>
+              <p>For staff seeing the off-pitch signs first: written work, attendance, journals, GCSE pressure, learning needs, EHCP conversations, and the player who performs but does not submit.</p>
+            </div>
+          </article>
+          <article class="track-item reveal">
+            <div class="track-icon">PC</div>
+            <div>
+              <h3>Player Care Leads</h3>
+              <p>For the people holding family conversations, welfare concerns, adjustment discussions, and the difficult middle ground between support, safeguarding, and performance.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head reveal">
+        <div class="section-kicker">What staff learn</div>
+        <h2>The outcome is practical judgement.</h2>
+        <p>The course gives staff enough understanding to stop over-personalising behaviour and start asking better questions. Not diagnosis. Better observation. Better adjustment. Better records.</p>
+      </div>
+      <div class="flow-grid">
+        <article class="flow-card reveal" data-step="01">
+          <h3><span>Recognise</span> patterns.</h3>
+          <p>Staff learn what neurodivergence can look like in academy life, including the players who do not match the stereotype.</p>
+          <ul class="feature-list">
+            <li>ADHD, autism, dyslexia, dyspraxia, dyscalculia, dysgraphia</li>
+            <li>Masking, shutdown, RSD, demand avoidance, sensory load</li>
+            <li>Developmental age versus chronological age</li>
+          </ul>
+        </article>
+        <article class="flow-card reveal" data-step="02">
+          <h3><span>Respond</span> with fit.</h3>
+          <p>Staff get concrete coaching, education, and communication strategies that do not require them to become clinicians.</p>
+          <ul class="feature-list">
+            <li>How to change instruction, feedback, timing, and environment</li>
+            <li>How to support without lowering standards</li>
+            <li>How to work with parents without becoming defensive</li>
+          </ul>
+        </article>
+        <article class="flow-card reveal" data-step="03">
+          <h3><span>Record</span> what matters.</h3>
+          <p>The course lands in documentation because memory is not evidence. If an adjustment was tried, it needs a record.</p>
+          <ul class="feature-list">
+            <li>Observation logs and player ND profiles</li>
+            <li>Adjustment records and review cycles</li>
+            <li>Cleaner handovers across age groups and departments</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="section-head reveal">
+        <div class="section-kicker">Pricing</div>
+        <h2>Two options. One clear recommendation.</h2>
+        <p>Most academies should choose Annual. Team Pack exists if you are starting with one department first. All prices are ex-VAT. Invoices issued automatically at purchase.</p>
+      </div>
+      <div class="pricing-grid">
+
+        <div class="pricing-card featured reveal">
+          <div class="pricing-badge">Recommended for academies</div>
+          <div class="pricing-name">Annual Academy Licence</div>
+          <div class="pricing-who">Whole-academy access across coaching, player care, education, MDT, and leadership — including every new starter who joins after them. No seat counting. No going back to procurement.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px;">
+            <div>
+              <div style="font-family:'DM Mono',monospace;font-size:.68rem;color:#ffb7b7;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Cat 1 &amp; 2</div>
+              <div class="price-tag"><sup>£</sup>1,999</div>
+              <div class="price-sub">per year</div>
+            </div>
+            <div>
+              <div style="font-family:'DM Mono',monospace;font-size:.68rem;color:#ffb7b7;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Cat 3 &amp; 4</div>
+              <div class="price-tag"><sup>£</sup>1,499</div>
+              <div class="price-sub">per year</div>
+            </div>
+          </div>
+          <div class="price-per">Unlimited staff · EPPP category confirmed at invoice · renews at a reduced rate</div>
+          <ul class="pricing-features">
+            <li>Unlimited named staff accounts — no seat counting, ever</li>
+            <li>Add new starters as they join at no extra cost</li>
+            <li>Covers coaching, education, player care, welfare, and leadership</li>
+            <li>Admin completion dashboard — see exactly who has certified</li>
+            <li>Supplier invoicing for club finance teams</li>
+            <li>Men's, women's, or mixed version</li>
+            <li>Renews at a reduced rate — locked in year on year</li>
+          </ul>
+          <a class="btn btn-primary" href="https://calendar.app.google/mryhiF8wEkkc4y8b6" style="width:100%;justify-content:center;">Start Annual Licence</a>
+          <p style="font-size:.76rem;color:var(--muted);text-align:center;margin-top:18px;margin-bottom:0;line-height:1.5;">Prefer a live session first? We deliver in-person and Zoom training for academies that want a facilitated launch before rolling out online. <a href="https://calendar.app.google/mryhiF8wEkkc4y8b6" style="color:#ffb7b7;text-decoration:underline;text-underline-offset:3px;">Get in touch.</a></p>
+        </div>
+
+        <div class="pricing-card reveal">
+          <div class="pricing-name">Team Pack</div>
+          <div class="pricing-who">For one department or phase group. A useful starting point — not designed for full academy rollout.</div>
+          <div class="price-tag"><sup>£</sup>599</div>
+          <div class="price-sub">up to 10 staff · one-time</div>
+          <div class="price-per">£59.90 per person · 12 months access from enrolment</div>
+          <ul class="pricing-features">
+            <li>Up to 10 individual staff accounts</li>
+            <li>Each staff member gets their own progress and certificate</li>
+            <li>Admin view of who has completed</li>
+            <li>Registration link to forward to staff</li>
+            <li>Full resource pack on completion</li>
+          </ul>
+          <a class="btn btn-secondary" href="https://calendar.app.google/mryhiF8wEkkc4y8b6" style="width:100%;justify-content:center;">Get Team Pack</a>
+          <p style="font-size:.76rem;color:var(--muted);text-align:center;margin-top:18px;margin-bottom:0;line-height:1.5;">Individual licences (£89/person) are available for grassroots clubs, non-academy organisations, and individual practitioners. <a href="https://calendar.app.google/mryhiF8wEkkc4y8b6" style="color:#ffb7b7;text-decoration:underline;text-underline-offset:3px;">Get in touch.</a></p>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="proof-grid reveal">
+        <div class="proof-number">
+          <small>For Annual Licence buyers</small>
+          <strong>Let's talk rollout</strong>
+          <p>The Annual Licence is the right choice for most Category 1 and Category 2 academies. A call helps us work out the rollout sequence and access setup.</p>
+        </div>
+        <div class="proof-copy">
+          <div class="section-kicker">Annual Academy Licence</div>
+          <h2 style="font-size:clamp(2rem,4.8vw,4.25rem);line-height:.94;letter-spacing:-.07em;margin-bottom:18px;">One annual investment. Every staff member covered — including everyone who joins after them.</h2>
+          <p>A Team Pack covers a department. The Annual Licence covers the whole academy — every coach, education officer, player care lead, welfare staff member, and new starter — without counting heads or going back to procurement each time someone new joins.</p>
+          <div class="pullquote">The goal is not to sell you a course seat. It is to help your academy decide where neurodiversity training belongs in the staff development system.</div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://calendar.app.google/mryhiF8wEkkc4y8b6">Book a call</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="section-head reveal">
+        <div class="section-kicker">FAQ</div>
+        <h2>Questions academy leads usually ask first.</h2>
+      </div>
+      <div class="faq-wrap">
+        <details class="reveal">
+          <summary>Is this live training or self-paced?</summary>
+          <p>It is self-paced online training. Each staff member works through 10 modules at their own pace, with knowledge checks after every module, a final assessment, certificate generation, and downloadable resources on completion. There is no scheduled session, no cohort, and no waiting for a delivery date.</p>
+        </details>
+        <details class="reveal">
+          <summary>Who should complete it?</summary>
+          <p>Academy managers, heads of education, player care leads, coaches, phase leads, welfare staff, and any academy staff member who works directly with young players or contributes to player pathway decisions. The course is built so every role gets something directly applicable to their day-to-day.</p>
+        </details>
+        <details class="reveal">
+          <summary>What happens if someone fails the final assessment?</summary>
+          <p>Resits are available. The assessment has a 75% pass mark and is designed to be achievable by someone who has engaged with the course properly. Staff who do not pass on the first attempt can review the relevant modules and retake.</p>
+        </details>
+        <details class="reveal">
+          <summary>How does access work for a Team Pack or Annual Licence?</summary>
+          <p>After purchase, the academy receives a registration link to forward to staff. Each staff member creates their own individual account, has their own login, and builds their own progress record and certificate. The purchasing admin gets a view of who has registered, how far they have got, and who has completed and been certified.</p>
+        </details>
+        <details class="reveal">
+          <summary>How long does access last?</summary>
+          <p>Team Pack purchases come with 12 months access from the date of enrolment for each individual. The Annual Academy Licence runs for 12 months from the date of purchase for the whole organisation and renews annually from £1,199.</p>
+        </details>
+        <details class="reveal">
+          <summary>Does it train staff to diagnose neurodivergence?</summary>
+          <p>No. The course is explicit about staff not diagnosing. It trains staff to observe patterns, make practical adjustments, document what was tried, and refer or escalate appropriately when a concern needs specialist input.</p>
+        </details>
+        <details class="reveal">
+          <summary>Are there different versions for different academy contexts?</summary>
+          <p>Yes. The course is available in men's, women's, and mixed versions so case studies, gender-specific presentation content, and academy context reflect the programme learners are actually working in. Select the right version at the point of purchase.</p>
+        </details>
+        <details class="reveal">
+          <summary>Is there a certificate, and can it be used as CPD evidence?</summary>
+          <p>Yes. Passing the final assessment generates a certificate confirming the staff member has completed ND Training Pro Academy. Academies can retain certificates as evidence of staff CPD and internal training around neurodiversity awareness, reasonable adjustments, identification, and documentation practice.</p>
+        </details>
+        <details class="reveal">
+          <summary>Can we get an invoice for our finance team?</summary>
+          <p>Yes. An invoice is generated automatically at purchase and can be forwarded to your club's finance team. For Annual Academy Licence buyers at larger clubs, we can also support supplier registration if your finance department requires it.</p>
+        </details>
+        <details class="reveal">
+          <summary>What is the course based on?</summary>
+          <p>The evidence base includes UK legal sources, neurodevelopmental research, clinical guidance, and applied academy content. Legal and clinical review are listed as pre-launch requirements before paying clients see the course. Key sources include the Equality Act 2010, NICE guidelines on ADHD (NG87) and autism (CG128), and UK GDPR guidance from the ICO.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="final-inner reveal">
+        <div class="eyebrow"><span class="dot"></span> Start with the academy conversation</div>
+        <h2>Your academy already has neurodivergent players. Your staff need a shared way to recognise, respond, and record.</h2>
+        <p>The Annual Licence gives every member of staff — coaching, education, player care, welfare, and everyone who joins after them — a consistent foundation. Start the conversation.</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+          <a class="btn btn-primary" href="https://calendar.app.google/mryhiF8wEkkc4y8b6">Start Annual Licence</a>
+          <a class="btn btn-secondary" href="#pricing">See pricing</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <strong>ND Training Pro Academy</strong><br>
+        Built by The Football Mental Health Alliance / withinu for professional football academies.
+      </div>
+      <div>
+        <strong>Evidence notes</strong><br>
+        Neurodivergence prevalence is presented as a working UK umbrella estimate. Legal references support the training's compliance framing. This course is not legal or clinical advice, and professional review is required before launch.
+        <div class="sources">
+          <a href="https://www.legislation.gov.uk/ukpga/2010/15/section/20" target="_blank" rel="noreferrer">Equality Act 2010 s20</a>
+          <a href="https://www.legislation.gov.uk/ukpga/2010/15/section/21" target="_blank" rel="noreferrer">Equality Act 2010 s21</a>
+          <a href="https://www.nice.org.uk/guidance/ng87" target="_blank" rel="noreferrer">NICE ADHD guideline NG87</a>
+          <a href="https://www.nice.org.uk/guidance/cg128" target="_blank" rel="noreferrer">NICE autism guideline CG128</a>
+          <a href="https://www.local.gov.uk/lga-libdem-group/our-press-releases/neurodiversity" target="_blank" rel="noreferrer">LGA neurodiversity estimate</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
