@@ -895,12 +895,79 @@
       line-height: 1.45;
     }
 
+    /* FMHA trust bar */
+    .fmha-bar {
+      background: rgba(255,255,255,.04);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      padding: 9px 24px;
+      text-align: center;
+      font-family: "DM Mono", monospace;
+      font-size: .72rem;
+      color: #8896b0;
+      letter-spacing: .04em;
+    }
+
+    .fmha-bar a {
+      color: #a8b5cb;
+      text-decoration: underline;
+      text-decoration-color: rgba(168,181,203,.3);
+      text-underline-offset: 3px;
+    }
+
+    .fmha-bar a:hover { color: #fff; }
+
     /* Pricing */
     .pricing-grid {
       display: grid;
       grid-template-columns: 1.08fr .92fr;
       gap: 16px;
       align-items: stretch;
+    }
+
+    /* Category pricing inside Annual card */
+    .cat-price-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+
+    .cat-price-label {
+      font-family: "DM Mono", monospace;
+      font-size: .74rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #ffb7b7;
+      margin-bottom: 10px;
+    }
+
+    .cat-price-value {
+      font-size: clamp(2.5rem, 6.4vw, 3.8rem);
+      font-weight: 900;
+      line-height: .85;
+      letter-spacing: -.06em;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .cat-price-value sup {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      vertical-align: super;
+    }
+
+    .cat-price-sub {
+      font-size: .8rem;
+      color: var(--muted);
+      font-family: "DM Mono", monospace;
+    }
+
+    .cat-renew {
+      font-size: .75rem;
+      color: #ffb7b7;
+      font-family: "DM Mono", monospace;
+      margin-bottom: 24px;
     }
 
     .pricing-card {
@@ -950,7 +1017,7 @@
     }
 
     .price-tag {
-      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-size: clamp(3.4rem, 7.2vw, 5.4rem);
       font-weight: 900;
       line-height: .85;
       letter-spacing: -.07em;
@@ -959,7 +1026,7 @@
     }
 
     .price-tag sup {
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       letter-spacing: -.03em;
       vertical-align: super;
     }
@@ -1195,26 +1262,6 @@
       font-weight: 800;
     }
 
-    .fmha-bar {
-      background: rgba(255,255,255,.04);
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      padding: 10px 24px;
-    }
-
-    .fmha-bar-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: .78rem;
-      color: var(--muted);
-      font-family: "DM Mono", monospace;
-    }
-
-    .fmha-bar-inner strong { color: #d8e0ec; font-weight: 700; }
-    .fmha-divider { width: 1px; height: 12px; background: rgba(255,255,255,.18); }
-
     .reveal {
       opacity: 0;
       transform: translateY(18px);
@@ -1375,13 +1422,7 @@
   </div>
 
   <div class="fmha-bar">
-    <div class="fmha-bar-inner">
-      <strong>The Football Mental Health Alliance</strong>
-      <div class="fmha-divider"></div>
-      <span>Specialist neurodiversity training for professional football academies</span>
-      <div class="fmha-divider"></div>
-      <span>withinu / FMHA</span>
-    </div>
+    Specialist neurodiversity training delivered by <a href="https://www.thefmha.com" target="_blank" rel="noreferrer">The Football Mental Health Alliance</a> / <a href="https://withinu.net" target="_blank" rel="noreferrer">withinu</a>
   </div>
 
   <main id="top">
@@ -1396,8 +1437,8 @@
           <a class="btn btn-secondary" href="#course">See what is inside</a>
         </div>
         <div class="trust-row" aria-label="Course facts">
-          <span class="trust-pill">10 modules</span>
-          <span class="trust-pill">Around 3.5 hours</span>
+          <span class="trust-pill">12 modules</span>
+          <span class="trust-pill">Around 4.5 hours</span>
           <span class="trust-pill">Knowledge checks throughout</span>
           <span class="trust-pill">Certificate on completion</span>
           <span class="trust-pill">Resource pack included</span>
@@ -1432,8 +1473,8 @@
                 <div><strong>Your legal obligations</strong><small>Reasonable adjustments and documentation practice.</small></div>
               </div>
               <div class="module-row">
-                <div class="tick">09</div>
-                <div><strong>Documentation and process</strong><small>What was observed, what was tried, what changed.</small></div>
+                <div class="tick">11</div>
+                <div><strong>Transitions, release and aftercare</strong><small>Handling release well, and the duty of care that follows.</small></div>
               </div>
             </div>
           </div>
@@ -1481,8 +1522,8 @@
       <div class="course-panel reveal">
         <div>
           <div class="section-kicker">The course</div>
-          <div class="big-number">10<span>x</span></div>
-          <p>Ten modules designed for the academy environment, with knowledge checks after every module, a final assessment, a certificate, and a resource pack for practical follow-through.</p>
+          <div class="big-number">12<span>x</span></div>
+          <p>Twelve modules designed for the academy environment, with knowledge checks after every module, a final assessment, a certificate, and a resource pack for practical follow-through.</p>
           <p>This is not a video course. It is a text-and-interaction based learning experience with a 75% pass mark on the final assessment. Staff can complete it at their own pace and return to any section they need.</p>
         </div>
         <div class="module-grid" aria-label="Course modules">
@@ -1493,9 +1534,11 @@
           <div class="module-chip">05. Your legal obligations</div>
           <div class="module-chip">06. Spotting hidden players</div>
           <div class="module-chip">07. Practical strategies</div>
-          <div class="module-chip">08. Parents and carers</div>
-          <div class="module-chip">09. Documentation and process</div>
-          <div class="module-chip">10. Final assessment</div>
+          <div class="module-chip">08. Training load and the medical picture</div>
+          <div class="module-chip">09. Parents and carers</div>
+          <div class="module-chip">10. Documentation and process</div>
+          <div class="module-chip">11. Transitions, release and aftercare</div>
+          <div class="module-chip">12. Final assessment</div>
         </div>
       </div>
 
@@ -1529,7 +1572,7 @@
       </div>
       <div class="version-card reveal">
         <strong>Female version</strong>
-        <p>Reflects the women's game specifically — presentations of ADHD and autism in girls and women, and the context of the female academy pathway.</p>
+        <p>Reflects the women's game specifically — presentations of ADHD and autism in girls and women, and the context of the women's academy pathway.</p>
       </div>
       <div class="version-card reveal">
         <strong>Mixed version</strong>
@@ -1551,13 +1594,13 @@
         </article>
         <article class="step-card reveal" data-n="2">
           <div class="step-num">Step 02</div>
-          <h3>Work through 10 modules at your own pace</h3>
+          <h3>Work through 12 modules at your own pace</h3>
           <p>Each module unlocks after the previous one is complete. Knowledge checks throughout make sure the content lands before moving on.</p>
         </article>
         <article class="step-card reveal" data-n="3">
           <div class="step-num">Step 03</div>
           <h3>Pass the final assessment</h3>
-          <p>Module 10 is a 20-question assessment with a 75% pass mark. Resits are available. It tests applied judgement, not just recall.</p>
+          <p>Module 12 is a 28-question assessment with a 75% pass mark. Resits are available. It tests applied judgement, not just recall.</p>
         </article>
         <article class="step-card reveal" data-n="4">
           <div class="step-num">Step 04</div>
@@ -1606,6 +1649,13 @@
               <p>For the people holding family conversations, welfare concerns, adjustment discussions, and the difficult middle ground between support, safeguarding, and performance.</p>
             </div>
           </article>
+          <article class="track-item reveal">
+            <div class="track-icon">SM</div>
+            <div>
+              <h3>Sports Science and Medical</h3>
+              <p>For S&amp;C coaches, physios, sports scientists, and medical staff. Neurodivergent players don't always report pain, fatigue, or illness accurately, and sleep and fuelling problems are far more common. This module helps the performance and medical team read the signals self-report misses.</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -1615,6 +1665,7 @@
         <div class="section-kicker">What staff learn</div>
         <h2>The outcome is practical judgement.</h2>
         <p>The course gives staff enough understanding to stop over-personalising behaviour and start asking better questions. Not diagnosis. Better observation. Better adjustment. Better records.</p>
+        <p>The course now runs the whole journey — from first contact at recruitment through to release and aftercare — not just the period a player is settled in the building.</p>
       </div>
       <div class="flow-grid">
         <article class="flow-card reveal" data-step="01">
@@ -1624,6 +1675,7 @@
             <li>ADHD, autism, dyslexia, dyspraxia, dyscalculia, dysgraphia</li>
             <li>Masking, shutdown, RSD, demand avoidance, sensory load</li>
             <li>Developmental age versus chronological age</li>
+            <li>Body-signal differences: interoception, sleep, and fuelling, and why "I'm fine" isn't always reliable</li>
           </ul>
         </article>
         <article class="flow-card reveal" data-step="02">
@@ -1633,6 +1685,7 @@
             <li>How to change instruction, feedback, timing, and environment</li>
             <li>How to support without lowering standards</li>
             <li>How to work with parents without becoming defensive</li>
+            <li>Handling high-stakes moments: recruitment, the disciplinary conversation, and release</li>
           </ul>
         </article>
         <article class="flow-card reveal" data-step="03">
@@ -1650,56 +1703,58 @@
     <section id="pricing">
       <div class="section-head reveal">
         <div class="section-kicker">Pricing</div>
-        <h2>Two options. One clear recommendation.</h2>
-        <p>Most academies should choose Annual. Team Pack exists if you are starting with one department first. All prices are ex-VAT. Invoices issued automatically at purchase.</p>
+        <h2>The Annual Licence is the right choice for most academies.</h2>
+        <p>Unlimited staff, no per-head counting, new starters covered automatically. Priced by EPPP category — confirmed at point of invoice. All prices are ex-VAT.</p>
       </div>
       <div class="pricing-grid">
 
         <div class="pricing-card featured reveal">
           <div class="pricing-badge">Recommended for academies</div>
           <div class="pricing-name">Annual Academy Licence</div>
-          <div class="pricing-who">Whole-academy access across coaching, player care, education, MDT, and leadership — including every new starter who joins after them. No seat counting. No going back to procurement.</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px;">
-            <div>
-              <div style="font-family:'DM Mono',monospace;font-size:.68rem;color:#ffb7b7;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Cat 1 &amp; 2</div>
-              <div class="price-tag"><sup>£</sup>1,999</div>
-              <div class="price-sub">per year</div>
+          <div class="pricing-who">Unlimited staff for 12 months. New starters join mid-season — covered automatically, no extra cost, no procurement loop. The whole academy trained, including everyone who joins after day one.</div>
+          <div class="cat-price-grid" aria-label="Category pricing">
+            <div class="cat-price-item">
+              <div class="cat-price-label">Cat 1 &amp; 2</div>
+              <div class="cat-price-value"><sup>£</sup>1,999</div>
+              <div class="cat-price-sub">per year</div>
             </div>
-            <div>
-              <div style="font-family:'DM Mono',monospace;font-size:.68rem;color:#ffb7b7;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Cat 3 &amp; 4</div>
-              <div class="price-tag"><sup>£</sup>1,499</div>
-              <div class="price-sub">per year</div>
+            <div class="cat-price-item">
+              <div class="cat-price-label">Cat 3 &amp; 4</div>
+              <div class="cat-price-value"><sup>£</sup>1,499</div>
+              <div class="cat-price-sub">per year</div>
             </div>
           </div>
-          <div class="price-per">Unlimited staff · EPPP category confirmed at invoice · renews at a reduced rate</div>
+          <div class="cat-renew">Cat 1&2 renews from £1,599 · Cat 3&4 renews from £1,199</div>
           <ul class="pricing-features">
-            <li>Unlimited named staff accounts — no seat counting, ever</li>
-            <li>Add new starters as they join at no extra cost</li>
-            <li>Covers coaching, education, player care, welfare, and leadership</li>
-            <li>Admin completion dashboard — see exactly who has certified</li>
+            <li>Unlimited named staff accounts — whole academy</li>
+            <li>Add new starters any time at no extra cost</li>
+            <li>Each staff member gets their own progress record and certificate</li>
+            <li>Admin completion dashboard</li>
+            <li>Full resource pack for every staff member</li>
             <li>Supplier invoicing for club finance teams</li>
-            <li>Men's, women's, or mixed version</li>
-            <li>Renews at a reduced rate — locked in year on year</li>
+            <li>Annual renewal with loyalty rate</li>
           </ul>
           <a class="btn btn-primary" href="https://calendar.app.google/mryhiF8wEkkc4y8b6" style="width:100%;justify-content:center;">Start Annual Licence</a>
-          <p style="font-size:.76rem;color:var(--muted);text-align:center;margin-top:18px;margin-bottom:0;line-height:1.5;">Prefer a live session first? We deliver in-person and Zoom training for academies that want a facilitated launch before rolling out online. <a href="https://calendar.app.google/mryhiF8wEkkc4y8b6" style="color:#ffb7b7;text-decoration:underline;text-underline-offset:3px;">Get in touch.</a></p>
+          <a class="btn btn-secondary" href="mailto:support@withinu.net" style="width:100%;justify-content:center;margin-top:10px;">Questions first? Email us</a>
+          <p style="font-size:.76rem;color:var(--muted);margin-top:16px;margin-bottom:0;line-height:1.5;">Prefer a live session first? We deliver in-person and Zoom training for academies that want a facilitated launch before rolling out online. <a href="https://calendar.app.google/mryhiF8wEkkc4y8b6" style="color:#a8b5cb;text-decoration:underline;">Get in touch.</a></p>
         </div>
 
         <div class="pricing-card reveal">
           <div class="pricing-name">Team Pack</div>
-          <div class="pricing-who">For one department or phase group. A useful starting point — not designed for full academy rollout.</div>
+          <div class="pricing-who">Up to 11 staff — a starting XI. A phase group, education team, or player care department that wants to train together. Good starting point — though most academies move to the Annual Licence once they see how staff turnover works.</div>
           <div class="price-tag"><sup>£</sup>599</div>
-          <div class="price-sub">up to 10 staff · one-time</div>
-          <div class="price-per">£59.90 per person · 12 months access from enrolment</div>
+          <div class="price-sub">up to 11 staff · one-time</div>
+          <div class="price-per">£54.45 per person · includes resource pack</div>
           <ul class="pricing-features">
-            <li>Up to 10 individual staff accounts</li>
-            <li>Each staff member gets their own progress and certificate</li>
+            <li>Up to 11 individual staff accounts</li>
+            <li>Full 12-module course per account</li>
+            <li>Each staff member gets their own progress record and certificate</li>
             <li>Admin view of who has completed</li>
             <li>Registration link to forward to staff</li>
-            <li>Full resource pack on completion</li>
+            <li>Full resource pack download</li>
           </ul>
           <a class="btn btn-secondary" href="https://calendar.app.google/mryhiF8wEkkc4y8b6" style="width:100%;justify-content:center;">Get Team Pack</a>
-          <p style="font-size:.76rem;color:var(--muted);text-align:center;margin-top:18px;margin-bottom:0;line-height:1.5;">Individual licences (£89/person) are available for grassroots clubs, non-academy organisations, and individual practitioners. <a href="https://calendar.app.google/mryhiF8wEkkc4y8b6" style="color:#ffb7b7;text-decoration:underline;text-underline-offset:3px;">Get in touch.</a></p>
+          <p style="font-size:.76rem;color:var(--muted);margin-top:14px;margin-bottom:0;line-height:1.5;">Individual licences (£89/person) are available for grassroots clubs, non-academy organisations, and individual practitioners. <a href="https://calendar.app.google/mryhiF8wEkkc4y8b6" style="color:#a8b5cb;text-decoration:underline;">Get in touch.</a></p>
         </div>
 
       </div>
@@ -1732,7 +1787,7 @@
       <div class="faq-wrap">
         <details class="reveal">
           <summary>Is this live training or self-paced?</summary>
-          <p>It is self-paced online training. Each staff member works through 10 modules at their own pace, with knowledge checks after every module, a final assessment, certificate generation, and downloadable resources on completion. There is no scheduled session, no cohort, and no waiting for a delivery date.</p>
+          <p>It is self-paced online training. Each staff member works through 12 modules at their own pace, with knowledge checks after every module, a final assessment, certificate generation, and downloadable resources on completion. There is no scheduled session, no cohort, and no waiting for a delivery date.</p>
         </details>
         <details class="reveal">
           <summary>Who should complete it?</summary>
@@ -1748,7 +1803,7 @@
         </details>
         <details class="reveal">
           <summary>How long does access last?</summary>
-          <p>Team Pack purchases come with 12 months access from the date of enrolment for each individual. The Annual Academy Licence runs for 12 months from the date of purchase for the whole organisation and renews annually from £1,199.</p>
+          <p>Team Pack purchases come with 12 months access from the date of enrolment. The Annual Academy Licence runs for 12 months from the date of purchase for the whole organisation, and renews annually. Individual Per User access (£89/person) also runs for 12 months — email support@withinu.net to arrange.</p>
         </details>
         <details class="reveal">
           <summary>Does it train staff to diagnose neurodivergence?</summary>
@@ -1757,6 +1812,14 @@
         <details class="reveal">
           <summary>Are there different versions for different academy contexts?</summary>
           <p>Yes. The course is available in men's, women's, and mixed versions so case studies, gender-specific presentation content, and academy context reflect the programme learners are actually working in. Select the right version at the point of purchase.</p>
+        </details>
+        <details class="reveal">
+          <summary>Does the course cover the performance and medical side, not just coaching and welfare?</summary>
+          <p>Yes. A dedicated module covers how neurodivergence shows up in the body: interoception (why some players under-report pain, fatigue, and even concussion symptoms), sleep, fuelling and energy availability, and coordination. It's written for the whole staff, including sports science and medical, because the person who notices a player running on empty is usually the coach on the grass, not the doctor.</p>
+        </details>
+        <details class="reveal">
+          <summary>Does it cover what happens when a player is released?</summary>
+          <p>Yes. Release is the hardest transition in academy football, and it hits neurodivergent players especially hard. A dedicated module covers delivering a release decision well, the mental-health risks around release, the club's aftercare and duty-of-care responsibilities, and how a player's support should travel with them on loan or transfer.</p>
         </details>
         <details class="reveal">
           <summary>Is there a certificate, and can it be used as CPD evidence?</summary>
@@ -1768,7 +1831,7 @@
         </details>
         <details class="reveal">
           <summary>What is the course based on?</summary>
-          <p>The evidence base includes UK legal sources, neurodevelopmental research, clinical guidance, and applied academy content. Legal and clinical review are listed as pre-launch requirements before paying clients see the course. Key sources include the Equality Act 2010, NICE guidelines on ADHD (NG87) and autism (CG128), and UK GDPR guidance from the ICO.</p>
+          <p>The evidence base includes UK legal sources, neurodevelopmental research, clinical guidance, and applied academy content. Legal and clinical review are listed as pre-launch requirements before paying clients see the course. Key sources include the Equality Act 2010, NICE guidelines on ADHD (NG87) and autism (CG128), and UK GDPR guidance from the ICO. The evidence base also draws on JCQ Access Arrangements guidance for exams, the 2023 IOC consensus statement on Relative Energy Deficiency in Sport, and a duty-of-care framework for released academy players.</p>
         </details>
       </div>
     </section>
@@ -1777,11 +1840,10 @@
       <div class="final-inner reveal">
         <div class="eyebrow"><span class="dot"></span> Start with the academy conversation</div>
         <h2>Your academy already has neurodivergent players. Your staff need a shared way to recognise, respond, and record.</h2>
-        <p>The Annual Licence gives every member of staff — coaching, education, player care, welfare, and everyone who joins after them — a consistent foundation. Start the conversation.</p>
+        <p>Start the Annual Licence directly — unlimited staff, new starters always covered, no per-head accounting. Cat 1&2: £1,999/year. Cat 3&4: £1,499/year. Or email us if you want to talk it through first.</p>
         <div style="display:flex;gap:14px;flex-wrap:wrap;">
           <a class="btn btn-primary" href="https://calendar.app.google/mryhiF8wEkkc4y8b6">Start Annual Licence</a>
-          <a class="btn btn-secondary" href="#pricing">See pricing</a>
-          <a class="btn btn-primary" href="mailto:support@withinu.net">Questions first? Email us</a>
+          <a class="btn btn-secondary" href="mailto:support@withinu.net">Questions first? Email us</a>
         </div>
       </div>
     </section>
@@ -1802,6 +1864,8 @@
           <a href="https://www.nice.org.uk/guidance/ng87" target="_blank" rel="noreferrer">NICE ADHD guideline NG87</a>
           <a href="https://www.nice.org.uk/guidance/cg128" target="_blank" rel="noreferrer">NICE autism guideline CG128</a>
           <a href="https://www.local.gov.uk/lga-libdem-group/our-press-releases/neurodiversity" target="_blank" rel="noreferrer">LGA neurodiversity estimate</a>
+          <a href="https://www.jcq.org.uk/exams-office/access-arrangements-and-reasonable-adjustments/" target="_blank" rel="noreferrer">JCQ Access Arrangements</a>
+          <a href="https://bjsm.bmj.com/content/57/17/1073" target="_blank" rel="noreferrer">2023 IOC consensus statement on REDs</a>
         </div>
       </div>
     </div>
