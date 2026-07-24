@@ -56,6 +56,22 @@ html, body {
 
 .inner { max-width: 980px; width: 100%; }
 
+/* ── Back to hub ────────────────────────────────────────── */
+#back-to-hub {
+  position: fixed; top: 18px; left: 20px; z-index: 210;
+  display: flex; align-items: center; gap: 6px;
+  background: var(--card2); border: 1px solid var(--border);
+  color: var(--muted); text-decoration: none;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
+  padding: 8px 14px; border-radius: 20px;
+  transition: background .2s, color .2s, border-color .2s;
+}
+#back-to-hub:hover { background: var(--acc); color: #fff; border-color: var(--acc); }
+
+@media (max-width: 600px) {
+  #back-to-hub { top: 12px; left: 12px; font-size: 11px; padding: 6px 12px; }
+}
+
 /* ── Nav ────────────────────────────────────────────────── */
 #nav {
   position: fixed; bottom: 22px; right: 26px;
@@ -1403,8 +1419,9 @@ h2 {
 
 </div><!-- /deck -->
 
+<a id="back-to-hub" href="https://assets.thefmha.com/FMHA_Resource_Hub.html">&#8592; Session hub</a>
+
 <div id="nav">
-  <a href="https://assets.thefmha.com/FMHA_Resource_Hub.html" style="font-size:12px;color:var(--muted);text-decoration:none;letter-spacing:0.04em;">&#8592; Hub</a>
   <span id="ctr">1 / 18</span>
   <button class="nb" onclick="nav(-1)">&#8592;</button>
   <button class="nb" onclick="nav(1)">&#8594;</button>
