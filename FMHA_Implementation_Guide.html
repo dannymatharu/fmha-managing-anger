@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Club Behaviour Implementation Guide — FMHA</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --card: #141414;
+    --card2: #1e1e1e;
+    --border: #2a2a2a;
+    --text: #ffffff;
+    --muted: #888888;
+    --accent: #E8312A;
+    --accent-soft: rgba(232,49,42,0.10);
+    --accent-mid: rgba(232,49,42,0.28);
+    --amber: #f39c12;
+    --amber-soft: rgba(243,156,18,0.10);
+    --amber-mid: rgba(243,156,18,0.28);
+    --green: #27ae60;
+    --green-soft: rgba(39,174,96,0.10);
+    --green-mid: rgba(39,174,96,0.28);
+    --blue: #3498db;
+    --blue-soft: rgba(52,152,219,0.10);
+    --blue-mid: rgba(52,152,219,0.28);
+    --purple: #9b59b6;
+    --purple-soft: rgba(155,89,182,0.10);
+    --purple-mid: rgba(155,89,182,0.28);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    min-height: 100vh; line-height: 1.6;
+  }
+
+  .site-header {
+    background: var(--card); border-bottom: 1px solid var(--border);
+    padding: 16px 24px; display: flex; align-items: center;
+    justify-content: space-between; position: sticky; top: 0; z-index: 200;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .brand-mark {
+    width: 34px; height: 34px; background: var(--accent); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 900; color: white; letter-spacing: -0.5px; flex-shrink: 0;
+  }
+  .brand-sub { font-size: 10px; color: var(--muted); }
+  .pill {
+    background: var(--purple-soft); border: 1px solid var(--purple-mid);
+    color: var(--purple); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 20px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--card); border-bottom: 1px solid var(--border);
+    padding: 32px 24px 28px;
+  }
+  .hero-inner { max-width: 720px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-block;
+    background: var(--purple-soft); border: 1px solid var(--purple-mid);
+    color: var(--purple); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 4px; margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-size: clamp(24px, 5vw, 38px); font-weight: 800;
+    letter-spacing: -0.5px; line-height: 1.15; margin-bottom: 10px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 560px; }
+
+  /* ── MAIN ── */
+  .main { max-width: 720px; margin: 0 auto; padding: 28px 24px 80px; }
+
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+  }
+
+  /* ── PILLAR BLOCKS ── */
+  .pillar-block {
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 22px 20px; margin-bottom: 20px;
+  }
+  .pillar-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .pillar-num {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--accent-soft); border: 1px solid var(--accent-mid);
+    color: var(--accent); font-size: 14px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .pillar-head h3 { font-size: 16px; font-weight: 700; color: var(--text); }
+
+  .pillar-question { font-size: 13px; color: #bbb; line-height: 1.65; margin-bottom: 14px; }
+  .pillar-question strong { color: var(--text); }
+
+  .first-action {
+    background: var(--green-soft); border: 1px solid var(--green-mid);
+    border-radius: 10px; padding: 14px 16px;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .first-action-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--green); flex-shrink: 0; padding-top: 1px;
+  }
+  .first-action p { font-size: 13px; color: #aaa; line-height: 1.55; }
+  .first-action a { color: var(--green); text-decoration: none; font-weight: 600; }
+  .first-action a:hover { text-decoration: underline; }
+
+  /* ── INTRO CALLOUT ── */
+  .stat-callout {
+    background: var(--purple-soft); border: 1px solid var(--purple-mid);
+    border-radius: 12px; padding: 20px 20px;
+    margin-bottom: 32px;
+  }
+  .stat-callout p { font-size: 13px; color: #ccc; line-height: 1.65; }
+  .stat-callout strong { color: var(--text); }
+
+  /* ── FOOTER ── */
+  .coc-footer {
+    padding-top: 24px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px; max-width: 720px; margin: 0 auto;
+  }
+  .footer-brand { font-size: 12px; color: var(--muted); }
+  .footer-brand strong { color: var(--accent); }
+  .footer-url { font-size: 11px; color: var(--muted); text-decoration: none; }
+
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    body { background: #fff !important; color: #111 !important; }
+    .site-header { display: none !important; }
+    .hero { background: #f8f8f8 !important; border-color: #ddd !important; }
+    .pillar-block { background: #f8f8f8 !important; border-color: #ddd !important; }
+    .first-action { background: #e8f5e9 !important; border-color: #a5d6a7 !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="https://assets.thefmha.com/FMHA_Resource_Hub.html">
+    <div class="brand-mark">FMHA</div>
+    <div>
+      <div class="brand-sub">Football Mental Health Alliance</div>
+    </div>
+  </a>
+  <span class="pill">Club Committees</span>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Club Behaviour Implementation Guide</div>
+    <h1>Four Pillars. <span>One Honest Audit.</span></h1>
+    <p>The Four Pillars from Module 5, turned into something your committee can actually work through. Be honest about what's in place versus what you assume is in place, then commit to one action per pillar.</p>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="stat-callout">
+    <p><strong>How to use this:</strong> Go through each pillar with your committee. Answer the question straight, then take the first action before your next meeting — not eventually, before the next meeting.</p>
+  </div>
+
+  <div class="section-label">The four pillars</div>
+
+  <div class="pillar-block">
+    <div class="pillar-head">
+      <div class="pillar-num">1</div>
+      <h3>Clear Expectations</h3>
+    </div>
+    <div class="pillar-question">Is there a written code of conduct that every new player, parent and volunteer actually receives — <strong>not one that just exists somewhere on a shared drive?</strong></div>
+    <div class="first-action">
+      <div class="first-action-label">First action</div>
+      <p>Adopt or adapt the <a href="FMHA_Code_of_Conduct.html">Code of Conduct tile</a> and confirm who's responsible for handing it to every new joiner.</p>
+    </div>
+  </div>
+
+  <div class="pillar-block">
+    <div class="pillar-head">
+      <div class="pillar-num">2</div>
+      <h3>Visible Leadership</h3>
+    </div>
+    <div class="pillar-question">Do committee members and senior coaches <strong>visibly model the standard</strong>, or is it only enforced downward onto players and parents?</div>
+    <div class="first-action">
+      <div class="first-action-label">First action</div>
+      <p>Name one committee member who owns behaviour standards publicly — not administratively, publicly.</p>
+    </div>
+  </div>
+
+  <div class="pillar-block">
+    <div class="pillar-head">
+      <div class="pillar-num">3</div>
+      <h3>Consistent Consequences</h3>
+    </div>
+    <div class="pillar-question">Are sanctions applied the same way regardless of who's involved — <strong>does the star player's parent get the same response as anyone else?</strong></div>
+    <div class="first-action">
+      <div class="first-action-label">First action</div>
+      <p>Agree a simple three-strike written process before an incident happens, not while one is unfolding.</p>
+    </div>
+  </div>
+
+  <div class="pillar-block">
+    <div class="pillar-head">
+      <div class="pillar-num">4</div>
+      <h3>Proactive Communication</h3>
+    </div>
+    <div class="pillar-question">Does the club say anything about behaviour <strong>before the season starts</strong>, or only react once a referee report lands?</div>
+    <div class="first-action">
+      <div class="first-action-label">First action</div>
+      <p>Send one pre-season email or run one meeting where the standard gets stated out loud.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="coc-footer">
+    <div class="footer-brand">Produced by <strong>FMHA</strong> — Football Mental Health Alliance</div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a class="footer-url" href="https://assets.thefmha.com/FMHA_Resource_Hub.html">← Session hub</a>
+      <a class="footer-url" href="https://vault.thefmha.com" target="_blank">vault.thefmha.com</a>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
