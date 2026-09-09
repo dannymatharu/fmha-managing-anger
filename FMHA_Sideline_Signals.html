@@ -584,7 +584,7 @@
     .hero h1 span { color: #E8312A !important; }
     .hero p { color: #555 !important; }
     .level-card { background: #f8f8f8 !important; border-color: #ddd !important; break-inside: avoid; }
-    .level-body { max-height: none !important; overflow: visible !important; }
+    .level-body, .level-body[hidden] { display: block !important; max-height: none !important; overflow: visible !important; }
     .level-header { cursor: default; }
     .chevron { display: none; }
     .best-window { background: #e8f5e9 !important; color: #27ae60 !important; border-color: #a5d6a7 !important; }
@@ -704,7 +704,7 @@
         </div>
         <div class="chevron">▼</div>
       </div>
-      <div class="level-body" id="body-1">
+      <div class="level-body" id="body-1" hidden>
         <div class="level-body-inner">
           <div class="divider"></div>
 
@@ -758,7 +758,7 @@
         <span class="best-window">Best window</span>
         <div class="chevron">▼</div>
       </div>
-      <div class="level-body" id="body-2">
+      <div class="level-body" id="body-2" hidden>
         <div class="level-body-inner">
           <div class="divider"></div>
 
@@ -826,7 +826,7 @@
         </div>
         <div class="chevron">▼</div>
       </div>
-      <div class="level-body" id="body-3">
+      <div class="level-body" id="body-3" hidden>
         <div class="level-body-inner">
           <div class="divider"></div>
 
@@ -884,7 +884,7 @@
         </div>
         <div class="chevron">▼</div>
       </div>
-      <div class="level-body" id="body-4">
+      <div class="level-body" id="body-4" hidden>
         <div class="level-body-inner">
           <div class="divider"></div>
 
@@ -960,7 +960,7 @@
         <span class="danger-badge">Call 999</span>
         <div class="chevron">▼</div>
       </div>
-      <div class="level-body" id="body-5">
+      <div class="level-body" id="body-5" hidden>
         <div class="level-body-inner">
           <div class="divider"></div>
 
@@ -1094,8 +1094,10 @@
     if (isOpen) {
       card.classList.remove('open');
       body.style.maxHeight = '0';
+      body.hidden = true;
       trigger.setAttribute('aria-expanded', 'false');
     } else {
+      body.hidden = false;
       card.classList.add('open');
       body.style.maxHeight = body.scrollHeight + 'px';
       trigger.setAttribute('aria-expanded', 'true');

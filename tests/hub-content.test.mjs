@@ -99,7 +99,7 @@ test('the post-incident kit supports records and people after an incident', () =
     'Review date',
     'Print / Save PDF',
     'Clear this device',
-    'localStorage',
+    'sessionStorage',
   ]) {
     assert.ok(kit.includes(phrase), `post-incident kit missing: ${phrase}`);
   }
@@ -115,12 +115,12 @@ test('device-only tools do not transmit entered information', () => {
   }
 });
 
-test('sensitive incident persistence is explicit and time-limited', () => {
+test('sensitive incident persistence is limited to the current browser tab', () => {
   const kit = read('FMHA_Post_Incident_Kit.html');
-  assert.match(kit, /Keep this draft on this device for up to 30 days/);
+  assert.match(kit, /clears when the tab closes/);
   assert.match(kit, /stored unencrypted/i);
-  assert.match(kit, /if \(!remember\.checked\)/);
-  assert.match(kit, /_expiresAt/);
+  assert.match(kit, /sessionStorage/);
+  assert.doesNotMatch(kit, /localStorage/);
 });
 
 test('the browser deck no longer contains identified unsupported absolutes', () => {
@@ -150,8 +150,10 @@ test('interactive disclosures expose keyboard and expanded state', () => {
   const signals = read('FMHA_Sideline_Signals.html');
   const cards = read('FMHA_Junior_Player_Cards.html');
   assert.equal((signals.match(/class="level-header" role="button" tabindex="0" aria-expanded="false"/g) || []).length, 5);
+  assert.equal((signals.match(/class="level-body" id="body-[1-5]" hidden/g) || []).length, 5);
   assert.equal((cards.match(/class="scenario-card" role="button" tabindex="0" aria-expanded="false"/g) || []).length, 3);
   assert.match(signals, /event\.key === 'Enter' \|\| event\.key === ' '/);
+  assert.match(signals, /body\.hidden = true/);
   assert.match(cards, /event\.key === 'Enter' \|\| event\.key === ' '/);
 });
 
