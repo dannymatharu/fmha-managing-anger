@@ -215,6 +215,10 @@
     user-select: none;
     -webkit-tap-highlight-color: transparent;
   }
+  .level-header:focus-visible {
+    outline: 3px solid rgba(52,152,219,0.55);
+    outline-offset: -3px;
+  }
 
   .level-indicator {
     width: 10px;
@@ -522,6 +526,35 @@
 
   .resource-arrow { color: var(--muted); font-size: 16px; margin-left: auto; }
 
+  /* ── SAFE PATTERN INTERRUPTION ── */
+  .interrupt-panel {
+    margin-bottom: 36px; padding: 22px;
+    background: linear-gradient(135deg, rgba(39,174,96,0.12), rgba(52,152,219,0.08));
+    border: 1px solid var(--green-mid); border-radius: 12px;
+  }
+  .interrupt-head { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 14px; }
+  .interrupt-icon {
+    display: grid; place-items: center; flex: 0 0 38px; height: 38px;
+    border-radius: 9px; background: var(--green); color: #08120d; font-weight: 900;
+  }
+  .interrupt-head h2 { margin: 0 0 3px; font-size: 19px; }
+  .interrupt-head p { margin: 0; color: #aaa; font-size: 13px; }
+  .interrupt-rule {
+    margin: 14px 0; padding: 12px 14px; background: rgba(0,0,0,0.25);
+    border-radius: 8px; font-size: 13px; color: #ccc;
+  }
+  .interrupt-rule strong { color: var(--green); }
+  .interrupt-prompts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .interrupt-prompt {
+    padding: 10px 12px; border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; background: rgba(0,0,0,0.2); font-size: 13px; color: #ddd;
+  }
+  .safety-switch {
+    margin-top: 14px; padding: 13px 14px; border-left: 4px solid var(--accent);
+    background: var(--accent-soft); color: #ccc; font-size: 13px; border-radius: 6px;
+  }
+  .safety-switch strong { color: #ff625d; }
+
   /* ── FOOTER ── */
   .coc-footer {
     padding-top: 24px;
@@ -537,6 +570,10 @@
   .footer-brand strong { color: var(--accent); }
   .footer-url { font-size: 11px; color: var(--muted); text-decoration: none; }
 
+  @media (max-width: 600px) {
+    .interrupt-prompts { grid-template-columns: 1fr; }
+  }
+
   /* ── PRINT ── */
   @media print {
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
@@ -547,7 +584,7 @@
     .hero h1 span { color: #E8312A !important; }
     .hero p { color: #555 !important; }
     .level-card { background: #f8f8f8 !important; border-color: #ddd !important; break-inside: avoid; }
-    .level-body { max-height: none !important; overflow: visible !important; }
+    .level-body, .level-body[hidden] { display: block !important; max-height: none !important; overflow: visible !important; }
     .level-header { cursor: default; }
     .chevron { display: none; }
     .best-window { background: #e8f5e9 !important; color: #27ae60 !important; border-color: #a5d6a7 !important; }
@@ -561,6 +598,8 @@
     .level-5 .script-box { background: #fde8e7 !important; border-color: #f5b0ab !important; }
     .prep-card, .after-block, .avoid-box { background: #f8f8f8 !important; border-color: #ddd !important; }
     .resource-link { border-color: #ddd !important; background: #f8f8f8 !important; }
+    .interrupt-panel { background: #eef8f2 !important; border-color: #9bcdb0 !important; }
+    .interrupt-prompt, .interrupt-rule { background: #fff !important; color: #333 !important; }
     @page { margin: 16mm 14mm; size: A4; }
   }
 </style>
@@ -628,6 +667,25 @@
     </div>
   </div>
 
+  <section class="interrupt-panel" aria-labelledby="interrupt-title">
+    <div class="interrupt-head">
+      <div class="interrupt-icon" aria-hidden="true">?</div>
+      <div>
+        <h2 id="interrupt-title">Safe Pattern Interruption</h2>
+        <p>A small, ordinary question can sometimes break a person’s escalating rhythm long enough for them to reset.</p>
+      </div>
+    </div>
+    <div class="interrupt-rule"><strong>Disrupt the pattern, not the person.</strong> Use this only at levels 1 and 2, when the behaviour is low-level, you feel safe and the person can still respond to an everyday request. Approach calmly from the side, leave space and accept a brief answer.</div>
+    <div class="interrupt-prompts" aria-label="Neutral interruption prompts">
+      <div class="interrupt-prompt">“Can you help me with something for a second?”</div>
+      <div class="interrupt-prompt">“Do you know where the toilets are?”</div>
+      <div class="interrupt-prompt">“What time did this match kick off?”</div>
+      <div class="interrupt-prompt">“Can you stand over here with me?”</div>
+      <div class="interrupt-prompt">“Could you give me a hand with the equipment?”</div>
+    </div>
+    <div class="safety-switch"><strong>Safety switch:</strong> threats, discriminatory abuse or physical aggression are not moments for a casual interruption. Create distance, involve the referee or an appropriate club official, support anyone targeted, record what happened and follow the correct reporting route. Do not put yourself between people or try to manage serious risk alone.</div>
+  </section>
+
   <!-- ESCALATION LEVELS -->
   <div class="section-label">The escalation ladder — tap each level to expand</div>
 
@@ -637,16 +695,16 @@
     <!-- LEVEL 1 — FRUSTRATED                -->
     <!-- ════════════════════════════════════ -->
     <div class="level-card level-1" id="card-1">
-      <div class="level-header" onclick="toggleLevel('card-1')">
+      <div class="level-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-1" onclick="toggleLevel('card-1')">
         <div class="level-indicator"></div>
         <div class="level-meta">
           <div class="level-number">Level 1 · Frustrated</div>
           <div class="level-name">Early warning signs</div>
-          <div class="level-desc">Low-level tension. No intervention needed yet — but watch.</div>
+          <div class="level-desc">Low-level tension. Watch closely and use a neutral question if it feels safe and useful.</div>
         </div>
         <div class="chevron">▼</div>
       </div>
-      <div class="level-body" id="body-1">
+      <div class="level-body" id="body-1" hidden>
         <div class="level-body-inner">
           <div class="divider"></div>
 
@@ -670,7 +728,7 @@
             <div class="script-lines">
               <div class="script-line">
                 <div class="quote-mark">"</div>
-                <div class="script-text">No script needed yet. Stay visible. Make eye contact and smile — a calm, friendly presence can settle tension before it surfaces. You don't need to say anything.</div>
+                <div class="script-text">A direct correction may not be needed. Stay visible. If it feels safe and useful, try one neutral pattern-interruption question. You can also simply make friendly eye contact and keep watching.</div>
               </div>
             </div>
           </div>
@@ -690,7 +748,7 @@
     <!-- LEVEL 2 — AGITATED                  -->
     <!-- ════════════════════════════════════ -->
     <div class="level-card level-2" id="card-2">
-      <div class="level-header" onclick="toggleLevel('card-2')">
+      <div class="level-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-2" onclick="toggleLevel('card-2')">
         <div class="level-indicator"></div>
         <div class="level-meta">
           <div class="level-number">Level 2 · Agitated</div>
@@ -700,7 +758,7 @@
         <span class="best-window">Best window</span>
         <div class="chevron">▼</div>
       </div>
-      <div class="level-body" id="body-2">
+      <div class="level-body" id="body-2" hidden>
         <div class="level-body-inner">
           <div class="divider"></div>
 
@@ -759,7 +817,7 @@
     <!-- LEVEL 3 — VERBAL                    -->
     <!-- ════════════════════════════════════ -->
     <div class="level-card level-3" id="card-3">
-      <div class="level-header" onclick="toggleLevel('card-3')">
+      <div class="level-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-3" onclick="toggleLevel('card-3')">
         <div class="level-indicator"></div>
         <div class="level-meta">
           <div class="level-number">Level 3 · Verbal</div>
@@ -768,7 +826,7 @@
         </div>
         <div class="chevron">▼</div>
       </div>
-      <div class="level-body" id="body-3">
+      <div class="level-body" id="body-3" hidden>
         <div class="level-body-inner">
           <div class="divider"></div>
 
@@ -817,7 +875,7 @@
     <!-- LEVEL 4 — THREATENING               -->
     <!-- ════════════════════════════════════ -->
     <div class="level-card level-4" id="card-4">
-      <div class="level-header" onclick="toggleLevel('card-4')">
+      <div class="level-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-4" onclick="toggleLevel('card-4')">
         <div class="level-indicator"></div>
         <div class="level-meta">
           <div class="level-number">Level 4 · Threatening</div>
@@ -826,7 +884,7 @@
         </div>
         <div class="chevron">▼</div>
       </div>
-      <div class="level-body" id="body-4">
+      <div class="level-body" id="body-4" hidden>
         <div class="level-body-inner">
           <div class="divider"></div>
 
@@ -892,7 +950,7 @@
     <!-- LEVEL 5 — PHYSICAL                  -->
     <!-- ════════════════════════════════════ -->
     <div class="level-card level-5" id="card-5">
-      <div class="level-header" onclick="toggleLevel('card-5')">
+      <div class="level-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-5" onclick="toggleLevel('card-5')">
         <div class="level-indicator"></div>
         <div class="level-meta">
           <div class="level-number">Level 5 · Physical</div>
@@ -902,7 +960,7 @@
         <span class="danger-badge">Call 999</span>
         <div class="chevron">▼</div>
       </div>
-      <div class="level-body" id="body-5">
+      <div class="level-body" id="body-5" hidden>
         <div class="level-body-inner">
           <div class="divider"></div>
 
@@ -1031,18 +1089,31 @@
     const num  = id.split('-')[1];
     const body = document.getElementById('body-' + num);
     const isOpen = card.classList.contains('open');
+    const trigger = card.querySelector('.level-header');
 
     if (isOpen) {
       card.classList.remove('open');
       body.style.maxHeight = '0';
+      body.hidden = true;
+      trigger.setAttribute('aria-expanded', 'false');
     } else {
+      body.hidden = false;
       card.classList.add('open');
       body.style.maxHeight = body.scrollHeight + 'px';
+      trigger.setAttribute('aria-expanded', 'true');
     }
   }
 
   // Open level 2 by default — it's the most important intervention window
   window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.level-header').forEach((trigger) => {
+      trigger.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggleLevel(trigger.closest('.level-card').id);
+        }
+      });
+    });
     toggleLevel('card-2');
   });
 </script>
