@@ -1,235 +1,169 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Club Behaviour Implementation Guide — FMHA</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Club Action and Repair Plan | FMHA</title>
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --bg: #0a0a0a;
-    --card: #141414;
-    --card2: #1e1e1e;
-    --border: #2a2a2a;
-    --text: #ffffff;
-    --muted: #888888;
-    --accent: #E8312A;
-    --accent-soft: rgba(232,49,42,0.10);
-    --accent-mid: rgba(232,49,42,0.28);
-    --amber: #f39c12;
-    --amber-soft: rgba(243,156,18,0.10);
-    --amber-mid: rgba(243,156,18,0.28);
-    --green: #27ae60;
-    --green-soft: rgba(39,174,96,0.10);
-    --green-mid: rgba(39,174,96,0.28);
-    --blue: #3498db;
-    --blue-soft: rgba(52,152,219,0.10);
-    --blue-mid: rgba(52,152,219,0.28);
-    --purple: #9b59b6;
-    --purple-soft: rgba(155,89,182,0.10);
-    --purple-mid: rgba(155,89,182,0.28);
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-    min-height: 100vh; line-height: 1.6;
-  }
-
-  .site-header {
-    background: var(--card); border-bottom: 1px solid var(--border);
-    padding: 16px 24px; display: flex; align-items: center;
-    justify-content: space-between; position: sticky; top: 0; z-index: 200;
-  }
-  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-  .brand-mark {
-    width: 34px; height: 34px; background: var(--accent); border-radius: 7px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 9px; font-weight: 900; color: white; letter-spacing: -0.5px; flex-shrink: 0;
-  }
-  .brand-sub { font-size: 10px; color: var(--muted); }
-  .pill {
-    background: var(--purple-soft); border: 1px solid var(--purple-mid);
-    color: var(--purple); font-size: 10px; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 4px 10px; border-radius: 20px;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    background: var(--card); border-bottom: 1px solid var(--border);
-    padding: 32px 24px 28px;
-  }
-  .hero-inner { max-width: 720px; margin: 0 auto; }
-  .hero-badge {
-    display: inline-block;
-    background: var(--purple-soft); border: 1px solid var(--purple-mid);
-    color: var(--purple); font-size: 10px; font-weight: 700;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    padding: 4px 10px; border-radius: 4px; margin-bottom: 14px;
-  }
-  .hero h1 {
-    font-size: clamp(24px, 5vw, 38px); font-weight: 800;
-    letter-spacing: -0.5px; line-height: 1.15; margin-bottom: 10px;
-  }
-  .hero h1 span { color: var(--accent); }
-  .hero p { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 560px; }
-
-  /* ── MAIN ── */
-  .main { max-width: 720px; margin: 0 auto; padding: 28px 24px 80px; }
-
-  .section-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
-  }
-
-  /* ── PILLAR BLOCKS ── */
-  .pillar-block {
-    background: var(--card2); border: 1px solid var(--border);
-    border-radius: 12px; padding: 22px 20px; margin-bottom: 20px;
-  }
-  .pillar-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-  .pillar-num {
-    width: 32px; height: 32px; border-radius: 8px;
-    background: var(--accent-soft); border: 1px solid var(--accent-mid);
-    color: var(--accent); font-size: 14px; font-weight: 800;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .pillar-head h3 { font-size: 16px; font-weight: 700; color: var(--text); }
-
-  .pillar-question { font-size: 13px; color: #bbb; line-height: 1.65; margin-bottom: 14px; }
-  .pillar-question strong { color: var(--text); }
-
-  .first-action {
-    background: var(--green-soft); border: 1px solid var(--green-mid);
-    border-radius: 10px; padding: 14px 16px;
-    display: flex; gap: 10px; align-items: flex-start;
-  }
-  .first-action-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--green); flex-shrink: 0; padding-top: 1px;
-  }
-  .first-action p { font-size: 13px; color: #aaa; line-height: 1.55; }
-  .first-action a { color: var(--green); text-decoration: none; font-weight: 600; }
-  .first-action a:hover { text-decoration: underline; }
-
-  /* ── INTRO CALLOUT ── */
-  .stat-callout {
-    background: var(--purple-soft); border: 1px solid var(--purple-mid);
-    border-radius: 12px; padding: 20px 20px;
-    margin-bottom: 32px;
-  }
-  .stat-callout p { font-size: 13px; color: #ccc; line-height: 1.65; }
-  .stat-callout strong { color: var(--text); }
-
-  /* ── FOOTER ── */
-  .coc-footer {
-    padding-top: 24px; border-top: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 10px; max-width: 720px; margin: 0 auto;
-  }
-  .footer-brand { font-size: 12px; color: var(--muted); }
-  .footer-brand strong { color: var(--accent); }
-  .footer-url { font-size: 11px; color: var(--muted); text-decoration: none; }
-
-  @media print {
-    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-    body { background: #fff !important; color: #111 !important; }
-    .site-header { display: none !important; }
-    .hero { background: #f8f8f8 !important; border-color: #ddd !important; }
-    .pillar-block { background: #f8f8f8 !important; border-color: #ddd !important; }
-    .first-action { background: #e8f5e9 !important; border-color: #a5d6a7 !important; }
-  }
+:root{--bg:#090909;--panel:#151515;--panel2:#1d1d1d;--line:#303030;--text:#fff;--muted:#b7b7b7;--red:#e8312a;--gold:#f2b84b;--green:#66d19e}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit}.topbar{position:sticky;top:0;z-index:5;display:flex;gap:16px;align-items:center;justify-content:space-between;padding:14px max(20px,calc((100% - 1060px)/2));background:rgba(12,12,12,.96);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:750}.mark{display:grid;place-items:center;width:38px;height:38px;background:var(--red);border-radius:8px;font-size:10px;font-weight:900}
+.actions{display:flex;flex-wrap:wrap;gap:8px}.button{border:1px solid var(--line);border-radius:8px;background:#242424;color:#fff;padding:10px 13px;font:inherit;font-weight:700;cursor:pointer}.button:hover,.button:focus-visible{border-color:#777}.button.primary{background:var(--red);border-color:var(--red)}
+main{max-width:1060px;margin:auto;padding:50px 22px 80px}.eyebrow{color:var(--red);font-size:.75rem;font-weight:850;letter-spacing:.16em;text-transform:uppercase}h1{max-width:800px;margin:.3rem 0 .8rem;font-size:clamp(2.2rem,6vw,4.6rem);line-height:.98;letter-spacing:-.045em}h2{font-size:clamp(1.6rem,3vw,2.35rem);letter-spacing:-.025em;margin:0 0 8px}h3{margin:0;font-size:1.15rem}.lede{max-width:760px;color:var(--muted);font-size:1.1rem}
+.notice,.boundary{margin:30px 0;padding:18px 20px;border:1px solid #755d25;border-left:5px solid var(--gold);border-radius:10px;background:#201b11}.notice strong,.boundary strong{color:var(--gold)}
+.section{margin-top:54px}.section-head{display:flex;gap:24px;justify-content:space-between;align-items:end;margin-bottom:18px}.section-head p{max-width:560px;margin:0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}.number{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:7px;background:rgba(232,49,42,.15);color:#ff6761;font-weight:850;margin-bottom:12px}.prompt{color:var(--muted);margin:8px 0 18px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.field.wide{grid-column:1/-1}label{display:block;color:#d7d7d7;font-size:.78rem;font-weight:750;margin-bottom:6px}input,select,textarea{width:100%;border:1px solid #3b3b3b;border-radius:8px;background:#0e0e0e;color:#fff;padding:11px 12px;font:inherit}textarea{min-height:86px;resize:vertical}input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:3px solid rgba(232,49,42,.35);outline-offset:2px}
+.commitments{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.commitment{background:var(--panel);border-top:4px solid var(--red);border-radius:12px;padding:20px}.commitment:nth-child(2){border-color:var(--gold)}.commitment:nth-child(3){border-color:var(--green)}
+.questions{counter-reset:q;display:grid;gap:10px;margin-top:18px}.question{counter-increment:q;display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:start}.question:before{content:counter(q);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--red);font-weight:850}.question textarea{min-height:74px}
+.review{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px}.save-state{font-size:.78rem;color:var(--green);min-height:1.2em;margin:12px 0 0}.clear-confirm{display:none;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 0}.clear-confirm.show{display:flex}.small{color:var(--muted);font-size:.84rem}.footer{margin-top:58px;padding-top:20px;border-top:1px solid var(--line);color:#888;font-size:.82rem}
+@media(max-width:760px){.topbar{align-items:flex-start;position:static}.grid,.commitments,.review{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.field.wide{grid-column:auto}.section-head{display:block}.section-head p{margin-top:8px}.actions{justify-content:flex-end}.button{padding:9px 10px;font-size:.82rem}}
+@media print{body{background:#fff;color:#111}.topbar,.notice .screen-only,.clear-confirm,.save-state{display:none!important}.notice,.boundary,.card,.commitment{break-inside:avoid;background:#fff;color:#111;border-color:#aaa}.prompt,.section-head p,.small{color:#444}input,select,textarea{background:#fff;color:#111;border-color:#888}.section{margin-top:32px}}
 </style>
 </head>
 <body>
-
-<header class="site-header">
-  <a class="brand" href="https://assets.thefmha.com/FMHA_Resource_Hub.html">
-    <div class="brand-mark">FMHA</div>
-    <div>
-      <div class="brand-sub">Football Mental Health Alliance</div>
-    </div>
-  </a>
-  <span class="pill">Club Committees</span>
+<header class="topbar">
+  <a class="brand" href="FMHA_Resource_Hub.html"><span class="mark">FMHA</span><span>Managing Anger Resource Hub</span></a>
+  <div class="actions">
+    <button class="button" id="clearButton" type="button">Clear this device</button>
+    <button class="button primary" id="printButton" type="button">Print / Save PDF</button>
+  </div>
 </header>
+<main>
+  <p class="eyebrow">Delegate follow-through tool</p>
+  <h1>Club Action and Repair Plan</h1>
+  <p class="lede">Turn the session into named actions. Audit the Four Pillars, decide what changes next, and use the restorative questions when a relationship needs repairing.</p>
 
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-badge">Club Behaviour Implementation Guide</div>
-    <h1>Four Pillars. <span>One Honest Audit.</span></h1>
-    <p>The Four Pillars from Module 5, turned into something your committee can actually work through. Be honest about what's in place versus what you assume is in place, then commit to one action per pillar.</p>
-  </div>
-</div>
-
-<div class="main">
-
-  <div class="stat-callout">
-    <p><strong>How to use this:</strong> Go through each pillar with your committee. Answer the question straight, then take the first action before your next meeting — not eventually, before the next meeting.</p>
-  </div>
-
-  <div class="section-label">The four pillars</div>
-
-  <div class="pillar-block">
-    <div class="pillar-head">
-      <div class="pillar-num">1</div>
-      <h3>Clear Expectations</h3>
+  <div class="notice">
+    <strong>Private by design.</strong> What you type stays on this device in this browser. Nothing is submitted to FMHA, your club, the FA or anybody else. Shared device? Print or save what you need, then clear it.
+    <div class="clear-confirm" id="clearConfirm" role="group" aria-label="Confirm clear">
+      <span>Delete every saved answer from this plan?</span>
+      <button class="button primary" id="confirmClear" type="button">Yes, clear it</button>
+      <button class="button" id="cancelClear" type="button">Cancel</button>
     </div>
-    <div class="pillar-question">Is there a written code of conduct that every new player, parent and volunteer actually receives — <strong>not one that just exists somewhere on a shared drive?</strong></div>
-    <div class="first-action">
-      <div class="first-action-label">First action</div>
-      <p>Adopt or adapt the <a href="FMHA_Code_of_Conduct.html">Code of Conduct tile</a> and confirm who's responsible for handing it to every new joiner.</p>
-    </div>
+    <p class="save-state" id="saveState" aria-live="polite"></p>
   </div>
 
-  <div class="pillar-block">
-    <div class="pillar-head">
-      <div class="pillar-num">2</div>
-      <h3>Visible Leadership</h3>
+  <section class="section" aria-labelledby="audit-title">
+    <div class="section-head"><div><p class="eyebrow">Part 1</p><h2 id="audit-title">Audit the Four Pillars</h2></div><p>Evidence beats instinct. “We usually do this” is not evidence. A named document, briefing, message or record is.</p></div>
+    <div class="grid">
+      <article class="card"><span class="number">1</span><h3>Clear Expectations</h3><p class="prompt">Can every player, parent, coach and volunteer describe the standard before there is a problem?</p><div class="fields">
+        <div class="field"><label for="p1-status">Status</label><select id="p1-status"><option value="">Choose</option><option>In place</option><option>Partial</option><option>Missing</option></select></div>
+        <div class="field"><label for="p1-owner">Owner</label><input id="p1-owner" type="text"></div>
+        <div class="field wide"><label for="p1-evidence">Evidence</label><textarea id="p1-evidence"></textarea></div>
+        <div class="field wide"><label for="p1-action">Next action</label><textarea id="p1-action"></textarea></div>
+        <div class="field"><label for="p1-date">Target date</label><input id="p1-date" type="date"></div>
+      </div></article>
+      <article class="card"><span class="number">2</span><h3>Visible Leadership</h3><p class="prompt">Do leaders model the standard when emotions are high, including with friends and influential adults?</p><div class="fields">
+        <div class="field"><label for="p2-status">Status</label><select id="p2-status"><option value="">Choose</option><option>In place</option><option>Partial</option><option>Missing</option></select></div>
+        <div class="field"><label for="p2-owner">Owner</label><input id="p2-owner" type="text"></div>
+        <div class="field wide"><label for="p2-evidence">Evidence</label><textarea id="p2-evidence"></textarea></div>
+        <div class="field wide"><label for="p2-action">Next action</label><textarea id="p2-action"></textarea></div>
+        <div class="field"><label for="p2-date">Target date</label><input id="p2-date" type="date"></div>
+      </div></article>
+      <article class="card"><span class="number">3</span><h3>Consistent Consequences</h3><p class="prompt">Would the same behaviour receive the same response, regardless of status, role or match result?</p><div class="fields">
+        <div class="field"><label for="p3-status">Status</label><select id="p3-status"><option value="">Choose</option><option>In place</option><option>Partial</option><option>Missing</option></select></div>
+        <div class="field"><label for="p3-owner">Owner</label><input id="p3-owner" type="text"></div>
+        <div class="field wide"><label for="p3-evidence">Evidence</label><textarea id="p3-evidence"></textarea></div>
+        <div class="field wide"><label for="p3-action">Next action</label><textarea id="p3-action"></textarea></div>
+        <div class="field"><label for="p3-date">Target date</label><input id="p3-date" type="date"></div>
+      </div></article>
+      <article class="card"><span class="number">4</span><h3>Proactive Communication</h3><p class="prompt">Does the club discuss behaviour before fixtures and pressure points, not only after an incident?</p><div class="fields">
+        <div class="field"><label for="p4-status">Status</label><select id="p4-status"><option value="">Choose</option><option>In place</option><option>Partial</option><option>Missing</option></select></div>
+        <div class="field"><label for="p4-owner">Owner</label><input id="p4-owner" type="text"></div>
+        <div class="field wide"><label for="p4-evidence">Evidence</label><textarea id="p4-evidence"></textarea></div>
+        <div class="field wide"><label for="p4-action">Next action</label><textarea id="p4-action"></textarea></div>
+        <div class="field"><label for="p4-date">Target date</label><input id="p4-date" type="date"></div>
+      </div></article>
     </div>
-    <div class="pillar-question">Do committee members and senior coaches <strong>visibly model the standard</strong>, or is it only enforced downward onto players and parents?</div>
-    <div class="first-action">
-      <div class="first-action-label">First action</div>
-      <p>Name one committee member who owns behaviour standards publicly — not administratively, publicly.</p>
-    </div>
-  </div>
+  </section>
 
-  <div class="pillar-block">
-    <div class="pillar-head">
-      <div class="pillar-num">3</div>
-      <h3>Consistent Consequences</h3>
+  <section class="section" aria-labelledby="commitments-title">
+    <div class="section-head"><div><p class="eyebrow">Part 2</p><h2 id="commitments-title">Make three commitments</h2></div><p>Keep them observable and small enough to begin. “Improve behaviour” is fog. “Brief every coach before Saturday” can be checked.</p></div>
+    <div class="commitments">
+      <article class="commitment"><h3>Personal commitment</h3><div class="field"><label for="c1-action">I will</label><textarea id="c1-action"></textarea></div><div class="field"><label for="c1-step">First step</label><input id="c1-step" type="text"></div><div class="field"><label for="c1-evidence">Completion evidence</label><input id="c1-evidence" type="text"></div><div class="field"><label for="c1-review">Review date</label><input id="c1-review" type="date"></div></article>
+      <article class="commitment"><h3>Club commitment</h3><div class="field"><label for="c2-action">Our club will</label><textarea id="c2-action"></textarea></div><div class="field"><label for="c2-step">First step</label><input id="c2-step" type="text"></div><div class="field"><label for="c2-evidence">Completion evidence</label><input id="c2-evidence" type="text"></div><div class="field"><label for="c2-review">Review date</label><input id="c2-review" type="date"></div></article>
+      <article class="commitment"><h3>For someone else</h3><div class="field"><label for="c3-action">I will support</label><textarea id="c3-action"></textarea></div><div class="field"><label for="c3-step">First step</label><input id="c3-step" type="text"></div><div class="field"><label for="c3-evidence">Completion evidence</label><input id="c3-evidence" type="text"></div><div class="field"><label for="c3-review">Review date</label><input id="c3-review" type="date"></div></article>
     </div>
-    <div class="pillar-question">Are sanctions applied the same way regardless of who's involved — <strong>does the star player's parent get the same response as anyone else?</strong></div>
-    <div class="first-action">
-      <div class="first-action-label">First action</div>
-      <p>Agree a simple three-strike written process before an incident happens, not while one is unfolding.</p>
-    </div>
-  </div>
+  </section>
 
-  <div class="pillar-block">
-    <div class="pillar-head">
-      <div class="pillar-num">4</div>
-      <h3>Proactive Communication</h3>
+  <section class="section" aria-labelledby="repair-title">
+    <div class="section-head"><div><p class="eyebrow">Part 3</p><h2 id="repair-title">Plan a restorative conversation</h2></div><p>Use these five restorative questions once everybody is calm and participation is safe. Listen. Do not use them as a disguised interrogation.</p></div>
+    <div class="questions">
+      <label class="question"><span><strong>What happened?</strong><textarea id="r1"></textarea></span></label>
+      <label class="question"><span><strong>What were you thinking at the time?</strong><textarea id="r2"></textarea></span></label>
+      <label class="question"><span><strong>What have you thought about since?</strong><textarea id="r3"></textarea></span></label>
+      <label class="question"><span><strong>Who has been affected, and how?</strong><textarea id="r4"></textarea></span></label>
+      <label class="question"><span><strong>What needs to happen to make things right?</strong><textarea id="r5"></textarea></span></label>
     </div>
-    <div class="pillar-question">Does the club say anything about behaviour <strong>before the season starts</strong>, or only react once a referee report lands?</div>
-    <div class="first-action">
-      <div class="first-action-label">First action</div>
-      <p>Send one pre-season email or run one meeting where the standard gets stated out loud.</p>
+  </section>
+
+  <div class="boundary"><strong>Repair does not replace reporting.</strong> Safeguarding concerns, discriminatory abuse, threats, violence and serious misconduct still follow the relevant club, County FA, FA, police or emergency route. Never require the person harmed to meet the person responsible.</div>
+
+  <section class="section" aria-labelledby="review-title">
+    <div class="section-head"><div><p class="eyebrow">Part 4</p><h2 id="review-title">Close the loop</h2></div><p>Decide who checks the plan. Otherwise today’s urgency quietly becomes next month’s forgotten note.</p></div>
+    <div class="card review">
+      <div class="field"><label for="review-owner">Owner</label><input id="review-owner" type="text"></div>
+      <div class="field"><label for="review-target">Target date</label><input id="review-target" type="date"></div>
+      <div class="field"><label for="review-date">Review date</label><input id="review-date" type="date"></div>
+      <div class="field wide"><label for="review-result">What will tell us it worked?</label><textarea id="review-result"></textarea></div>
     </div>
-  </div>
+  </section>
 
-  <!-- FOOTER -->
-  <div class="coc-footer">
-    <div class="footer-brand">Produced by <strong>FMHA</strong> — Football Mental Health Alliance</div>
-    <div style="display:flex;align-items:center;gap:12px;">
-      <a class="footer-url" href="https://assets.thefmha.com/FMHA_Resource_Hub.html">← Session hub</a>
-      <a class="footer-url" href="https://vault.thefmha.com" target="_blank">vault.thefmha.com</a>
-    </div>
-  </div>
+  <p class="footer">FMHA practical resource. Review club procedures and current FA guidance before use. This planning page is not a reporting service or safeguarding record system.</p>
+</main>
+<script>
+(() => {
+  const storageKey = 'fmha-managing-anger-action-repair-v1';
+  const controls = [...document.querySelectorAll('input, select, textarea')];
+  const state = document.getElementById('saveState');
+  const confirmBox = document.getElementById('clearConfirm');
+  let timer;
 
-</div>
+  function load() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+      controls.forEach((control) => {
+        if (Object.hasOwn(saved, control.id)) control.value = saved[control.id];
+      });
+      if (Object.keys(saved).length) state.textContent = 'Saved answers restored from this device.';
+    } catch {
+      state.textContent = 'This browser could not restore the saved copy.';
+    }
+  }
 
+  function save() {
+    const data = Object.fromEntries(controls.map((control) => [control.id, control.value]));
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(data));
+      state.textContent = 'Saved on this device.';
+      clearTimeout(timer);
+      timer = setTimeout(() => { state.textContent = ''; }, 2500);
+    } catch {
+      state.textContent = 'This browser could not save locally. Print or save a PDF instead.';
+    }
+  }
+
+  controls.forEach((control) => control.addEventListener('input', save));
+  document.getElementById('printButton').addEventListener('click', () => window.print());
+  document.getElementById('clearButton').addEventListener('click', () => {
+    confirmBox.classList.add('show');
+    document.getElementById('confirmClear').focus();
+  });
+  document.getElementById('cancelClear').addEventListener('click', () => {
+    confirmBox.classList.remove('show');
+    document.getElementById('clearButton').focus();
+  });
+  document.getElementById('confirmClear').addEventListener('click', () => {
+    localStorage.removeItem(storageKey);
+    controls.forEach((control) => { control.value = ''; });
+    confirmBox.classList.remove('show');
+    state.textContent = 'Saved answers cleared from this device.';
+    document.getElementById('clearButton').focus();
+  });
+  load();
+})();
+</script>
 </body>
 </html>
