@@ -17,6 +17,19 @@ test('every local HTML link on the hub resolves to a repository file', () => {
   }
 });
 
+test('the hub gives delegates a five-step follow-through route', () => {
+  const hub = read('FMHA_Resource_Hub.html');
+  for (const phrase of [
+    'Tonight',
+    'Before your next fixture',
+    'Within seven days',
+    'Before the next committee meeting',
+    'After an incident',
+  ]) {
+    assert.ok(hub.includes(phrase), `hub route missing: ${phrase}`);
+  }
+});
+
 test('the action and repair plan covers audit, commitments and restoration', () => {
   const guide = read('FMHA_Implementation_Guide.html');
   const required = [
@@ -115,4 +128,12 @@ test('the browser deck no longer contains identified unsupported absolutes', () 
   ];
 
   for (const phrase of removed) assert.ok(!deck.includes(phrase), `deck still contains: ${phrase}`);
+});
+
+test('Chimp resources describe a teaching model without fixed speed claims', () => {
+  for (const file of ['FMHA_Managing_Anger_Deck.html', 'FMHA_Chimp_Paradox.html', 'FMHA_Know_Your_Brain.html', 'FMHA_Junior_Player_Cards.html']) {
+    const html = read(file);
+    assert.doesNotMatch(html, /\b[45](?:×|x) faster\b/i, `${file} still makes a fixed processing-speed claim`);
+    assert.match(html, /teaching (?:label|model)/i, `${file} should explain the teaching-model boundary`);
+  }
 });
