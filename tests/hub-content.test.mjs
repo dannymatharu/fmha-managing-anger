@@ -6,6 +6,17 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (file) => readFileSync(join(root, file), 'utf8');
+const supportingResources = [
+  'FMHA_Chimp_Paradox.html',
+  'FMHA_Code_of_Conduct.html',
+  'FMHA_FA_Rules_Explained.html',
+  'FMHA_Implementation_Guide.html',
+  'FMHA_Junior_Player_Cards.html',
+  'FMHA_Know_Your_Brain.html',
+  'FMHA_Managing_Anger_Deck.html',
+  'FMHA_Post_Incident_Kit.html',
+  'FMHA_Sideline_Signals.html',
+];
 
 test('every local HTML link on the hub resolves to a repository file', () => {
   const hub = read('FMHA_Resource_Hub.html');
@@ -14,6 +25,16 @@ test('every local HTML link on the hub resolves to a repository file', () => {
   assert.ok(links.length >= 9, 'the hub should expose at least nine local HTML tools');
   for (const link of links) {
     assert.ok(existsSync(join(root, link)), `missing linked file: ${link}`);
+  }
+});
+
+test('every supporting resource has one explicit route back to the hub', () => {
+  for (const filename of supportingResources) {
+    const html = read(filename);
+    const links = html.match(/<a\b[^>]*class="[^"]*hub-back-link[^"]*"[^>]*>/gi) ?? [];
+    assert.equal(links.length, 1, `${filename} should contain one hub back link`);
+    assert.match(links[0], /href="\/fmha_resource_hub"/i, `${filename} should link directly to the hub`);
+    assert.match(html, />\s*←\s*Back to resource hub\s*<\/a>/i, `${filename} should use the agreed label`);
   }
 });
 
