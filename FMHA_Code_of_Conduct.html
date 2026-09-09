@@ -661,6 +661,10 @@
 
     @page { margin: 16mm 14mm; size: A4; }
   }
+  .hub-back-link { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:0 14px; border:1px solid currentColor; border-radius:999px; color:inherit; font-size:13px; font-weight:700; text-decoration:none; white-space:nowrap; opacity:.82; }
+  .hub-back-link:hover { opacity:1; }
+  .hub-back-link:focus-visible { outline:3px solid #f4b942; outline-offset:3px; }
+  @media print { .hub-back-link { display:none !important; } }
 </style>
 </head>
 <body>
@@ -673,6 +677,7 @@
       <span class="b-sub">Football Mental Health Alliance</span>
     </div>
   </a>
+  <a class="hub-back-link" href="/fmha_resource_hub">← Back to resource hub</a>
   <div class="topbar-right">
     <span class="tb-badge">Code of Conduct</span>
     <button class="print-btn" onclick="window.print()">

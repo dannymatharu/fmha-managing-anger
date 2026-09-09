@@ -20,11 +20,13 @@ main{max-width:1060px;margin:auto;padding:50px 22px 80px}.eyebrow{color:var(--re
 .review{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px}.save-state{font-size:.78rem;color:var(--green);min-height:1.2em;margin:12px 0 0}.clear-confirm{display:none;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 0}.clear-confirm.show{display:flex}.small{color:var(--muted);font-size:.84rem}.footer{margin-top:58px;padding-top:20px;border-top:1px solid var(--line);color:#888;font-size:.82rem}
 @media(max-width:760px){.topbar{align-items:flex-start;position:static}.grid,.commitments,.review{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.field.wide{grid-column:auto}.section-head{display:block}.section-head p{margin-top:8px}.actions{justify-content:flex-end}.button{padding:9px 10px;font-size:.82rem}}
 @media print{body{background:#fff;color:#111}.topbar,.notice .screen-only,.clear-confirm,.save-state{display:none!important}.notice,.boundary,.card,.commitment{break-inside:avoid;background:#fff;color:#111;border-color:#aaa}.prompt,.section-head p,.small{color:#444}input,select,textarea{background:#fff;color:#111;border-color:#888}.section{margin-top:32px}}
+.hub-back-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border:1px solid currentColor;border-radius:999px;color:inherit;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;opacity:.82}.hub-back-link:hover{opacity:1}.hub-back-link:focus-visible{outline:3px solid #f4b942;outline-offset:3px}@media print{.hub-back-link{display:none!important}}
 </style>
 </head>
 <body>
 <header class="topbar">
   <a class="brand" href="FMHA_Resource_Hub.html"><span class="mark">FMHA</span><span>Managing Anger Resource Hub</span></a>
+  <a class="hub-back-link" href="/fmha_resource_hub">← Back to resource hub</a>
   <div class="actions">
     <button class="button" id="clearButton" type="button">Clear this device</button>
     <button class="button primary" id="printButton" type="button">Print / Save PDF</button>

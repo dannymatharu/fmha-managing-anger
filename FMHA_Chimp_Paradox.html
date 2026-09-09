@@ -269,6 +269,10 @@
     .brains-grid { grid-template-columns: 1fr; }
     .tab-btn { padding: 12px 14px; font-size: 11px; }
   }
+  .hub-back-link { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:0 14px; border:1px solid currentColor; border-radius:999px; color:inherit; font-size:13px; font-weight:700; text-decoration:none; white-space:nowrap; opacity:.82; }
+  .hub-back-link:hover { opacity:1; }
+  .hub-back-link:focus-visible { outline:3px solid #f4b942; outline-offset:3px; }
+  @media print { .hub-back-link { display:none !important; } }
 </style>
 </head>
 <body>
@@ -280,6 +284,7 @@
       <div class="brand-sub">Football Mental Health Alliance</div>
     </div>
   </a>
+  <a class="hub-back-link" href="/fmha_resource_hub">← Back to resource hub</a>
   <span class="pill">Brain Science</span>
 </header>
 
