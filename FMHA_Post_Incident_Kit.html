@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Post-Incident and Aftercare Kit | FMHA</title>
+<style>
+:root{--bg:#090909;--panel:#161616;--line:#303030;--text:#fff;--muted:#b6b6b6;--red:#e8312a;--amber:#f0b441;--green:#63ce98;--blue:#5eb5e8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px max(20px,calc((100% - 1040px)/2));background:rgba(12,12,12,.96);border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800}.mark{display:grid;place-items:center;width:38px;height:38px;border-radius:8px;background:var(--red);font-size:10px;font-weight:900}.buttons{display:flex;gap:8px;flex-wrap:wrap}.button{padding:10px 13px;border:1px solid var(--line);border-radius:8px;background:#252525;color:#fff;font:inherit;font-weight:750;cursor:pointer}.button.primary{background:var(--red);border-color:var(--red)}.button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid rgba(232,49,42,.4);outline-offset:2px}
+main{max-width:1040px;margin:auto;padding:50px 22px 80px}.eyebrow{margin:0;color:var(--red);font-size:.75rem;font-weight:850;letter-spacing:.16em;text-transform:uppercase}h1{margin:.3rem 0 .8rem;max-width:850px;font-size:clamp(2.2rem,6vw,4.5rem);line-height:.98;letter-spacing:-.045em}h2{margin:0 0 8px;font-size:clamp(1.55rem,3vw,2.25rem);line-height:1.1}h3{margin:0 0 7px;font-size:1.08rem}.lede{max-width:750px;color:var(--muted);font-size:1.08rem}.notice,.urgent{margin:28px 0;padding:18px 20px;border-radius:10px;background:#201a10;border:1px solid #725922;border-left:5px solid var(--amber)}.notice strong,.urgent strong{color:var(--amber)}.urgent{background:#251010;border-color:#79302d;border-left-color:var(--red)}.urgent strong{color:#ff6b65}
+.section{margin-top:50px}.section-head{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:end;margin-bottom:18px}.section-head p{margin:0;color:var(--muted)}.panel{padding:22px;background:var(--panel);border:1px solid var(--line);border-radius:14px}.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.field.wide{grid-column:1/-1}.field.two{grid-column:span 2}label{display:block;margin-bottom:6px;color:#ddd;font-size:.8rem;font-weight:750}input,textarea,select{width:100%;padding:11px 12px;border:1px solid #3d3d3d;border-radius:8px;background:#0d0d0d;color:#fff;font:inherit}textarea{min-height:92px;resize:vertical}.check-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.check{display:flex;gap:9px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:#111;color:#d8d8d8;font-size:.88rem}.check input{width:auto;margin-top:3px;accent-color:var(--red)}.people-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.person{padding:20px;background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--blue);border-radius:12px}.person:nth-child(2){border-top-color:var(--green)}.person:nth-child(3){border-top-color:var(--amber)}.person p,.person li{color:var(--muted);font-size:.88rem}.person ul{padding-left:18px;margin:10px 0 0}.save-state{min-height:1.2em;color:var(--green);font-size:.8rem}.clear-confirm{display:none;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}.clear-confirm.show{display:flex}.footer{margin-top:55px;padding-top:20px;border-top:1px solid var(--line);color:#888;font-size:.82rem}.footer a{color:#aaa}
+@media(max-width:720px){.top{position:static;align-items:flex-start}.buttons{justify-content:flex-end}.button{font-size:.8rem;padding:9px 10px}.section-head,.people-grid{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.field.wide,.field.two{grid-column:auto}.check-grid{grid-template-columns:1fr}}
+@media print{body{background:#fff;color:#111}.top,.clear-confirm,.save-state{display:none!important}.notice,.urgent,.panel,.person,.check{background:#fff;color:#111;border-color:#999;break-inside:avoid}.section-head p,.person p,.person li,.footer{color:#444}input,textarea,select{background:#fff;color:#111;border-color:#777}.section{margin-top:30px}@page{margin:14mm}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="FMHA_Resource_Hub.html"><span class="mark">FMHA</span><span>Managing Anger Resource Hub</span></a>
+  <div class="buttons"><button class="button" id="clearButton" type="button">Clear this device</button><button class="button primary" id="printButton" type="button">Print / Save PDF</button></div>
+</header>
+<main>
+  <p class="eyebrow">Use after safety has been restored</p>
+  <h1>Post-Incident and Aftercare Kit</h1>
+  <p class="lede">Capture facts while they are fresh, make support visible and close the loop. This is a practical working note, not an official reporting system.</p>
+
+  <div class="notice"><strong>Device-only privacy.</strong> What you type stays on this device in this browser. Nothing is sent to FMHA, a club or a governing body. Do not leave sensitive details saved on a shared device.
+    <div class="clear-confirm" id="clearConfirm"><span>Delete every saved answer in this kit?</span><button class="button primary" id="confirmClear" type="button">Yes, clear it</button><button class="button" id="cancelClear" type="button">Cancel</button></div>
+    <p class="save-state" id="saveState" aria-live="polite"></p>
+  </div>
+  <div class="urgent"><strong>Deal with immediate risk first.</strong> Call 999 where somebody is in immediate danger or needs urgent medical help. Safeguarding concerns, children, threats, discriminatory abuse and physical contact must follow the appropriate club, County FA, FA, police or emergency procedure. This page does not replace any of them.</div>
+
+  <section class="section" aria-labelledby="safety-title">
+    <div class="section-head"><div><p class="eyebrow">Step 1</p><h2 id="safety-title">Immediate safety check</h2></div><p>Do this before taking statements or asking people to repair a relationship.</p></div>
+    <div class="panel check-grid">
+      <label class="check"><input id="safe-separated" type="checkbox">People are safely separated and supervised where needed.</label>
+      <label class="check"><input id="safe-medical" type="checkbox">Injury or medical needs have been checked.</label>
+      <label class="check"><input id="safe-target" type="checkbox">The person targeted has a named support contact.</label>
+      <label class="check"><input id="safe-child" type="checkbox">A child’s safeguarding needs and appropriate adult support have been considered.</label>
+      <label class="check"><input id="safe-official" type="checkbox">The referee or relevant match official has been informed where appropriate.</label>
+      <label class="check"><input id="safe-preserve" type="checkbox">Messages, video or other evidence have been preserved without circulating them unnecessarily.</label>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="record-title">
+    <div class="section-head"><div><p class="eyebrow">Step 2</p><h2 id="record-title">Incident record</h2></div><p>Record what you saw or heard. Mark second-hand information clearly. Avoid diagnosis, motive and loaded labels.</p></div>
+    <div class="panel fields">
+      <div class="field"><label for="incident-date">Date</label><input id="incident-date" type="date"></div>
+      <div class="field"><label for="incident-time">Time</label><input id="incident-time" type="time"></div>
+      <div class="field"><label for="incident-location">Location</label><input id="incident-location" type="text"></div>
+      <div class="field two"><label for="incident-fixture">Fixture or activity</label><input id="incident-fixture" type="text"></div>
+      <div class="field"><label for="incident-recorder">Recorded by and role</label><input id="incident-recorder" type="text"></div>
+      <div class="field wide"><label for="incident-people">People involved</label><textarea id="incident-people"></textarea></div>
+      <div class="field wide"><label for="incident-witnesses">Witnesses and contact route, if appropriate</label><textarea id="incident-witnesses"></textarea></div>
+      <div class="field wide"><label for="incident-exact">Exact words or actions</label><textarea id="incident-exact" placeholder="Use quotation marks for words you heard directly."></textarea></div>
+      <div class="field wide"><label for="incident-before">What happened immediately before?</label><textarea id="incident-before"></textarea></div>
+      <div class="field wide"><label for="incident-response">Immediate response</label><textarea id="incident-response"></textarea></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="people-title">
+    <div class="section-head"><div><p class="eyebrow">Step 3</p><h2 id="people-title">Support the people, not just the process</h2></div><p>A tidy report is not aftercare. Name the contact, the next check-in and what the person actually needs.</p></div>
+    <div class="people-grid">
+      <article class="person"><h3>Affected person</h3><p>Offer choice and privacy. Do not require a meeting or apology as the price of support.</p><ul><li>Ask what would help now.</li><li>Explain what will happen next.</li><li>Agree a safe contact and check-in.</li></ul></article>
+      <article class="person"><h3>Young referee</h3><p>Check welfare away from the crowd. Involve their referee support contact, parent or guardian and safeguarding lead as appropriate.</p><ul><li>Do not ask them to minimise abuse.</li><li>Confirm who will handle reporting.</li><li>Check in after the immediate adrenaline has passed.</li></ul></article>
+      <article class="person"><h3>Welfare officer aftercare</h3><p>The person handling the incident may also need support, supervision and a proper handover.</p><ul><li>Name a second club contact.</li><li>Protect rest and confidentiality.</li><li>Review workload after serious incidents.</li></ul></article>
+    </div>
+    <div class="panel fields" style="margin-top:14px">
+      <div class="field wide"><label for="support-offered">Support offered</label><textarea id="support-offered"></textarea></div>
+      <div class="field"><label for="support-contact">Named support contact</label><input id="support-contact" type="text"></div>
+      <div class="field"><label for="support-checkin">Next check-in</label><input id="support-checkin" type="date"></div>
+      <div class="field"><label for="support-preference">Person’s stated preference</label><input id="support-preference" type="text"></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="route-title">
+    <div class="section-head"><div><p class="eyebrow">Step 4</p><h2 id="route-title">Reporting route and ownership</h2></div><p>Record the official route used. Do not use this local page as the only copy of a report that your procedure requires elsewhere.</p></div>
+    <div class="panel fields">
+      <div class="field"><label for="report-route">Reporting route</label><select id="report-route"><option value="">Choose</option><option>Club procedure</option><option>County FA or FA</option><option>Safeguarding referral</option><option>Police or emergency service</option><option>Other official route</option></select></div>
+      <div class="field"><label for="report-reference">Official reference number</label><input id="report-reference" type="text"></div>
+      <div class="field"><label for="report-owner">Owner</label><input id="report-owner" type="text"></div>
+      <div class="field two"><label for="report-action">Action taken and next step</label><textarea id="report-action"></textarea></div>
+      <div class="field"><label for="report-date">Target date</label><input id="report-date" type="date"></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="repair-title">
+    <div class="section-head"><div><p class="eyebrow">Step 5</p><h2 id="repair-title">Restorative follow-up</h2></div><p>Only consider this when it is safe, voluntary and does not interfere with safeguarding, disciplinary or criminal procedures.</p></div>
+    <div class="panel fields">
+      <div class="field wide"><label for="repair-readiness">Is each person ready, safe and willing? What tells you that?</label><textarea id="repair-readiness"></textarea></div>
+      <div class="field wide"><label for="repair-needed">What needs to happen to make things right?</label><textarea id="repair-needed"></textarea></div>
+      <div class="field two"><label for="repair-agreement">Agreed repair action</label><textarea id="repair-agreement"></textarea></div>
+      <div class="field"><label for="repair-owner">Owner</label><input id="repair-owner" type="text"></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="review-title">
+    <div class="section-head"><div><p class="eyebrow">Step 6</p><h2 id="review-title">Review and close</h2></div><p>Check whether support happened, reporting was completed and the club learned something concrete.</p></div>
+    <div class="panel fields">
+      <div class="field"><label for="review-date">Review date</label><input id="review-date" type="date"></div>
+      <div class="field"><label for="review-owner">Review owner</label><input id="review-owner" type="text"></div>
+      <div class="field"><label for="review-status">Status</label><select id="review-status"><option value="">Choose</option><option>Open</option><option>Awaiting external action</option><option>Closed</option></select></div>
+      <div class="field wide"><label for="review-outcome">Outcome</label><textarea id="review-outcome"></textarea></div>
+      <div class="field wide"><label for="review-learning">What should the club change before the next fixture?</label><textarea id="review-learning"></textarea></div>
+    </div>
+  </section>
+
+  <p class="footer">FMHA practical resource. Check current <a href="https://www.thefa.com/football-rules-governance/safeguarding" target="_blank" rel="noopener">FA safeguarding guidance</a> and your County FA or competition procedures. Last content review: 09-09-2026.</p>
+</main>
+<script>
+(() => {
+  const storageKey = 'fmha-managing-anger-post-incident-v1';
+  const controls = [...document.querySelectorAll('input, textarea, select')];
+  const state = document.getElementById('saveState');
+  const confirmBox = document.getElementById('clearConfirm');
+  let timer;
+  const valueOf = (control) => control.type === 'checkbox' ? control.checked : control.value;
+  const setValue = (control, value) => { if (control.type === 'checkbox') control.checked = Boolean(value); else control.value = value ?? ''; };
+
+  function load() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+      controls.forEach((control) => { if (Object.hasOwn(saved, control.id)) setValue(control, saved[control.id]); });
+      if (Object.keys(saved).length) state.textContent = 'Saved answers restored from this device.';
+    } catch {
+      state.textContent = 'This browser could not restore the saved copy.';
+    }
+  }
+  function save() {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(Object.fromEntries(controls.map((control) => [control.id, valueOf(control)]))));
+      state.textContent = 'Saved on this device.';
+      clearTimeout(timer);
+      timer = setTimeout(() => { state.textContent = ''; }, 2500);
+    } catch {
+      state.textContent = 'This browser could not save locally. Print or save a PDF instead.';
+    }
+  }
+  controls.forEach((control) => control.addEventListener('input', save));
+  document.getElementById('printButton').addEventListener('click', () => window.print());
+  document.getElementById('clearButton').addEventListener('click', () => { confirmBox.classList.add('show'); document.getElementById('confirmClear').focus(); });
+  document.getElementById('cancelClear').addEventListener('click', () => { confirmBox.classList.remove('show'); document.getElementById('clearButton').focus(); });
+  document.getElementById('confirmClear').addEventListener('click', () => {
+    localStorage.removeItem(storageKey);
+    controls.forEach((control) => setValue(control, control.type === 'checkbox' ? false : ''));
+    confirmBox.classList.remove('show');
+    state.textContent = 'Saved answers cleared from this device.';
+    document.getElementById('clearButton').focus();
+  });
+  load();
+})();
+</script>
+</body>
+</html>
