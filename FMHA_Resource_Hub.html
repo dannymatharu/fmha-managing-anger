@@ -200,6 +200,26 @@
     background: var(--border);
   }
 
+  /* START HERE */
+  .start-here {
+    padding: 24px; margin-bottom: 34px;
+    background: linear-gradient(145deg, rgba(232,49,42,0.12), rgba(232,49,42,0.03));
+    border: 1px solid var(--accent-mid); border-radius: 14px;
+  }
+  .start-here h2 { font-size: 23px; letter-spacing: -0.5px; margin-bottom: 6px; }
+  .start-here > p { color: var(--muted); font-size: 13px; max-width: 620px; margin-bottom: 20px; }
+  .pathway { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .path-step {
+    display: flex; flex-direction: column; min-height: 150px;
+    padding: 16px; border-radius: 10px; background: rgba(10,10,10,0.72);
+    border: 1px solid var(--border);
+  }
+  .path-when { color: var(--accent); font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+  .path-step strong { margin: 6px 0; font-size: 14px; line-height: 1.35; }
+  .path-step p { color: var(--muted); font-size: 12px; line-height: 1.5; }
+  .path-step a { color: #fff; font-size: 12px; font-weight: 700; margin-top: auto; padding-top: 12px; text-decoration: none; }
+  .path-step a:hover { color: var(--accent); }
+
   /* ── CARDS GRID ── */
   .grid {
     display: grid;
@@ -364,6 +384,11 @@
     .download-card { flex-wrap: wrap; }
     .download-btn { width: 100%; justify-content: center; }
     .card-wide { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .pathway { grid-template-columns: 1fr; }
+    .path-step { min-height: 0; }
+  }
+  @media (min-width: 521px) and (max-width: 800px) {
+    .pathway { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
@@ -388,7 +413,7 @@
   <div class="hero-meta">
     <span class="meta-pill">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
-      8 interactive tools
+      9 practical tools
     </span>
     <span class="meta-pill">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
@@ -399,6 +424,18 @@
 
 <!-- MAIN -->
 <main>
+
+  <section class="start-here" aria-labelledby="start-title">
+    <div class="hero-eyebrow" style="margin-bottom:8px">Start here</div>
+    <h2 id="start-title">Do something with the session</h2>
+    <p>A short route from reflection to club practice. You do not need to finish every resource tonight.</p>
+    <div class="pathway">
+      <div class="path-step"><span class="path-when">Tonight</span><strong>Choose three commitments</strong><p>Capture one personal action, one club action and one action that supports somebody else.</p><a href="FMHA_Implementation_Guide.html">Open the action plan →</a></div>
+      <div class="path-step"><span class="path-when">Before your next fixture</span><strong>Brief one calm interrupter</strong><p>Agree who watches the touchline and rehearse a neutral question for low-level tension.</p><a href="FMHA_Sideline_Signals.html">Use Sideline Signals →</a></div>
+      <div class="path-step"><span class="path-when">Within seven days</span><strong>Audit the Four Pillars</strong><p>Bring evidence, name each gap and give every action an owner and target date.</p><a href="FMHA_Implementation_Guide.html#audit-title">Run the club audit →</a></div>
+      <div class="path-step"><span class="path-when">Before the next committee meeting</span><strong>Agree the aftercare route</strong><p>Decide how the club records an incident, supports people and checks that action happened.</p><a href="FMHA_Post_Incident_Kit.html">Open the aftercare kit →</a></div>
+    </div>
+  </section>
 
   <!-- SECTION: Interactive Tools -->
   <div class="section-label">Interactive tools</div>
@@ -477,18 +514,29 @@
       </div>
       <div class="card-type">Ages 10–14</div>
       <h3>Junior Player Cards</h3>
-      <p>Five interactive cards for young players — the Chimp/Human brain, the 10-second rule, what to say when it kicks off, empathy in action, and matchday standards.</p>
+      <p>Six interactive cards for young players, including the Chimp/Human teaching model, the 10-second pause, matchday choices and Words Carry Weight.</p>
       <div class="card-arrow">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
     </a>
 
-    <!-- Club Behaviour Implementation Guide -->
+    <!-- Club Action and Repair Plan -->
     <a class="card green" href="FMHA_Implementation_Guide.html">
       <div class="card-icon">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
       </div>
       <div class="card-type">Club Committees</div>
-      <h3>Club Behaviour Implementation Guide</h3>
-      <p>The Four Pillars from the session turned into a working audit — what's in place, what's missing, and the first action for each.</p>
+      <h3>Club Action and Repair Plan</h3>
+      <p>Audit the Four Pillars, make three commitments and prepare the five restorative questions. Entries stay on your device.</p>
+      <div class="card-arrow">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+    </a>
+
+    <!-- Post-Incident and Aftercare Kit -->
+    <a class="card blue" href="FMHA_Post_Incident_Kit.html">
+      <div class="card-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </div>
+      <div class="card-type">Aftercare and follow-up</div>
+      <h3>Post-Incident and Aftercare Kit</h3>
+      <p>Record facts, support affected people and young referees, choose the correct reporting route and review what happened next.</p>
       <div class="card-arrow">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
     </a>
 
