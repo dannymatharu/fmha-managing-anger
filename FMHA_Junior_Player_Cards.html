@@ -13,6 +13,7 @@
     --c3: #0077b6;
     --c4: #7b2fbf;
     --c5: #2ea84e;
+    --c6: #d25b00;
     --text: #111;
     --muted: #666;
     --bg: #f5f5f7;
@@ -69,6 +70,7 @@
   .tab-btn[data-card="2"].active { background: var(--c3); color: white; }
   .tab-btn[data-card="3"].active { background: var(--c4); color: white; }
   .tab-btn[data-card="4"].active { background: var(--c5); color: white; }
+  .tab-btn[data-card="5"].active { background: var(--c6); color: white; }
 
   .card-container {
     max-width: 680px;
@@ -348,6 +350,21 @@
   .phase-item strong { display: block; font-size: 14px; font-weight: 800; color: #222; margin-bottom: 4px; }
   .phase-item p { font-size: 13px; color: var(--muted); line-height: 1.5; }
 
+  /* CARD 6: Words Carry Weight */
+  .word-rule {
+    margin: 0 0 22px; padding: 20px; border-radius: 12px;
+    background: #fff5ec; border: 2px solid #f0bd91;
+    font-size: 19px; line-height: 1.45; font-weight: 850; color: #592500;
+  }
+  .word-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 22px; }
+  .word-step { padding: 16px 12px; border-radius: 12px; background: #f4f4f4; text-align: center; }
+  .word-step b { display: block; color: var(--c6); font-size: 19px; margin-bottom: 4px; }
+  .word-step span { font-size: 13px; line-height: 1.4; color: #555; }
+  .adult-box { padding: 20px; border-radius: 12px; background: #151515; color: #fff; }
+  .adult-box h3 { color: #ff9b50; margin-bottom: 10px; }
+  .adult-box p { color: #d2d2d2; font-size: 14px; line-height: 1.6; }
+  .adult-box ul { margin: 12px 0 0 20px; color: #d2d2d2; font-size: 14px; line-height: 1.55; }
+
   /* Footer */
   .footer { text-align: center; padding: 20px; font-size: 11px; color: #aaa; }
   .footer a { color: #aaa; text-decoration: none; }
@@ -359,6 +376,7 @@
     .say-headers { grid-template-columns: 1fr; }
     .card-hero h1 { font-size: 22px; }
     .timer-count { font-size: 72px; }
+    .word-steps { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -379,6 +397,7 @@
   <button class="tab-btn" data-card="2" onclick="showCard(2)">💬 What to Say</button>
   <button class="tab-btn" data-card="3" onclick="showCard(3)">👁 Look Closer</button>
   <button class="tab-btn" data-card="4" onclick="showCard(4)">⚽ Your Club</button>
+  <button class="tab-btn" data-card="5" onclick="showCard(5)">🗣 Words</button>
 </div>
 
 <div class="card-container">
@@ -390,7 +409,7 @@
       <p>Why sometimes you react before you think</p>
     </div>
     <div class="card-body">
-      <p class="card-intro">Everyone has two systems in their brain that compete for control. Understanding them is the first step to staying in control on the pitch.</p>
+      <p class="card-intro">This course uses “Chimp” and “Human” as simple teaching labels. They are not two literal parts of the brain. The idea helps us notice a quick emotional urge and make room for a more considered choice.</p>
 
       <div class="brain-grid">
         <div class="brain-col">
@@ -398,7 +417,7 @@
           <div class="brain-traits">
             <div class="brain-trait">
               <strong style="color:var(--c2)">Reacts FAST</strong>
-              <span>5x faster than your thinking brain</span>
+              <span>Can feel quicker than your thinking brain</span>
             </div>
             <div class="brain-trait">
               <strong style="color:var(--c2)">Emotional</strong>
@@ -406,15 +425,15 @@
             </div>
             <div class="brain-trait">
               <strong style="color:var(--c2)">Fight or flight</strong>
-              <span>Sees everything as a threat</span>
+              <span>May read pressure as danger</span>
             </div>
             <div class="brain-trait">
               <strong style="color:var(--c2)">No consequences</strong>
-              <span>Doesn't think about what happens next</span>
+              <span>Can miss what happens next</span>
             </div>
             <div class="brain-trait">
               <strong style="color:var(--c2)">Loud</strong>
-              <span>Shouts over your thinking brain</span>
+              <span>Can drown out quieter thoughts</span>
             </div>
           </div>
         </div>
@@ -457,7 +476,7 @@
 
       <div class="card-nav">
         <button class="nav-btn" disabled>← Back</button>
-        <span class="card-counter">1 of 5</span>
+        <span class="card-counter">1 of 6</span>
         <button class="nav-btn primary" onclick="showCard(1)">Next →</button>
       </div>
     </div>
@@ -470,7 +489,7 @@
       <p>How to stop your Chimp from taking over</p>
     </div>
     <div class="card-body">
-      <p class="card-intro">When something makes you angry, your brain floods with chemicals that last about 90 seconds. You don't need to count to 90. You just need to survive the first 10.</p>
+      <p class="card-intro">When something makes you angry, the urge to react can arrive before you have properly read the situation. Ten seconds creates a useful pause. It is a practice tool, not a magic timer.</p>
 
       <div class="steps-list">
         <div class="step">
@@ -486,7 +505,7 @@
           <div class="step-content">
             <strong>BREATHE</strong>
             <div class="step-sub">One deep breath in through your nose, out through your mouth.</div>
-            <p>This isn't soft — it's science. Deep breathing slows the chemicals flooding your brain. Elite athletes do it before every penalty.</p>
+            <p>A slow breath can help you pause and shift your attention. It will not solve every situation, but it gives you a better chance to choose your next move.</p>
           </div>
         </div>
         <div class="step">
@@ -502,7 +521,7 @@
           <div class="step-content">
             <strong>CHOOSE</strong>
             <div class="step-sub">Now decide. What's the SMART thing to do?</div>
-            <p>After 10 seconds, your Human has caught up. You can still be angry — but now you choose what to do instead of just reacting.</p>
+            <p>After the pause, you may have more room to choose. You can still be angry, but you do not have to act on the first urge.</p>
           </div>
         </div>
       </div>
@@ -521,7 +540,7 @@
 
       <div class="card-nav">
         <button class="nav-btn" onclick="showCard(0)">← Back</button>
-        <span class="card-counter">2 of 5</span>
+        <span class="card-counter">2 of 6</span>
         <button class="nav-btn primary" onclick="showCard(2)">Next →</button>
       </div>
     </div>
@@ -601,7 +620,7 @@
 
       <div class="card-nav">
         <button class="nav-btn" onclick="showCard(1)">← Back</button>
-        <span class="card-counter">3 of 5</span>
+        <span class="card-counter">3 of 6</span>
         <button class="nav-btn primary" onclick="showCard(3)">Next →</button>
       </div>
     </div>
@@ -628,7 +647,7 @@
           </div>
           <div class="scenario-reveal">
             <div class="scenario-reveal-label">What might be happening</div>
-            <p>They might be neurodivergent — meaning their brain is wired differently. Some people's brains react more intensely and they genuinely can't always control it. The remorse afterwards is real.</p>
+            <p>They might process pressure, noise or unfairness differently. Neurodivergence can be one factor, but you cannot diagnose it from the touchline. Give them space, keep the boundary clear and check in later.</p>
           </div>
         </div>
 
@@ -678,7 +697,7 @@
 
       <div class="card-nav">
         <button class="nav-btn" onclick="showCard(2)">← Back</button>
-        <span class="card-counter">4 of 5</span>
+        <span class="card-counter">4 of 6</span>
         <button class="nav-btn primary" onclick="showCard(4)">Next →</button>
       </div>
     </div>
@@ -754,7 +773,47 @@
 
       <div class="card-nav">
         <button class="nav-btn" onclick="showCard(3)">← Back</button>
-        <span class="card-counter">5 of 5</span>
+        <span class="card-counter">5 of 6</span>
+        <button class="nav-btn primary" onclick="showCard(5)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6: Words Carry Weight -->
+  <div class="card" id="card-5">
+    <div class="card-hero" style="background: var(--c6)">
+      <h1>Words Carry Weight</h1>
+      <p>What to do when you hear a word you do not understand</p>
+    </div>
+    <div class="card-body">
+      <p class="card-intro">Words copied from a group chat, video, changing room or adult can hurt someone even when the person repeating them does not understand the meaning. Curiosity is fine. Repeating it first is not.</p>
+
+      <div class="word-rule">If you don't know what a word means, don't repeat it, post it or send it. Ask a trusted adult.</div>
+
+      <div class="word-steps">
+        <div class="word-step"><b>Pause</b><span>Do not say it, type it or forward it.</span></div>
+        <div class="word-step"><b>Ask</b><span>Check the meaning privately with a trusted adult.</span></div>
+        <div class="word-step"><b>Tell</b><span>If somebody used it against you or another person, tell your coach, welfare officer, teacher or parent.</span></div>
+      </div>
+
+      <div class="key-callout" style="background:#111">
+        <div class="key-title">Not understanding is not a free pass</div>
+        <div class="key-body">You can learn, apologise and put it right. The adult should also support the person who was targeted.</div>
+      </div>
+
+      <div class="adult-box">
+        <h3>Adult companion</h3>
+        <p>Stop the language calmly. Support the person targeted first, then check understanding privately. Explain the meaning and impact without turning the child into a public spectacle.</p>
+        <ul>
+          <li>Record the exact words, context and immediate response.</li>
+          <li>Follow club, County FA and safeguarding procedures where they apply.</li>
+          <li>Lack of understanding may change the educational response, but it does not erase the harm or automatically remove reporting duties.</li>
+        </ul>
+      </div>
+
+      <div class="card-nav">
+        <button class="nav-btn" onclick="showCard(4)">← Back</button>
+        <span class="card-counter">6 of 6</span>
         <button class="nav-btn" disabled>Done ✓</button>
       </div>
     </div>
