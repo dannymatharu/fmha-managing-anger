@@ -215,6 +215,10 @@
     user-select: none;
     -webkit-tap-highlight-color: transparent;
   }
+  .level-header:focus-visible {
+    outline: 3px solid rgba(52,152,219,0.55);
+    outline-offset: -3px;
+  }
 
   .level-indicator {
     width: 10px;
@@ -691,12 +695,12 @@
     <!-- LEVEL 1 — FRUSTRATED                -->
     <!-- ════════════════════════════════════ -->
     <div class="level-card level-1" id="card-1">
-      <div class="level-header" onclick="toggleLevel('card-1')">
+      <div class="level-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-1" onclick="toggleLevel('card-1')">
         <div class="level-indicator"></div>
         <div class="level-meta">
           <div class="level-number">Level 1 · Frustrated</div>
           <div class="level-name">Early warning signs</div>
-          <div class="level-desc">Low-level tension. No intervention needed yet — but watch.</div>
+          <div class="level-desc">Low-level tension. Watch closely and use a neutral question if it feels safe and useful.</div>
         </div>
         <div class="chevron">▼</div>
       </div>
@@ -724,7 +728,7 @@
             <div class="script-lines">
               <div class="script-line">
                 <div class="quote-mark">"</div>
-                <div class="script-text">No script needed yet. Stay visible. Make eye contact and smile — a calm, friendly presence can settle tension before it surfaces. You don't need to say anything.</div>
+                <div class="script-text">A direct correction may not be needed. Stay visible. If it feels safe and useful, try one neutral pattern-interruption question. You can also simply make friendly eye contact and keep watching.</div>
               </div>
             </div>
           </div>
@@ -744,7 +748,7 @@
     <!-- LEVEL 2 — AGITATED                  -->
     <!-- ════════════════════════════════════ -->
     <div class="level-card level-2" id="card-2">
-      <div class="level-header" onclick="toggleLevel('card-2')">
+      <div class="level-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-2" onclick="toggleLevel('card-2')">
         <div class="level-indicator"></div>
         <div class="level-meta">
           <div class="level-number">Level 2 · Agitated</div>
@@ -813,7 +817,7 @@
     <!-- LEVEL 3 — VERBAL                    -->
     <!-- ════════════════════════════════════ -->
     <div class="level-card level-3" id="card-3">
-      <div class="level-header" onclick="toggleLevel('card-3')">
+      <div class="level-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-3" onclick="toggleLevel('card-3')">
         <div class="level-indicator"></div>
         <div class="level-meta">
           <div class="level-number">Level 3 · Verbal</div>
@@ -871,7 +875,7 @@
     <!-- LEVEL 4 — THREATENING               -->
     <!-- ════════════════════════════════════ -->
     <div class="level-card level-4" id="card-4">
-      <div class="level-header" onclick="toggleLevel('card-4')">
+      <div class="level-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-4" onclick="toggleLevel('card-4')">
         <div class="level-indicator"></div>
         <div class="level-meta">
           <div class="level-number">Level 4 · Threatening</div>
@@ -946,7 +950,7 @@
     <!-- LEVEL 5 — PHYSICAL                  -->
     <!-- ════════════════════════════════════ -->
     <div class="level-card level-5" id="card-5">
-      <div class="level-header" onclick="toggleLevel('card-5')">
+      <div class="level-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-5" onclick="toggleLevel('card-5')">
         <div class="level-indicator"></div>
         <div class="level-meta">
           <div class="level-number">Level 5 · Physical</div>
@@ -1085,18 +1089,29 @@
     const num  = id.split('-')[1];
     const body = document.getElementById('body-' + num);
     const isOpen = card.classList.contains('open');
+    const trigger = card.querySelector('.level-header');
 
     if (isOpen) {
       card.classList.remove('open');
       body.style.maxHeight = '0';
+      trigger.setAttribute('aria-expanded', 'false');
     } else {
       card.classList.add('open');
       body.style.maxHeight = body.scrollHeight + 'px';
+      trigger.setAttribute('aria-expanded', 'true');
     }
   }
 
   // Open level 2 by default — it's the most important intervention window
   window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.level-header').forEach((trigger) => {
+      trigger.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggleLevel(trigger.closest('.level-card').id);
+        }
+      });
+    });
     toggleLevel('card-2');
   });
 </script>

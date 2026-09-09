@@ -278,6 +278,7 @@
     transition: box-shadow 0.2s;
   }
   .scenario-card:hover { box-shadow: 0 2px 12px rgba(123,47,191,0.15); }
+  .scenario-card:focus-visible { outline: 3px solid rgba(123,47,191,0.45); outline-offset: 3px; }
   .scenario-see { padding: 16px; background: white; }
   .scenario-see-label {
     font-size: 10px; font-weight: 800; text-transform: uppercase;
@@ -636,7 +637,7 @@
       <p class="card-intro">You know that teammate who always seems to overreact? Or the kid on the other team who can't stop arguing with the ref? Before you judge them — <strong>tap each card to see what might really be going on.</strong></p>
 
       <div class="scenario-list">
-        <div class="scenario-card" onclick="toggleScenario(this)">
+        <div class="scenario-card" role="button" tabindex="0" aria-expanded="false" aria-controls="scenario-reveal-1" onclick="toggleScenario(this)">
           <div class="scenario-see">
             <div class="scenario-see-label">What you see</div>
             <p>A player kicks off after a foul and gets a yellow card. After the game, they're really upset and sorry.</p>
@@ -645,13 +646,13 @@
             <span>Tap to see what might be happening</span>
             <span class="tap-arrow">↓</span>
           </div>
-          <div class="scenario-reveal">
+          <div class="scenario-reveal" id="scenario-reveal-1">
             <div class="scenario-reveal-label">What might be happening</div>
             <p>They might process pressure, noise or unfairness differently. Neurodivergence can be one factor, but you cannot diagnose it from the touchline. Give them space, keep the boundary clear and check in later.</p>
           </div>
         </div>
 
-        <div class="scenario-card" onclick="toggleScenario(this)">
+        <div class="scenario-card" role="button" tabindex="0" aria-expanded="false" aria-controls="scenario-reveal-2" onclick="toggleScenario(this)">
           <div class="scenario-see">
             <div class="scenario-see-label">What you see</div>
             <p>A parent starts shouting at the ref over a throw-in. It seems totally over the top.</p>
@@ -660,13 +661,13 @@
             <span>Tap to see what might be happening</span>
             <span class="tap-arrow">↓</span>
           </div>
-          <div class="scenario-reveal">
+          <div class="scenario-reveal" id="scenario-reveal-2">
             <div class="scenario-reveal-label">What might be happening</div>
             <p>You don't know what's happening in their life. They might be dealing with problems at work, at home, or with their health. The throw-in isn't really what they're angry about.</p>
           </div>
         </div>
 
-        <div class="scenario-card" onclick="toggleScenario(this)">
+        <div class="scenario-card" role="button" tabindex="0" aria-expanded="false" aria-controls="scenario-reveal-3" onclick="toggleScenario(this)">
           <div class="scenario-see">
             <div class="scenario-see-label">What you see</div>
             <p>Someone on the other team says something offensive. Their teammates look embarrassed.</p>
@@ -675,7 +676,7 @@
             <span>Tap to see what might be happening</span>
             <span class="tap-arrow">↓</span>
           </div>
-          <div class="scenario-reveal">
+          <div class="scenario-reveal" id="scenario-reveal-3">
             <div class="scenario-reveal-label">What might be happening</div>
             <p>Sometimes people repeat things they've heard at home or online without fully understanding how it lands. That doesn't make it okay — but understanding why helps you respond better.</p>
           </div>
@@ -836,8 +837,18 @@
   }
 
   function toggleScenario(card) {
-    card.classList.toggle('revealed');
+    const isRevealed = card.classList.toggle('revealed');
+    card.setAttribute('aria-expanded', String(isRevealed));
   }
+
+  document.querySelectorAll('.scenario-card').forEach((card) => {
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleScenario(card);
+      }
+    });
+  });
 
   let timerInterval = null;
   let timerRunning = false;

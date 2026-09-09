@@ -23,7 +23,8 @@ main{max-width:1040px;margin:auto;padding:50px 22px 80px}.eyebrow{margin:0;color
   <h1>Post-Incident and Aftercare Kit</h1>
   <p class="lede">Capture facts while they are fresh, make support visible and close the loop. This is a practical working note, not an official reporting system.</p>
 
-  <div class="notice"><strong>Device-only privacy.</strong> What you type stays on this device in this browser. Nothing is sent to FMHA, a club or a governing body. Do not leave sensitive details saved on a shared device.
+  <div class="notice"><strong>Device-only privacy.</strong> Nothing is sent to FMHA, a club or a governing body. Your current entries remain in this browser tab. If you choose to keep one, the saved draft stays on this device and is stored unencrypted in this browser profile for up to 30 days. Another person using the same profile, or another page on this website, may be able to read it.
+    <label class="check" style="margin-top:14px"><input id="save-on-device" type="checkbox">Keep this draft on this device for up to 30 days</label>
     <div class="clear-confirm" id="clearConfirm"><span>Delete every saved answer in this kit?</span><button class="button primary" id="confirmClear" type="button">Yes, clear it</button><button class="button" id="cancelClear" type="button">Cancel</button></div>
     <p class="save-state" id="saveState" aria-live="polite"></p>
   </div>
@@ -110,6 +111,7 @@ main{max-width:1040px;margin:auto;padding:50px 22px 80px}.eyebrow{margin:0;color
 (() => {
   const storageKey = 'fmha-managing-anger-post-incident-v1';
   const controls = [...document.querySelectorAll('input, textarea, select')];
+  const remember = document.getElementById('save-on-device');
   const state = document.getElementById('saveState');
   const confirmBox = document.getElementById('clearConfirm');
   let timer;
@@ -119,6 +121,11 @@ main{max-width:1040px;margin:auto;padding:50px 22px 80px}.eyebrow{margin:0;color
   function load() {
     try {
       const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+      if (saved._expiresAt && Date.now() > saved._expiresAt) {
+        localStorage.removeItem(storageKey);
+        state.textContent = 'An expired local draft was removed from this device.';
+        return;
+      }
       controls.forEach((control) => { if (Object.hasOwn(saved, control.id)) setValue(control, saved[control.id]); });
       if (Object.keys(saved).length) state.textContent = 'Saved answers restored from this device.';
     } catch {
@@ -126,9 +133,16 @@ main{max-width:1040px;margin:auto;padding:50px 22px 80px}.eyebrow{margin:0;color
     }
   }
   function save() {
+    if (!remember.checked) {
+      localStorage.removeItem(storageKey);
+      state.textContent = 'Current answers are not saved after this tab closes.';
+      return;
+    }
     try {
-      localStorage.setItem(storageKey, JSON.stringify(Object.fromEntries(controls.map((control) => [control.id, valueOf(control)]))));
-      state.textContent = 'Saved on this device.';
+      const data = Object.fromEntries(controls.map((control) => [control.id, valueOf(control)]));
+      data._expiresAt = Date.now() + (30 * 24 * 60 * 60 * 1000);
+      localStorage.setItem(storageKey, JSON.stringify(data));
+      state.textContent = 'Draft saved on this device for up to 30 days.';
       clearTimeout(timer);
       timer = setTimeout(() => { state.textContent = ''; }, 2500);
     } catch {

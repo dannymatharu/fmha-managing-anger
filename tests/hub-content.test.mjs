@@ -115,6 +115,14 @@ test('device-only tools do not transmit entered information', () => {
   }
 });
 
+test('sensitive incident persistence is explicit and time-limited', () => {
+  const kit = read('FMHA_Post_Incident_Kit.html');
+  assert.match(kit, /Keep this draft on this device for up to 30 days/);
+  assert.match(kit, /stored unencrypted/i);
+  assert.match(kit, /if \(!remember\.checked\)/);
+  assert.match(kit, /_expiresAt/);
+});
+
 test('the browser deck no longer contains identified unsupported absolutes', () => {
   const deck = read('FMHA_Managing_Anger_Deck.html');
   const removed = [
@@ -136,4 +144,18 @@ test('Chimp resources describe a teaching model without fixed speed claims', () 
     assert.doesNotMatch(html, /\b[45](?:×|x) faster\b/i, `${file} still makes a fixed processing-speed claim`);
     assert.match(html, /teaching (?:label|model)/i, `${file} should explain the teaching-model boundary`);
   }
+});
+
+test('interactive disclosures expose keyboard and expanded state', () => {
+  const signals = read('FMHA_Sideline_Signals.html');
+  const cards = read('FMHA_Junior_Player_Cards.html');
+  assert.equal((signals.match(/class="level-header" role="button" tabindex="0" aria-expanded="false"/g) || []).length, 5);
+  assert.equal((cards.match(/class="scenario-card" role="button" tabindex="0" aria-expanded="false"/g) || []).length, 3);
+  assert.match(signals, /event\.key === 'Enter' \|\| event\.key === ' '/);
+  assert.match(cards, /event\.key === 'Enter' \|\| event\.key === ' '/);
+});
+
+test('the deck does not publish a stale static slide count', () => {
+  const deck = read('FMHA_Managing_Anger_Deck.html');
+  assert.doesNotMatch(deck, />\s*\d+ slides\s*[·<]/i);
 });
