@@ -1640,11 +1640,12 @@
         const data = new FormData(form);
 
         try {
-          await fetch('/', {
+          const res = await fetch('/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: new URLSearchParams(data).toString()
           });
+          if (!res.ok) throw new Error('bad status: ' + res.status);
           form.style.display = 'none';
           success.style.display = 'block';
         } catch (err) {
