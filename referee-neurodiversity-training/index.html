@@ -62,7 +62,7 @@
     .hero-footer { grid-column:1/-1; display:flex; align-items:end; justify-content:space-between; border-top:1px solid var(--line); padding-top:20px; font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#cbd1c6; }
     .hero-actions { display:flex; align-items:center; flex-wrap:wrap; gap:22px 28px; }
     .primary-action { display:inline-flex; align-items:center; justify-content:space-between; gap:20px; background:var(--lime); color:var(--ink); text-decoration:none; padding:15px 19px; min-height:54px; font-weight:900; }
-    .primary-action:hover { background:#ff8080; }
+    .primary-action:hover { background:#6ec2ff; }
     .primary-action.dark { background:var(--ink); color:var(--paper); }
     .primary-action.dark:hover { background:#34343a; }
     .textlink { display:inline-flex; gap:13px; align-items:center; text-decoration:none; font-weight:800; font-size:13px; text-transform:uppercase; letter-spacing:.13em; border-bottom:1px solid currentColor; padding-bottom:9px; }
@@ -218,7 +218,21 @@
       .proof { border-bottom:1px solid #0d0d0f55; padding-bottom:20px; }
       .pilot-grid { grid-template-columns:1fr; }
     }
+    .interest { background:var(--ink2); }
+    .interest-form { margin-top:10px; display:grid; gap:22px; max-width:760px; }
+    .interest-form .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px 24px; }
+    .interest-form label { display:flex; flex-direction:column; gap:8px; font-size:13px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--mist); }
+    .interest-form label.full { grid-column:1/-1; }
+    .interest-form input[type="text"], .interest-form input[type="email"], .interest-form select, .interest-form textarea { font-family:var(--font); font-size:15px; font-weight:400; text-transform:none; letter-spacing:normal; background:var(--ink); color:var(--paper); border:1px solid var(--line); padding:13px 14px; border-radius:2px; }
+    .interest-form input:focus, .interest-form select:focus, .interest-form textarea:focus { outline:2px solid var(--lime); outline-offset:1px; border-color:var(--lime); }
+    .interest-form textarea { resize:vertical; min-height:90px; }
+    .hp-field { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+    .interest-form button.primary-action { border:none; cursor:pointer; width:max-content; }
+    .interest-form button.primary-action:disabled { opacity:.6; cursor:default; }
+    .form-note { font-size:13px; color:var(--mist); max-width:520px; margin-top:-6px; }
+    .interest-success { margin-top:10px; }
     @media (max-width:650px) {
+      .interest-form .form-grid { grid-template-columns:1fr; }
       .topbar { height:64px; }
       .progress { top:64px; }
       main { padding-top:64px; }
@@ -323,6 +337,25 @@
       <p class="eyebrow yellow">10 / Common questions</p><h2 id="questions-title">Good to know.</h2>
       <div class="qa-list"><details><summary>Is this mandatory for all grades?</summary><p>That's for each County FA to decide. The module is written to work for every grade from day one, so it can be phased in starting with grassroots or youth-qualified officials if that's preferred.</p></details><details><summary>Does it replace existing referee CPD?</summary><p>No. It sits alongside existing CPD rather than replacing any of it, and the optional live element piggybacks onto a CPD day you already run.</p></details><details><summary>How long does it take?</summary><p>30-35 minutes for the core module, built to be done in one sitting or paused and resumed.</p></details><details><summary>Can officials revisit it?</summary><p>Yes. Save-and-resume is built in, and there's no reason an official couldn't come back to it ahead of a new season.</p></details><details><summary>Is there a live element?</summary><p>An optional Q&amp;A, run once on an existing CPD day - not a separate commitment in the diary.</p></details></div>
     </section>
+    <section class="section interest" id="interest" aria-labelledby="interest-title">
+      <p class="eyebrow yellow">11 / Get on the list</p><h2 id="interest-title">Not live yet.<br>Tell us you want it.</h2>
+      <p class="bodycopy" style="margin-bottom:40px;">This module is still being built. Registering your interest doesn't commit your County FA to anything - it just tells us there's demand, and means you hear first when there's something to pilot.</p>
+      <form name="referee-course-interest" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="interest-form">
+        <input type="hidden" name="form-name" value="referee-course-interest">
+        <input type="hidden" name="source" value="Referee neurodiversity module landing page">
+        <p class="hp-field" aria-hidden="true"><label>Don't fill this out: <input tabindex="-1" autocomplete="off" name="bot-field"></label></p>
+        <div class="form-grid">
+          <label>Name<input type="text" name="name" autocomplete="name" required></label>
+          <label>Email<input type="email" name="email" autocomplete="email" required></label>
+          <label>Club or County FA<input type="text" name="organisation" autocomplete="organization"></label>
+          <label>Your role<select name="role"><option value="">Select...</option><option>Referee / match official</option><option>County FA CPD lead</option><option>Club committee / chair</option><option>Other</option></select></label>
+        </div>
+        <label class="full">Anything specific you'd want this to cover?<textarea name="notes" rows="3"></textarea></label>
+        <button type="submit" class="primary-action">Register interest <span aria-hidden="true">↗</span></button>
+        <p class="form-note">We'll only use this to tell you when the course is ready. No spam, no onward sharing.</p>
+      </form>
+      <div class="interest-success" hidden tabindex="-1"><p class="biglead">Thanks - you're on the list.</p><p class="bodycopy">We'll be in touch when there's something to try.</p></div>
+    </section>
   </main>
   <footer><span>FMHA Academy · Course information</span><a href="mailto:danny@withinu.net">danny@withinu.net</a></footer>
   <script>
@@ -343,6 +376,7 @@
     document.querySelectorAll('.lesson button').forEach(btn=>btn.addEventListener('click',()=>{const row=btn.closest('.lesson');const open=row.classList.toggle('open');btn.setAttribute('aria-expanded',String(open));}));
     let tick=false;
     window.addEventListener('scroll',()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-innerHeight;document.getElementById('progress-fill').style.width=(max>0?100*scrollY/max:0)+'%';tick=false;});},{passive:true});
+    (()=>{const form=document.querySelector('.interest-form');if(!form)return;const success=document.querySelector('.interest-success');form.addEventListener('submit',e=>{e.preventDefault();const btn=form.querySelector('button[type="submit"]');const body=new URLSearchParams(new FormData(form)).toString();if(btn){btn.disabled=true;btn.textContent='Sending...';}fetch(form.action,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body}).then(res=>{if(!res.ok)throw new Error('bad status');form.hidden=true;if(success){success.hidden=false;success.focus();}}).catch(()=>{if(btn){btn.disabled=false;btn.textContent='Register interest';}alert('Something went wrong sending that - please try again, or email danny@withinu.net directly.');});});})();
   </script>
 </body>
 </html>
