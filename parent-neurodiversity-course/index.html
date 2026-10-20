@@ -167,7 +167,21 @@
       .lesson-toggle { grid-column:3; grid-row:1/3; }
       .lesson-detail { padding-left:65px; }
     }
+    .interest { background:var(--ink2); }
+    .interest-form { margin-top:10px; display:grid; gap:22px; max-width:760px; }
+    .interest-form .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px 24px; }
+    .interest-form label { display:flex; flex-direction:column; gap:8px; font-size:13px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--mist); }
+    .interest-form label.full { grid-column:1/-1; }
+    .interest-form input[type="text"], .interest-form input[type="email"], .interest-form select, .interest-form textarea { font-family:var(--font); font-size:15px; font-weight:400; text-transform:none; letter-spacing:normal; background:var(--ink); color:var(--paper); border:1px solid var(--line); padding:13px 14px; border-radius:2px; }
+    .interest-form input:focus, .interest-form select:focus, .interest-form textarea:focus { outline:2px solid var(--lime); outline-offset:1px; border-color:var(--lime); }
+    .interest-form textarea { resize:vertical; min-height:90px; }
+    .hp-field { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+    .interest-form button.primary-action { border:none; cursor:pointer; width:max-content; }
+    .interest-form button.primary-action:disabled { opacity:.6; cursor:default; }
+    .form-note { font-size:13px; color:var(--mist); max-width:520px; margin-top:-6px; }
+    .interest-success { margin-top:10px; }
     @media (max-width:650px) {
+      .interest-form .form-grid { grid-template-columns:1fr; }
       .topbar { height:64px; }
       .progress { top:64px; }
       main { padding-top:64px; }
@@ -360,6 +374,25 @@
       <p class="eyebrow yellow">10 / Common questions</p><h2 id="questions-title">Good to know.</h2>
       <div class="qa-list"><details><summary>Does my child need a diagnosis?</summary><p>No. The course focuses on what a child experiences and what helps. Families awaiting assessment or without a formal label are welcome.</p></details><details><summary>Is it only for families of neurodivergent children?</summary><p>No. Any parent, carer, guardian or spectator can learn to respond better to another child’s experience without asking that child’s family to explain it.</p></details><details><summary>Is this an in-person course?</summary><p>The planned core is self-paced online learning, with occasional live online discussion. There is no face-to-face parent course in this plan.</p></details><details><summary>Will families have to share details about their child?</summary><p>No. The family chooses whether to share a note with a coach. The planned course tools do not require uploading a child’s health details.</p></details><details><summary>Can I enrol now?</summary><p>Not yet. The first lesson will be tested before the full course is released. Clubs and County FAs can contact FMHA about development and future access.</p></details></div>
     </section>
+    <section class="section interest" id="interest" aria-labelledby="interest-title">
+      <p class="eyebrow yellow">11 / Get on the list</p><h2 id="interest-title">Not live yet.<br>Tell us you want it.</h2>
+      <p class="bodycopy" style="margin-bottom:40px;">This course is still being built, starting with the first lesson. Registering your interest doesn't commit you to anything - it just tells us there's demand, and means you hear first when there's something to try.</p>
+      <form name="parent-course-interest" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="interest-form">
+        <input type="hidden" name="form-name" value="parent-course-interest">
+        <input type="hidden" name="source" value="Parent neurodiversity course landing page">
+        <p class="hp-field" aria-hidden="true"><label>Don't fill this out: <input tabindex="-1" autocomplete="off" name="bot-field"></label></p>
+        <div class="form-grid">
+          <label>Name<input type="text" name="name" autocomplete="name" required></label>
+          <label>Email<input type="email" name="email" autocomplete="email" required></label>
+          <label>Club or County FA<input type="text" name="organisation" autocomplete="organization"></label>
+          <label>Your role<select name="role"><option value="">Select...</option><option>Parent / carer</option><option>Coach / club volunteer</option><option>County FA CPD lead</option><option>Other</option></select></label>
+        </div>
+        <label class="full">Anything specific you'd want this to cover?<textarea name="notes" rows="3"></textarea></label>
+        <button type="submit" class="primary-action">Register interest <span aria-hidden="true">↗</span></button>
+        <p class="form-note">We'll only use this to tell you when the course is ready. No spam, no onward sharing.</p>
+      </form>
+      <div class="interest-success" hidden tabindex="-1"><p class="biglead">Thanks - you're on the list.</p><p class="bodycopy">We'll be in touch when there's something to try.</p></div>
+    </section>
   </main>
   <footer><span>FMHA Academy · Course information</span><a href="mailto:support@withinu.net">support@withinu.net</a></footer>
   <script>
@@ -381,6 +414,7 @@
     let tick=false;
     window.addEventListener('scroll',()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-innerHeight;document.getElementById('progress-fill').style.width=(max>0?100*scrollY/max:0)+'%';tick=false;});},{passive:true});
     document.getElementById('hero-image').addEventListener('error',e=>{e.currentTarget.style.display='none';});
+    (()=>{const form=document.querySelector('.interest-form');if(!form)return;const success=document.querySelector('.interest-success');form.addEventListener('submit',e=>{e.preventDefault();const btn=form.querySelector('button[type="submit"]');const body=new URLSearchParams(new FormData(form)).toString();if(btn){btn.disabled=true;btn.textContent='Sending...';}fetch(form.action,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body}).then(res=>{if(!res.ok)throw new Error('bad status');form.hidden=true;if(success){success.hidden=false;success.focus();}}).catch(()=>{if(btn){btn.disabled=false;btn.textContent='Register interest';}alert('Something went wrong sending that - please try again, or email support@withinu.net directly.');});});})();
   </script>
 </body>
 </html>
