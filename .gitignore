@@ -1,3 +1,7 @@
 .worktrees/
 .netlify/
 
+
+.netlify-publish/
+.env
+.env.*
