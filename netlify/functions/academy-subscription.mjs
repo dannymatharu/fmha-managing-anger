@@ -8,12 +8,12 @@ const json = (body, status=200) => Response.json(body,{status,headers:{'Cache-Co
 const env = key => globalThis.Netlify?.env?.get(key) || process.env[key];
 const escape = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const hash = s => createHash('sha256').update(s).digest('hex');
-function settings(){return {key:env('ACADEMY_RESEND_API_KEY'),url:env('ACADEMY_SHEETS_WEBAPP_URL'),secret:env('ACADEMY_SHEETS_BRIDGE_SECRET'),enabled:env('ACADEMY_SIGNUP_ENABLED')==='true'}}
-function configured(c){return Boolean(c.key&&c.secret?.length>=32&&/^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(c.url||''))}
-async function bridge(c,payload){
+export function settings(){return {key:env('ACADEMY_RESEND_API_KEY'),url:env('ACADEMY_SHEETS_WEBAPP_URL'),secret:env('ACADEMY_SHEETS_BRIDGE_SECRET'),enabled:env('ACADEMY_SIGNUP_ENABLED')==='true'}}
+export function configured(c){return Boolean(c.key&&c.secret?.length>=32&&/^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(c.url||''))}
+export async function bridge(c,payload,timeout=20000){
  const body=JSON.stringify({...payload,timestamp:Date.now()});
  const signature=createHmac('sha256',c.secret).update(body).digest('hex');
- const r=await fetch(c.url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({body,signature}),redirect:'follow',signal:AbortSignal.timeout(20000)});
+ const r=await fetch(c.url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({body,signature}),redirect:'follow',signal:AbortSignal.timeout(timeout)});
  if(!r.ok)throw Error('Sheet connection failed');
  const data=await r.json();if(!data.ok)throw Error('Sheet operation failed');return data;
 }
