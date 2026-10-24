@@ -26,7 +26,7 @@ export function confirmationEmail({firstName,token}){
 }
 export async function handle(request){
  const c=settings();
- if(request.method==='GET'){let healthy=false;if(configured(c)){try{healthy=(await bridge(c,{action:'health'})).ok===true}catch{}}return json({enabled:healthy&&c.enabled,configured:healthy})}
+ if(request.method==='GET'){let healthy=false;if(configured(c)){try{healthy=(await bridge(c,{action:'health'})).ok===true}catch{}}const state={enabled:healthy&&c.enabled,configured:healthy};if(new URL(request.url).searchParams.get('check')==='1')state.checks={sendingKeyPresent:Boolean(c.key),bridgeSecretPresent:Boolean(c.secret&&c.secret.length>=32),bridgeURLValid:/^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(c.url||''),activationEnabled:c.enabled,bridgeReachable:healthy};return json(state)}
  if(request.method!=='POST')return json({message:'Method not allowed.'},405);
  const origin=request.headers.get('origin');if(origin&&origin!==SITE)return json({message:'Please use the subscription form on our website.'},403);
  if(!configured(c)||!c.enabled)return json({message:'Subscriptions are not open yet. Please try again later.'},503);
