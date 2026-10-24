@@ -59,6 +59,34 @@
     .hero-side img { width:100%; height:100%; object-fit:cover; object-position:center 22%; display:block; filter:saturate(.8) contrast(1.05); }
     .hero-side::after { content:""; position:absolute; inset:0; background:linear-gradient(0deg,#10181ed9,transparent 45%); pointer-events:none; }
     .picture-label { position:absolute; z-index:1; bottom:25px; left:25px; right:25px; display:flex; justify-content:space-between; align-items:end; gap:20px; font-size:12px; text-transform:uppercase; letter-spacing:.14em; }
+    .radar { position:absolute; inset:0; background:radial-gradient(circle at 50% 50%,#1b2a35 0%,#0d161c 72%); }
+    .radar-meta-tl,.radar-meta-tr { position:absolute; z-index:2; font-size:11px; line-height:1.7; letter-spacing:.14em; text-transform:uppercase; color:#aebcc4; }
+    .radar-meta-tl { top:22px; left:22px; }
+    .radar-meta-tr { top:22px; right:22px; text-align:right; }
+    .radar-meta-tl b,.radar-meta-tr b { color:var(--lime); font-weight:800; }
+    .radar-legend { position:absolute; z-index:2; left:22px; right:22px; bottom:20px; display:flex; justify-content:space-between; gap:16px; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:#8d9aa1; }
+    .radar-dial-wrap { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:70px 28px; }
+    .radar-dial { position:relative; width:min(100%,440px); aspect-ratio:1/1; }
+    .radar-ring { position:absolute; border-radius:50%; border:1px solid rgba(174,191,199,.22); }
+    .radar-ring.r1 { inset:0; }
+    .radar-ring.r2 { inset:15%; }
+    .radar-ring.r3 { inset:30%; }
+    .radar-ring.r4 { inset:45%; border-color:rgba(174,191,199,.3); }
+    .radar-crosshair { position:absolute; inset:0; }
+    .radar-crosshair::before,.radar-crosshair::after { content:""; position:absolute; background:rgba(174,191,199,.16); }
+    .radar-crosshair::before { left:0; right:0; top:50%; height:1px; }
+    .radar-crosshair::after { top:0; bottom:0; left:50%; width:1px; }
+    .radar-sweep { position:absolute; inset:0; border-radius:50%; background:conic-gradient(from 0deg,rgba(63,169,255,.55) 0deg,rgba(63,169,255,.16) 26deg,transparent 60deg,transparent 360deg); animation:radarspin 7s linear infinite; mix-blend-mode:screen; }
+    @keyframes radarspin { to { transform:rotate(360deg); } }
+    .radar-origin { position:absolute; left:50%; top:50%; width:9px; height:9px; margin:-4.5px; border-radius:50%; background:var(--lime); box-shadow:0 0 0 5px rgba(63,169,255,.18),0 0 16px 2px rgba(63,169,255,.7); z-index:3; }
+    .radar-contact { position:absolute; width:15px; height:15px; margin:-7.5px; border-radius:50%; background:#0d161c; border:2px solid var(--lime); cursor:pointer; z-index:4; padding:0; animation:radarpulse 2.8s ease-out infinite; }
+    .radar-contact .radar-num { position:absolute; top:19px; left:50%; transform:translateX(-50%); font-size:10.5px; font-weight:800; letter-spacing:.08em; white-space:nowrap; color:var(--mist); }
+    @keyframes radarpulse { 0% { box-shadow:0 0 0 0 rgba(63,169,255,.55); } 100% { box-shadow:0 0 0 13px rgba(63,169,255,0); } }
+    .radar-card { position:absolute; z-index:6; width:198px; padding:13px 15px; background:#111c23; border:1px solid rgba(174,191,199,.3); box-shadow:0 14px 30px #0008; font-size:12.5px; line-height:1.4; color:var(--mist); opacity:0; transform:translateY(5px); pointer-events:none; transition:opacity .16s,transform .16s; }
+    .radar-card b { display:block; color:var(--lime); font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:5px; }
+    .radar-contact:hover .radar-card,.radar-contact:focus-visible .radar-card { opacity:1; transform:translateY(0); pointer-events:auto; }
+    @media (max-width:900px) { .radar-dial-wrap { padding:60px 18px; } .radar-meta-tr { display:none; } .hero-side.has-radar { min-height:480px; } }
+    @media (max-width:650px) { .radar-dial-wrap { padding:46px 14px 56px; } .radar-dial { width:min(100%,300px); } .radar-contact .radar-num { font-size:9.5px; } .radar-card { width:160px; font-size:11.5px; padding:10px 12px; } .hero-side.has-radar { min-height:430px; } }
     .picture-label b { font-size:46px; font-family:"Barlow Condensed",sans-serif; font-weight:700; letter-spacing:0; line-height:.85; color:var(--lime); }
     .hero-footer { grid-column:1/-1; display:flex; align-items:end; justify-content:space-between; border-top:1px solid var(--line); padding-top:20px; font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#cbd1c6; }
     .hero-actions { display:flex; align-items:center; flex-wrap:wrap; gap:22px 28px; }
@@ -277,7 +305,26 @@
   <main id="main">
     <section class="section hero" id="top" aria-labelledby="hero-title">
       <div class="hero-copy"><p class="eyebrow">Online learning for match officials</p><h1 id="hero-title"><span>Every</span><span>official</span><span class="yellow">shapes</span><span>the game.</span></h1><p class="biglead">Referees are often the ones deciding, in the moment, whether a player's reaction is overload or dissent - and the wrong read can shape the rest of their game before anyone's had the chance to check. This course gives match officials a quick, practical way to get that read right.</p><p class="bodycopy">Learn to recognise neurodivergent presentations in real time, respond without escalating, and know when to flag a pattern after the final whistle. Self-paced, 30-35 minutes, built for every grade on the panel - this is about recognition and response, not rule interpretation.</p><div class="hero-actions"><a class="primary-action" href="#learning">Explore the course <span aria-hidden="true">↗</span></a><a class="textlink" href="#moment">Try a learning moment <span class="arrow" aria-hidden="true">↘</span></a></div></div>
-      <div class="hero-side"><img src="hero-referee.webp" alt="Grassroots football referee" loading="eager"><div class="picture-label"><span>Pitch-side, matchday</span><b>FMHA</b></div></div>
+      <div class="hero-side has-radar">
+        <div class="radar" role="group" aria-label="Five signals every official learns to read - hover or focus a point for a preview, select it to open that lesson">
+          <div class="radar-meta-tl"><b>● LIVE READ</b><br>GRASSROOTS MATCHDAY</div>
+          <div class="radar-meta-tr">5 SIGNALS ON SCOPE<br>HOVER TO PREVIEW</div>
+          <div class="radar-dial-wrap">
+            <div class="radar-dial">
+              <div class="radar-ring r1"></div><div class="radar-ring r2"></div><div class="radar-ring r3"></div><div class="radar-ring r4"></div>
+              <div class="radar-crosshair"></div>
+              <div class="radar-sweep"></div>
+              <div class="radar-origin"></div>
+              <button type="button" class="radar-contact" data-lesson="01" style="left:50%;top:12%" aria-describedby="radar-card-01"><span class="radar-num">01</span><span class="radar-card" id="radar-card-01" style="top:22px;left:50%;transform:translateX(-50%)"><b>Why this matters</b>What matchday looks like from the other side.</span></button>
+              <button type="button" class="radar-contact" data-lesson="02" style="left:86.1%;top:38.3%" aria-describedby="radar-card-02"><span class="radar-num">02</span><span class="radar-card" id="radar-card-02" style="top:-6px;right:22px"><b>Spotting it in real time</b>Overload isn't dissent, and shutdown isn't ignoring you.</span></button>
+              <button type="button" class="radar-contact" data-lesson="03" style="left:72.3%;top:80.7%" aria-describedby="radar-card-03"><span class="radar-num">03</span><span class="radar-card" id="radar-card-03" style="bottom:22px;right:22px"><b>In-the-moment response</b>What to say, when to pause, what not to do.</span></button>
+              <button type="button" class="radar-contact" data-lesson="04" style="left:27.7%;top:80.7%" aria-describedby="radar-card-04"><span class="radar-num">04</span><span class="radar-card" id="radar-card-04" style="bottom:22px;left:22px"><b>After the match</b>A pattern is worth more than a single incident.</span></button>
+              <button type="button" class="radar-contact" data-lesson="05" style="left:13.9%;top:38.3%" aria-describedby="radar-card-05"><span class="radar-num">05</span><span class="radar-card" id="radar-card-05" style="top:-6px;left:22px"><b>Check and close</b>Short scenarios, a pass mark, a certificate.</span></button>
+            </div>
+          </div>
+          <div class="radar-legend"><span>○ A signal to read</span><span>Select a signal to open its lesson</span></div>
+        </div>
+      </div>
       <div class="hero-footer"><span>Course information · FMHA Academy</span><span>Scroll to explore ↓</span></div>
     </section>
     <section class="overview" id="overview" aria-labelledby="overview-title">
@@ -299,11 +346,11 @@
     <section class="section curriculum" id="learning" aria-labelledby="learning-title">
       <p class="eyebrow">04 / What you will explore</p><div class="curriculum-header"><h2 id="learning-title">Five short<br>lessons.</h2><p>Explore each of the five planned lessons. Open one for its focus and a practical example. Lesson 03 will be tested first.</p></div>
       <div class="lesson-list">
-        <div class="lesson"><button type="button" aria-expanded="false"><span class="lesson-number">01</span><span class="lesson-title">Why this matters</span><span class="lesson-caption">What matchday looks like from the other side.</span><span class="lesson-toggle" aria-hidden="true">+</span></button><div class="lesson-detail">Framing: neurodivergent players and coaches in grassroots football, and why match day is where a lot of this plays out in public.</div></div>
-        <div class="lesson"><button type="button" aria-expanded="false"><span class="lesson-number">02</span><span class="lesson-title">Spotting it in real time</span><span class="lesson-caption">Overload isn't dissent, and shutdown isn't ignoring you.</span><span class="lesson-toggle" aria-hidden="true">+</span></button><div class="lesson-detail">Common presentations: meltdown vs. dissent, shutdown vs. ignoring an instruction, stimming vs. time-wasting.</div></div>
-        <div class="lesson pilot"><button type="button" aria-expanded="false"><span class="lesson-number">03</span><span class="lesson-title">In-the-moment response</span><span class="lesson-caption">What to say, when to pause, what not to do.</span><span class="lesson-toggle" aria-hidden="true">+</span></button><div class="lesson-detail"><span class="tag">First lesson to be tested</span><br>De-escalation language, when and how to pause rather than sanction immediately, and what tends to make things worse.</div></div>
-        <div class="lesson"><button type="button" aria-expanded="false"><span class="lesson-number">04</span><span class="lesson-title">After the match</span><span class="lesson-caption">A pattern is worth more than a single incident.</span><span class="lesson-toggle" aria-hidden="true">+</span></button><div class="lesson-detail">Recording a pattern, when to flag it to the club or County FA, and where this sits against the normal disciplinary process.</div></div>
-        <div class="lesson"><button type="button" aria-expanded="false"><span class="lesson-number">05</span><span class="lesson-title">Check and close</span><span class="lesson-caption">Short scenarios, a pass mark, a certificate.</span><span class="lesson-toggle" aria-hidden="true">+</span></button><div class="lesson-detail">Scenario-based questions drawn from the lessons above, a 70% pass mark, and a certificate on completion.</div></div>
+        <div class="lesson" data-lesson="01"><button type="button" aria-expanded="false"><span class="lesson-number">01</span><span class="lesson-title">Why this matters</span><span class="lesson-caption">What matchday looks like from the other side.</span><span class="lesson-toggle" aria-hidden="true">+</span></button><div class="lesson-detail">Framing: neurodivergent players and coaches in grassroots football, and why match day is where a lot of this plays out in public.</div></div>
+        <div class="lesson" data-lesson="02"><button type="button" aria-expanded="false"><span class="lesson-number">02</span><span class="lesson-title">Spotting it in real time</span><span class="lesson-caption">Overload isn't dissent, and shutdown isn't ignoring you.</span><span class="lesson-toggle" aria-hidden="true">+</span></button><div class="lesson-detail">Common presentations: meltdown vs. dissent, shutdown vs. ignoring an instruction, stimming vs. time-wasting.</div></div>
+        <div class="lesson pilot" data-lesson="03"><button type="button" aria-expanded="false"><span class="lesson-number">03</span><span class="lesson-title">In-the-moment response</span><span class="lesson-caption">What to say, when to pause, what not to do.</span><span class="lesson-toggle" aria-hidden="true">+</span></button><div class="lesson-detail"><span class="tag">First lesson to be tested</span><br>De-escalation language, when and how to pause rather than sanction immediately, and what tends to make things worse.</div></div>
+        <div class="lesson" data-lesson="04"><button type="button" aria-expanded="false"><span class="lesson-number">04</span><span class="lesson-title">After the match</span><span class="lesson-caption">A pattern is worth more than a single incident.</span><span class="lesson-toggle" aria-hidden="true">+</span></button><div class="lesson-detail">Recording a pattern, when to flag it to the club or County FA, and where this sits against the normal disciplinary process.</div></div>
+        <div class="lesson" data-lesson="05"><button type="button" aria-expanded="false"><span class="lesson-number">05</span><span class="lesson-title">Check and close</span><span class="lesson-caption">Short scenarios, a pass mark, a certificate.</span><span class="lesson-toggle" aria-hidden="true">+</span></button><div class="lesson-detail">Scenario-based questions drawn from the lessons above, a 70% pass mark, and a certificate on completion.</div></div>
       </div>
     </section>
     <section class="section format" id="delivery" aria-labelledby="delivery-title">
@@ -375,6 +422,7 @@
     };
     document.querySelectorAll('.choice').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.choice').forEach(b=>b.classList.toggle('selected',b===btn)); const [heading,body]=responses[btn.dataset.answer];feedback.replaceChildren();const h=document.createElement('b');h.textContent=heading;const p=document.createElement('p');p.textContent=body;feedback.append(h,p);feedback.classList.add('show');}));
     document.querySelectorAll('.lesson button').forEach(btn=>btn.addEventListener('click',()=>{const row=btn.closest('.lesson');const open=row.classList.toggle('open');btn.setAttribute('aria-expanded',String(open));}));
+    document.querySelectorAll('.radar-contact').forEach(btn=>btn.addEventListener('click',()=>{const n=btn.dataset.lesson;const row=document.querySelector('.lesson[data-lesson="'+n+'"]');if(!row)return;row.scrollIntoView({behavior:'smooth',block:'center'});if(!row.classList.contains('open')){const lessonBtn=row.querySelector('button');lessonBtn.click();}}));
     let tick=false;
     window.addEventListener('scroll',()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-innerHeight;document.getElementById('progress-fill').style.width=(max>0?100*scrollY/max:0)+'%';tick=false;});},{passive:true});
     (()=>{const form=document.querySelector('.interest-form');if(!form)return;const success=document.querySelector('.interest-success');form.addEventListener('submit',e=>{e.preventDefault();const btn=form.querySelector('button[type="submit"]');const body=new URLSearchParams(new FormData(form)).toString();if(btn){btn.disabled=true;btn.textContent='Sending...';}fetch(form.action,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body}).then(res=>{if(!res.ok)throw new Error('bad status');form.hidden=true;if(success){success.hidden=false;success.focus();}}).catch(()=>{if(btn){btn.disabled=false;btn.textContent='Register interest';}alert('Something went wrong sending that - please try again, or email danny@withinu.net directly.');});});})();
